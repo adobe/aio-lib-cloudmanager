@@ -10,40 +10,42 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 -->
 
-[![Version](https://img.shields.io/npm/v/@{{REPO}}.svg)](https://npmjs.org/package/@{{REPO}})
-[![Downloads/week](https://img.shields.io/npm/dw/@{{REPO}}.svg)](https://npmjs.org/package/@{{REPO}})
-[![Build Status](https://travis-ci.com/{{REPO}}.svg?branch=master)](https://travis-ci.com/{{REPO}})
+[![Version](https://img.shields.io/npm/v/@{{REPO}}.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
+[![Downloads/week](https://img.shields.io/npm/dw/@{{REPO}}.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
+[![Build Status](https://travis-ci.com/{{REPO}}.svg?branch=master)](https://travis-ci.com/@adobe/aio-lib-cloudmanager)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/{{REPO}}/master.svg?style=flat-square)](https://codecov.io/gh/{{REPO}}/)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/@adobe/aio-lib-cloudmanager/master.svg?style=flat-square)](https://codecov.io/gh/@adobe/aio-lib-cloudmanager/)
 
-# Adobe I/O ??? Lib
+# Adobe I/O Cloud Manager Library
+
+JavaScript SDK wrapping the [Adobe Cloud Manager API](https://www.adobe.io/apis/experiencecloud/cloud-manager/docs.html).
 
 ### Installing
 
 ```bash
-$ npm install @{{REPO}}
+$ npm install @adobe/aio-lib-cloudmanager
 ```
 
 ### Usage
 1) Initialize the SDK
 
 ```javascript
-const sdk = require('@{{REPO}}')
+const sdk = require('@adobe/aio-lib-cloudmanager')
 
 async function sdkTest() {
   //initialize sdk
-  const client = await sdk.init('<tenant>', 'x-api-key', '<valid auth token>')
+  const client = await sdk.init('<orgId>', 'x-api-key', '<valid auth token>')
 }
 ```
 
 2) Call methods using the initialized SDK
 
 ```javascript
-const sdk = require('@{{REPO}}')
+const sdk = require('@adobe/aio-lib-cloudmanager')
 
 async function sdkTest() {
   // initialize sdk
-  const client = await sdk.init('<tenant>', 'x-api-key', '<valid auth token>')
+  const client = await sdk.init('<orgId>', 'x-api-key', '<valid auth token>')
 
   // call methods
   try {

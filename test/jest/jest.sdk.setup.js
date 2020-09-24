@@ -9,7 +9,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const swaggerClient = require('./mocks/swagger-client')
+const sdk = require('../../src')
 
-// ensure a mocked swagger-client module for unit-tests
-jest.setMock('swagger-client', swaggerClient)
+global.gOrgId = 'good'
+global.gApiKey = 'test-apikey'
+global.gAccessToken = 'test-token'
+
+global.sdk = sdk
+global.createSdkClient = async (orgId) => {
+  return sdk.init(orgId || global.gOrgId, global.gApiKey, global.gAccessToken)
+}

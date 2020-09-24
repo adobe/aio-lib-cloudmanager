@@ -10,16 +10,13 @@ governing permissions and limitations under the License.
 */
 
 /**
- * An example of a typed object.
- *
- * @typedef {object} MyParameters
- * @property {string} optionA - some option
- * @property {string} optionB - another option
+ * @typedef {object} DownloadedLog
+ * @property {string} path - the path where the log was stored
+ * @property {string} url - the url of the log that was downloaded
  */
 
 /**
- * Another typed object.
- *
- * @typedef {object} AnotherThing
- * @property {boolean} mayBeSomething - an option
+ * @typedef {object} PipelineUpdate
+ * @property {string} branch - the new branch
+ * @property {string} repositoryId - the new repository id
  */

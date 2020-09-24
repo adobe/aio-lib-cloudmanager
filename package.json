@@ -6,26 +6,31 @@
   "license": "Apache-2.0",
   "main": "src/index.js",
   "scripts": {
-    "validate": "node bin/validate_spec.js spec/api.json",
-    "test": "npm run validate && npm run lint && npm run unit-tests",
+    "generate-jsdoc-types": "curl https://raw.githubusercontent.com/AdobeDocs/cloudmanager-api-docs/master/swagger-specs/api.yaml > api.yaml && node ./tools/generate-jsdoc-types.js > ./src/sdktypes.jsdoc.js",
+    "test": "npm run lint && npm run unit-tests",
     "lint": "eslint src test e2e",
+    "lint-fix": "eslint src test e2e --fix",
     "unit-tests": "jest --config test/jest.config.js --maxWorkers=2",
     "e2e": "jest --config e2e/jest.config.js",
     "typings": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/*.js -d .",
     "jsdoc": "jsdoc2md -t ./docs/readme_template.md src/**/*.js > README.md",
-    "generate-docs": "npm run typings && npm run jsdoc"
+    "generate-docs": "npm run generate-jsdoc-types && npm run typings && npm run jsdoc"
   },
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^3.0.0",
     "@adobe/aio-lib-core-logging": "1.1.0",
     "cross-fetch": "^3.0.4",
-    "swagger-client": "3.9.6"
+    "halfred": "^2.0.0",
+    "lodash": "^4.17.20",
+    "swagger-client": "3.9.6",
+    "uritemplate": "^0.3.4"
   },
   "devDependencies": {
     "@adobe/eslint-config-aio-lib-config": "^1.2.0",
     "@types/node-fetch": "^2.5.4",
     "babel-runtime": "^6.26.0",
     "codecov": "^3.5.0",
+    "del": "^5.1.0",
     "dotenv": "^8.1.0",
     "eol": "^0.9.1",
     "eslint": "^6.2.2",
@@ -36,13 +41,16 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
+    "fetch-mock": "9.10.1",
+    "handlebars": "^4.7.6",
     "jest": "^24.8.0",
-    "jest-fetch-mock": "^3.0.2",
     "jest-junit": "^10.0.0",
     "jest-plugin-fs": "^2.9.0",
+    "js-yaml": "^3.14.0",
     "jsdoc": "^3.6.3",
     "jsdoc-to-markdown": "^5.0.0",
     "openapi-schema-validator": "^3.0.3",
+    "sinon": "^9.0.3",
     "stdout-stderr": "^0.1.9",
     "tsd-jsdoc": "^2.4.0"
   },

@@ -1,0 +1,4 @@
+{
+    "jest.pathToConfig": "test/jest.config.js",
+    "editor.tabSize": 2
+}
