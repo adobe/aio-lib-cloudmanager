@@ -14,7 +14,9 @@
     "e2e": "jest --config e2e/jest.config.js",
     "typings": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/*.js -d .",
     "jsdoc": "jsdoc2md -t ./docs/readme_template.md src/**/*.js > README.md",
-    "generate-docs": "npm run generate-jsdoc-types && npm run typings && npm run jsdoc"
+    "generate-docs": "npm run generate-jsdoc-types && npm run typings && npm run jsdoc",
+    "update-release": "gren release",
+    "update-changelog": "gren changelog -G --override && sed -i '' 's+# Changelog+---+' CHANGELOG.md && awk 'BEGIN{print\"\"}1' CHANGELOG.md > CHANGELOG-premerge.md && sed -n 'p' CHANGELOG-add.md CHANGELOG-premerge.md > CHANGELOG.md && rm CHANGELOG-add.md && rm CHANGELOG-premerge.md"
   },
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^3.0.0",
@@ -42,6 +44,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "fetch-mock": "9.10.1",
+    "github-release-notes": "^0.17.3",
     "handlebars": "^4.7.6",
     "jest": "^24.8.0",
     "jest-junit": "^10.0.0",
