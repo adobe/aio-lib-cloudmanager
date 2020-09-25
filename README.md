@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 -->
 
-[![Version](https://img.shields.io/npm/v/@.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
-[![Downloads/week](https://img.shields.io/npm/dw/@.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
-[![Build Status](https://travis-ci.com/.svg?branch=master)](https://travis-ci.com/@adobe/aio-lib-cloudmanager)
+[![Version](https://img.shields.io/npm/v/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
+[![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
+[![Build Status](https://travis-ci.com/adobe/aio-cli-plugin-cloudmanager.svg?branch=main)](https://travis-ci.com/@adobe/aio-lib-cloudmanager)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/@adobe/aio-lib-cloudmanager/master.svg?style=flat-square)](https://codecov.io/gh/@adobe/aio-lib-cloudmanager/)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-cloudmanager/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-cloudmanager/)
 
 # Adobe I/O Cloud Manager Library
 
