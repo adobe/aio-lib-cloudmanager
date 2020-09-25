@@ -23,5 +23,5 @@ after_success:
 # safelist (prevent double builds in PRs)
 branches:
   only:
-  - master
+  - main
   - /^greenkeeper/.*$/
