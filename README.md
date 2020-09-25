@@ -80,9 +80,6 @@ with valid values for tenantId, apiKey and accessToken</p>
 ## Typedefs
 
 <dl>
-<dt><a href="#ListProgramOptions">ListProgramOptions</a> : <code>object</code></dt>
-<dd><p>Options to the listPipeline function</p>
-</dd>
 <dt><a href="#EmbeddedProgram">EmbeddedProgram</a> : <code>object</code></dt>
 <dd><p>A lightweight representation of a Program</p>
 </dd>
@@ -108,6 +105,9 @@ with valid values for tenantId, apiKey and accessToken</p>
 </dd>
 <dt><a href="#LogOptionRepresentation">LogOptionRepresentation</a> : <code>object</code></dt>
 <dd></dd>
+<dt><a href="#ListProgramOptions">ListProgramOptions</a> : <code>object</code></dt>
+<dd><p>Options to the listPipeline function</p>
+</dd>
 <dt><a href="#DownloadedLog">DownloadedLog</a> : <code>object</code></dt>
 <dd></dd>
 <dt><a href="#PipelineUpdate">PipelineUpdate</a> : <code>object</code></dt>
@@ -484,18 +484,6 @@ Returns a Promise that resolves with a new CloudManagerAPI object.
 | accessToken | <code>string</code> | the access token for your integration |
 | baseUrl | <code>string</code> | the base URL to access the API (defaults to https://cloudmanager.adobe.io) |
 
-<a name="ListProgramOptions"></a>
-
-## ListProgramOptions : <code>object</code>
-Options to the listPipeline function
-
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| busy | <code>boolean</code> | if true, only busy pipelines will be returned |
-
 <a name="EmbeddedProgram"></a>
 
 ## EmbeddedProgram : <code>object</code>
@@ -639,6 +627,18 @@ A named value than can be set on an Environment or Pipeline
 | --- | --- | --- |
 | service | <code>string</code> | Name of the service in environment. Example: author |
 | name | <code>string</code> | Name of the log for service in environment. Example: aemerror |
+
+<a name="ListProgramOptions"></a>
+
+## ListProgramOptions : <code>object</code>
+Options to the listPipeline function
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| busy | <code>boolean</code> | if true, only busy pipelines will be returned |
 
 <a name="DownloadedLog"></a>
 

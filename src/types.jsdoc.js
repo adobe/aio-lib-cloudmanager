@@ -10,6 +10,13 @@ governing permissions and limitations under the License.
 */
 
 /**
+ * Options to the listPipeline function
+ *
+ * @typedef {object} ListProgramOptions
+ * @property {boolean} busy - if true, only busy pipelines will be returned
+ */
+
+/**
  * @typedef {object} DownloadedLog
  * @property {string} path - the path where the log was stored
  * @property {string} url - the url of the log that was downloaded

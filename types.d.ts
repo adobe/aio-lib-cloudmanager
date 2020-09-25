@@ -199,14 +199,6 @@ declare class CloudManagerAPI {
 }
 
 /**
- * Options to the listPipeline function
- * @property busy - if true, only busy pipelines will be returned
- */
-declare type ListProgramOptions = {
-    busy: boolean;
-};
-
-/**
  * A lightweight representation of a Program
  * @property id - Identifier of the program. Unique within the space.
  * @property name - Name of the program
@@ -356,6 +348,14 @@ declare type Variable = {
 declare type LogOptionRepresentation = {
     service: string;
     name: string;
+};
+
+/**
+ * Options to the listPipeline function
+ * @property busy - if true, only busy pipelines will be returned
+ */
+declare type ListProgramOptions = {
+    busy: boolean;
 };
 
 /**

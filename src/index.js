@@ -26,7 +26,7 @@ const { getCurrentStep, getWaitingStep, findStepState, isWithinFiveMinutesOfUTCM
 require('./sdktypes.jsdoc') // for VS Code autocomplete
 require('./types.jsdoc') // for VS Code autocomplete
 
-/* global EmbeddedProgram, Pipeline, PipelineExecution,
+/* global EmbeddedProgram, Pipeline, PipelineExecution, ListProgramOptions,
    PipelineStepMetrics, Environment, LogOptionRepresentation,
    DownloadedLog, PipelineUpdate, Variable */ // for linter
 
@@ -223,13 +223,6 @@ class CloudManagerAPI {
   }
 
   /**
-   * Options to the listPipeline function
-   *
-   * @typedef {object} ListProgramOptions
-   * @property {boolean} busy - if true, only busy pipelines will be returned
-   */
-
-  /**
    * Obtain a list of pipelines for the target program.
    *
    * @param {string} programId the program id
@@ -258,7 +251,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Start an execution for a pipeline
    *
    * @param {string} programId the program id
@@ -281,7 +273,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Get the current execution for a pipeline
    *
    * @param {string} programId the program id
@@ -303,7 +294,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Get an execution for a pipeline
    *
    * @param {string} programId the program id
@@ -327,7 +317,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Get the quality gate results for a pipeline step
    *
    * @param {string} programId the program id
@@ -357,7 +346,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Cancel current execution
    *
    * @param {string} programId the program id
@@ -402,7 +390,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Advance current execution
    *
    * @param {string} programId the program id
@@ -456,7 +443,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * List environments for a program
    *
    * @param {string} programId the program id
@@ -501,7 +487,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Write step log to an output stream.
    *
    * @param {string} programId the program id
@@ -604,7 +589,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Download log files from the environment to a specified directory.
    *
    * @param {string} programId the program id
@@ -734,7 +718,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Delete a pipeline
    *
    * @param {string} programId the program id
@@ -762,7 +745,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Update a pipeline
    *
    * @param {string} programId - the program id
@@ -799,7 +781,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Get the link to the developer console
    *
    * @param {string} programId - the program id
@@ -834,7 +815,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Get the list of variables for an environment
    *
    * @param {string} programId - the program id
@@ -855,7 +835,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Set the variables for an environment
    *
    * @param {string} programId - the program id
@@ -884,7 +863,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Get the list of variables for a pipeline
    *
    * @param {string} programId - the program id
@@ -905,7 +883,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Set the variables for a pipeline
    *
    * @param {string} programId - the program id
@@ -924,7 +901,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Delete a program
    *
    * @param {string} programId - the program id
@@ -944,7 +920,6 @@ class CloudManagerAPI {
   }
 
   /**
-   *
    * Delete an environment
    *
    * @param {string} programId - the program id
