@@ -111,7 +111,7 @@ Mandatory if type=BUILD
 
 
 /**
- * A named value than can be set on an Environment
+ * A named value than can be set on an Environment or Pipeline
  *
  * @typedef {object} Variable
  * @property {string} name - Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number.
