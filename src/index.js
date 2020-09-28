@@ -255,7 +255,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
-   * @returns {string} the execution url
+   * @returns {Promise<string>} the execution url
    */
   async startExecution (programId, pipelineId) {
     const pipelines = await this.listPipelines(programId)
@@ -277,7 +277,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
-   * @returns {PipelineExecution} the execution
+   * @returns {Promise<PipelineExecution>} the execution
    */
   async getCurrentExecution (programId, pipelineId) {
     const pipelines = await this.listPipelines(programId)
@@ -299,7 +299,7 @@ class CloudManagerAPI {
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
    * @param {string} executionId the execution id
-   * @returns {PipelineExecution} the execution
+   * @returns {Promise<PipelineExecution>} the execution
    */
   async getExecution (programId, pipelineId, executionId) {
     const pipelines = await this.listPipelines(programId)
@@ -323,7 +323,7 @@ class CloudManagerAPI {
    * @param {string} pipelineId the pipeline id
    * @param {string} executionId the execution id
    * @param {string} action the action name
-   * @returns {PipelineStepMetrics} the execution
+   * @returns {Promise<PipelineStepMetrics>} the execution
    */
   async getQualityGateResults (programId, pipelineId, executionId, action) {
     const execution = halfred.parse(await this.getExecution(programId, pipelineId, executionId))
@@ -350,7 +350,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
-   * @returns {object} a truthy value
+   * @returns {Promise<object>} a truthy value
    */
   async cancelCurrentExecution (programId, pipelineId) {
     const execution = halfred.parse(await this.getCurrentExecution(programId, pipelineId))
@@ -394,7 +394,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
-   * @returns {object} a truthy value
+   * @returns {Promise<object>} a truthy value
    */
   async advanceCurrentExecution (programId, pipelineId) {
     const execution = halfred.parse(await this.getCurrentExecution(programId, pipelineId))
@@ -446,7 +446,7 @@ class CloudManagerAPI {
    * List environments for a program
    *
    * @param {string} programId the program id
-   * @returns {Environment[]} a list of environments
+   * @returns {Promise<Environment[]>} a list of environments
    */
   async listEnvironments (programId) {
     const programs = await this.listPrograms()
@@ -495,7 +495,7 @@ class CloudManagerAPI {
    * @param {string} action the action
    * @param {string} logFile the log file to select a non-default value
    * @param {object} outputStream the output stream to write to
-   * @returns {Environment[]} a list of environments
+   * @returns {Promise<object>} a truthy value
    */
   async getExecutionStepLog (programId, pipelineId, executionId, action, logFile, outputStream) {
     if (!outputStream) {
@@ -528,7 +528,7 @@ class CloudManagerAPI {
    * @param {string} programId the program id
    * @param {string} environmentId the environment id
    *
-   * @returns {LogOptionRepresentation[]} the log options for the environment
+   * @returns {Promise<LogOptionRepresentation[]>} the log options for the environment
    */
   async listAvailableLogOptions (programId, environmentId) {
     const environment = await this._getEnvironment(programId, environmentId)
@@ -597,7 +597,7 @@ class CloudManagerAPI {
    * @param {string} name the log name
    * @param {number} days the number of days
    * @param {string} outputDirectory the output directory
-   * @returns {DownloadedLog[]} the list of downloaded logs
+   * @returns {Promise<DownloadedLog[]>} the list of downloaded logs
    */
   async downloadLogs (programId, environmentId, service, name, days, outputDirectory) {
     const environments = await this.listEnvironments(programId)
@@ -722,7 +722,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
-   * @returns {object} a truthy object
+   * @returns {Promise<object>} a truthy object
    */
   async deletePipeline (programId, pipelineId) {
     const pipeline = await this._getPipeline(programId, pipelineId)
@@ -750,7 +750,7 @@ class CloudManagerAPI {
    * @param {string} programId - the program id
    * @param {string} pipelineId - the pipeline id
    * @param {PipelineUpdate} changes - the changes
-   * @returns {Pipeline} the new pipeline definition
+   * @returns {Promise<Pipeline>} the new pipeline definition
    */
   async updatePipeline (programId, pipelineId, changes) {
     const pipeline = await this._getPipeline(programId, pipelineId)
@@ -785,7 +785,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
-   * @returns {string} the console url
+   * @returns {Promise<string>} the console url
    */
   async getDeveloperConsoleUrl (programId, environmentId) {
     const environment = await this._getEnvironment(programId, environmentId)
@@ -819,7 +819,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
-   * @returns {Variable[]} the variables
+   * @returns {Promise<Variable[]>} the variables
    */
   async getEnvironmentVariables (programId, environmentId) {
     const variablesLink = await this._getEnvironmentVariablesLink(programId, environmentId)
@@ -840,7 +840,7 @@ class CloudManagerAPI {
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
    * @param {Variable[]} variables the variables
-   * @returns {object} a truthy value
+   * @returns {Promise<object>} a truthy value
    */
   async setEnvironmentVariables (programId, environmentId, variables) {
     const variablesLink = await this._getEnvironmentVariablesLink(programId, environmentId)
@@ -867,7 +867,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} pipelineId - the pipeline id
-   * @returns {Variable[]} the variables
+   * @returns {Promise<Variable[]>} the variables
    */
   async getPipelineVariables (programId, pipelineId) {
     const variablesLink = await this._getPipelineVariablesLink(programId, pipelineId)
@@ -888,7 +888,7 @@ class CloudManagerAPI {
    * @param {string} programId - the program id
    * @param {string} pipelineId - the pipeline id
    * @param {Variable[]} variables the variables
-   * @returns {object} a truthy value
+   * @returns {Promise<object>} a truthy value
    */
   async setPipelineVariables (programId, pipelineId, variables) {
     const variablesLink = await this._getPipelineVariablesLink(programId, pipelineId)
@@ -904,7 +904,7 @@ class CloudManagerAPI {
    * Delete a program
    *
    * @param {string} programId - the program id
-   * @returns {object} a truthy value
+   * @returns {Promise<object>} a truthy value
    */
   async deleteProgram (programId) {
     const programs = await this.listPrograms()
@@ -924,7 +924,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
-   * @returns {object} a truthy value
+   * @returns {Promise<object>} a truthy value
    */
   async deleteEnvironment (programId, environmentId) {
     const environments = await this.listEnvironments(programId)

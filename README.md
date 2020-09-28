@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 [![Version](https://img.shields.io/npm/v/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
 [![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
-[![Build Status](https://travis-ci.com/adobe/aio-cli-plugin-cloudmanager.svg?branch=main)](https://travis-ci.com/adobe/aio-lib-cloudmanager)
+[![Build Status](https://travis-ci.com/adobe/aio-lib-cloudmanager.svg?branch=main)](https://travis-ci.com/adobe/aio-lib-cloudmanager)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-cloudmanager/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-cloudmanager/)
 
@@ -131,25 +131,25 @@ with valid values for tenantId, apiKey and accessToken
     * [.init(orgId, apiKey, accessToken, baseUrl)](#CloudManagerAPI+init) ⇒ [<code>Promise.&lt;CloudManagerAPI&gt;</code>](#CloudManagerAPI)
     * [.listPrograms()](#CloudManagerAPI+listPrograms) ⇒ <code>Promise.&lt;Array.&lt;EmbeddedProgram&gt;&gt;</code>
     * [.listPipelines(programId, options)](#CloudManagerAPI+listPipelines) ⇒ <code>Promise.&lt;Array.&lt;Pipeline&gt;&gt;</code>
-    * [.startExecution(programId, pipelineId)](#CloudManagerAPI+startExecution) ⇒ <code>string</code>
-    * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>PipelineExecution</code>](#PipelineExecution)
-    * [.getExecution(programId, pipelineId, executionId)](#CloudManagerAPI+getExecution) ⇒ [<code>PipelineExecution</code>](#PipelineExecution)
-    * [.getQualityGateResults(programId, pipelineId, executionId, action)](#CloudManagerAPI+getQualityGateResults) ⇒ [<code>PipelineStepMetrics</code>](#PipelineStepMetrics)
-    * [.cancelCurrentExecution(programId, pipelineId)](#CloudManagerAPI+cancelCurrentExecution) ⇒ <code>object</code>
-    * [.advanceCurrentExecution(programId, pipelineId)](#CloudManagerAPI+advanceCurrentExecution) ⇒ <code>object</code>
-    * [.listEnvironments(programId)](#CloudManagerAPI+listEnvironments) ⇒ [<code>Array.&lt;Environment&gt;</code>](#Environment)
-    * [.getExecutionStepLog(programId, pipelineId, executionId, action, logFile, outputStream)](#CloudManagerAPI+getExecutionStepLog) ⇒ [<code>Array.&lt;Environment&gt;</code>](#Environment)
-    * [.listAvailableLogOptions(programId, environmentId)](#CloudManagerAPI+listAvailableLogOptions) ⇒ [<code>Array.&lt;LogOptionRepresentation&gt;</code>](#LogOptionRepresentation)
-    * [.downloadLogs(programId, environmentId, service, name, days, outputDirectory)](#CloudManagerAPI+downloadLogs) ⇒ [<code>Array.&lt;DownloadedLog&gt;</code>](#DownloadedLog)
-    * [.deletePipeline(programId, pipelineId)](#CloudManagerAPI+deletePipeline) ⇒ <code>object</code>
-    * [.updatePipeline(programId, pipelineId, changes)](#CloudManagerAPI+updatePipeline) ⇒ [<code>Pipeline</code>](#Pipeline)
-    * [.getDeveloperConsoleUrl(programId, environmentId)](#CloudManagerAPI+getDeveloperConsoleUrl) ⇒ <code>string</code>
-    * [.getEnvironmentVariables(programId, environmentId)](#CloudManagerAPI+getEnvironmentVariables) ⇒ [<code>Array.&lt;Variable&gt;</code>](#Variable)
-    * [.setEnvironmentVariables(programId, environmentId, variables)](#CloudManagerAPI+setEnvironmentVariables) ⇒ <code>object</code>
-    * [.getPipelineVariables(programId, pipelineId)](#CloudManagerAPI+getPipelineVariables) ⇒ [<code>Array.&lt;Variable&gt;</code>](#Variable)
-    * [.setPipelineVariables(programId, pipelineId, variables)](#CloudManagerAPI+setPipelineVariables) ⇒ <code>object</code>
-    * [.deleteProgram(programId)](#CloudManagerAPI+deleteProgram) ⇒ <code>object</code>
-    * [.deleteEnvironment(programId, environmentId)](#CloudManagerAPI+deleteEnvironment) ⇒ <code>object</code>
+    * [.startExecution(programId, pipelineId)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
+    * [.getExecution(programId, pipelineId, executionId)](#CloudManagerAPI+getExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
+    * [.getQualityGateResults(programId, pipelineId, executionId, action)](#CloudManagerAPI+getQualityGateResults) ⇒ [<code>Promise.&lt;PipelineStepMetrics&gt;</code>](#PipelineStepMetrics)
+    * [.cancelCurrentExecution(programId, pipelineId)](#CloudManagerAPI+cancelCurrentExecution) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.advanceCurrentExecution(programId, pipelineId)](#CloudManagerAPI+advanceCurrentExecution) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.listEnvironments(programId)](#CloudManagerAPI+listEnvironments) ⇒ <code>Promise.&lt;Array.&lt;Environment&gt;&gt;</code>
+    * [.getExecutionStepLog(programId, pipelineId, executionId, action, logFile, outputStream)](#CloudManagerAPI+getExecutionStepLog) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.listAvailableLogOptions(programId, environmentId)](#CloudManagerAPI+listAvailableLogOptions) ⇒ <code>Promise.&lt;Array.&lt;LogOptionRepresentation&gt;&gt;</code>
+    * [.downloadLogs(programId, environmentId, service, name, days, outputDirectory)](#CloudManagerAPI+downloadLogs) ⇒ <code>Promise.&lt;Array.&lt;DownloadedLog&gt;&gt;</code>
+    * [.deletePipeline(programId, pipelineId)](#CloudManagerAPI+deletePipeline) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.updatePipeline(programId, pipelineId, changes)](#CloudManagerAPI+updatePipeline) ⇒ [<code>Promise.&lt;Pipeline&gt;</code>](#Pipeline)
+    * [.getDeveloperConsoleUrl(programId, environmentId)](#CloudManagerAPI+getDeveloperConsoleUrl) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getEnvironmentVariables(programId, environmentId)](#CloudManagerAPI+getEnvironmentVariables) ⇒ <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code>
+    * [.setEnvironmentVariables(programId, environmentId, variables)](#CloudManagerAPI+setEnvironmentVariables) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getPipelineVariables(programId, pipelineId)](#CloudManagerAPI+getPipelineVariables) ⇒ <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code>
+    * [.setPipelineVariables(programId, pipelineId, variables)](#CloudManagerAPI+setPipelineVariables) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.deleteProgram(programId)](#CloudManagerAPI+deleteProgram) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.deleteEnvironment(programId, environmentId)](#CloudManagerAPI+deleteEnvironment) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="CloudManagerAPI+orgId"></a>
 
@@ -212,11 +212,11 @@ Obtain a list of pipelines for the target program.
 
 <a name="CloudManagerAPI+startExecution"></a>
 
-### cloudManagerAPI.startExecution(programId, pipelineId) ⇒ <code>string</code>
+### cloudManagerAPI.startExecution(programId, pipelineId) ⇒ <code>Promise.&lt;string&gt;</code>
 Start an execution for a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>string</code> - the execution url  
+**Returns**: <code>Promise.&lt;string&gt;</code> - the execution url  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -225,11 +225,11 @@ Start an execution for a pipeline
 
 <a name="CloudManagerAPI+getCurrentExecution"></a>
 
-### cloudManagerAPI.getCurrentExecution(programId, pipelineId) ⇒ [<code>PipelineExecution</code>](#PipelineExecution)
+### cloudManagerAPI.getCurrentExecution(programId, pipelineId) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
 Get the current execution for a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>PipelineExecution</code>](#PipelineExecution) - the execution  
+**Returns**: [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution) - the execution  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -238,11 +238,11 @@ Get the current execution for a pipeline
 
 <a name="CloudManagerAPI+getExecution"></a>
 
-### cloudManagerAPI.getExecution(programId, pipelineId, executionId) ⇒ [<code>PipelineExecution</code>](#PipelineExecution)
+### cloudManagerAPI.getExecution(programId, pipelineId, executionId) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
 Get an execution for a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>PipelineExecution</code>](#PipelineExecution) - the execution  
+**Returns**: [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution) - the execution  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -252,11 +252,11 @@ Get an execution for a pipeline
 
 <a name="CloudManagerAPI+getQualityGateResults"></a>
 
-### cloudManagerAPI.getQualityGateResults(programId, pipelineId, executionId, action) ⇒ [<code>PipelineStepMetrics</code>](#PipelineStepMetrics)
+### cloudManagerAPI.getQualityGateResults(programId, pipelineId, executionId, action) ⇒ [<code>Promise.&lt;PipelineStepMetrics&gt;</code>](#PipelineStepMetrics)
 Get the quality gate results for a pipeline step
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>PipelineStepMetrics</code>](#PipelineStepMetrics) - the execution  
+**Returns**: [<code>Promise.&lt;PipelineStepMetrics&gt;</code>](#PipelineStepMetrics) - the execution  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -267,11 +267,11 @@ Get the quality gate results for a pipeline step
 
 <a name="CloudManagerAPI+cancelCurrentExecution"></a>
 
-### cloudManagerAPI.cancelCurrentExecution(programId, pipelineId) ⇒ <code>object</code>
+### cloudManagerAPI.cancelCurrentExecution(programId, pipelineId) ⇒ <code>Promise.&lt;object&gt;</code>
 Cancel current execution
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>object</code> - a truthy value  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -280,11 +280,11 @@ Cancel current execution
 
 <a name="CloudManagerAPI+advanceCurrentExecution"></a>
 
-### cloudManagerAPI.advanceCurrentExecution(programId, pipelineId) ⇒ <code>object</code>
+### cloudManagerAPI.advanceCurrentExecution(programId, pipelineId) ⇒ <code>Promise.&lt;object&gt;</code>
 Advance current execution
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>object</code> - a truthy value  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -293,11 +293,11 @@ Advance current execution
 
 <a name="CloudManagerAPI+listEnvironments"></a>
 
-### cloudManagerAPI.listEnvironments(programId) ⇒ [<code>Array.&lt;Environment&gt;</code>](#Environment)
+### cloudManagerAPI.listEnvironments(programId) ⇒ <code>Promise.&lt;Array.&lt;Environment&gt;&gt;</code>
 List environments for a program
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Array.&lt;Environment&gt;</code>](#Environment) - a list of environments  
+**Returns**: <code>Promise.&lt;Array.&lt;Environment&gt;&gt;</code> - a list of environments  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -305,11 +305,11 @@ List environments for a program
 
 <a name="CloudManagerAPI+getExecutionStepLog"></a>
 
-### cloudManagerAPI.getExecutionStepLog(programId, pipelineId, executionId, action, logFile, outputStream) ⇒ [<code>Array.&lt;Environment&gt;</code>](#Environment)
+### cloudManagerAPI.getExecutionStepLog(programId, pipelineId, executionId, action, logFile, outputStream) ⇒ <code>Promise.&lt;object&gt;</code>
 Write step log to an output stream.
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Array.&lt;Environment&gt;</code>](#Environment) - a list of environments  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -322,11 +322,11 @@ Write step log to an output stream.
 
 <a name="CloudManagerAPI+listAvailableLogOptions"></a>
 
-### cloudManagerAPI.listAvailableLogOptions(programId, environmentId) ⇒ [<code>Array.&lt;LogOptionRepresentation&gt;</code>](#LogOptionRepresentation)
+### cloudManagerAPI.listAvailableLogOptions(programId, environmentId) ⇒ <code>Promise.&lt;Array.&lt;LogOptionRepresentation&gt;&gt;</code>
 List the log options available for an environment
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Array.&lt;LogOptionRepresentation&gt;</code>](#LogOptionRepresentation) - the log options for the environment  
+**Returns**: <code>Promise.&lt;Array.&lt;LogOptionRepresentation&gt;&gt;</code> - the log options for the environment  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -335,11 +335,11 @@ List the log options available for an environment
 
 <a name="CloudManagerAPI+downloadLogs"></a>
 
-### cloudManagerAPI.downloadLogs(programId, environmentId, service, name, days, outputDirectory) ⇒ [<code>Array.&lt;DownloadedLog&gt;</code>](#DownloadedLog)
+### cloudManagerAPI.downloadLogs(programId, environmentId, service, name, days, outputDirectory) ⇒ <code>Promise.&lt;Array.&lt;DownloadedLog&gt;&gt;</code>
 Download log files from the environment to a specified directory.
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Array.&lt;DownloadedLog&gt;</code>](#DownloadedLog) - the list of downloaded logs  
+**Returns**: <code>Promise.&lt;Array.&lt;DownloadedLog&gt;&gt;</code> - the list of downloaded logs  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -352,11 +352,11 @@ Download log files from the environment to a specified directory.
 
 <a name="CloudManagerAPI+deletePipeline"></a>
 
-### cloudManagerAPI.deletePipeline(programId, pipelineId) ⇒ <code>object</code>
+### cloudManagerAPI.deletePipeline(programId, pipelineId) ⇒ <code>Promise.&lt;object&gt;</code>
 Delete a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>object</code> - a truthy object  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy object  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -365,11 +365,11 @@ Delete a pipeline
 
 <a name="CloudManagerAPI+updatePipeline"></a>
 
-### cloudManagerAPI.updatePipeline(programId, pipelineId, changes) ⇒ [<code>Pipeline</code>](#Pipeline)
+### cloudManagerAPI.updatePipeline(programId, pipelineId, changes) ⇒ [<code>Promise.&lt;Pipeline&gt;</code>](#Pipeline)
 Update a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Pipeline</code>](#Pipeline) - the new pipeline definition  
+**Returns**: [<code>Promise.&lt;Pipeline&gt;</code>](#Pipeline) - the new pipeline definition  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -379,11 +379,11 @@ Update a pipeline
 
 <a name="CloudManagerAPI+getDeveloperConsoleUrl"></a>
 
-### cloudManagerAPI.getDeveloperConsoleUrl(programId, environmentId) ⇒ <code>string</code>
+### cloudManagerAPI.getDeveloperConsoleUrl(programId, environmentId) ⇒ <code>Promise.&lt;string&gt;</code>
 Get the link to the developer console
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>string</code> - the console url  
+**Returns**: <code>Promise.&lt;string&gt;</code> - the console url  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -392,11 +392,11 @@ Get the link to the developer console
 
 <a name="CloudManagerAPI+getEnvironmentVariables"></a>
 
-### cloudManagerAPI.getEnvironmentVariables(programId, environmentId) ⇒ [<code>Array.&lt;Variable&gt;</code>](#Variable)
+### cloudManagerAPI.getEnvironmentVariables(programId, environmentId) ⇒ <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code>
 Get the list of variables for an environment
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Array.&lt;Variable&gt;</code>](#Variable) - the variables  
+**Returns**: <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code> - the variables  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -405,11 +405,11 @@ Get the list of variables for an environment
 
 <a name="CloudManagerAPI+setEnvironmentVariables"></a>
 
-### cloudManagerAPI.setEnvironmentVariables(programId, environmentId, variables) ⇒ <code>object</code>
+### cloudManagerAPI.setEnvironmentVariables(programId, environmentId, variables) ⇒ <code>Promise.&lt;object&gt;</code>
 Set the variables for an environment
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>object</code> - a truthy value  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -419,11 +419,11 @@ Set the variables for an environment
 
 <a name="CloudManagerAPI+getPipelineVariables"></a>
 
-### cloudManagerAPI.getPipelineVariables(programId, pipelineId) ⇒ [<code>Array.&lt;Variable&gt;</code>](#Variable)
+### cloudManagerAPI.getPipelineVariables(programId, pipelineId) ⇒ <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code>
 Get the list of variables for a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Array.&lt;Variable&gt;</code>](#Variable) - the variables  
+**Returns**: <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code> - the variables  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -432,11 +432,11 @@ Get the list of variables for a pipeline
 
 <a name="CloudManagerAPI+setPipelineVariables"></a>
 
-### cloudManagerAPI.setPipelineVariables(programId, pipelineId, variables) ⇒ <code>object</code>
+### cloudManagerAPI.setPipelineVariables(programId, pipelineId, variables) ⇒ <code>Promise.&lt;object&gt;</code>
 Set the variables for a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>object</code> - a truthy value  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -446,11 +446,11 @@ Set the variables for a pipeline
 
 <a name="CloudManagerAPI+deleteProgram"></a>
 
-### cloudManagerAPI.deleteProgram(programId) ⇒ <code>object</code>
+### cloudManagerAPI.deleteProgram(programId) ⇒ <code>Promise.&lt;object&gt;</code>
 Delete a program
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>object</code> - a truthy value  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -458,11 +458,11 @@ Delete a program
 
 <a name="CloudManagerAPI+deleteEnvironment"></a>
 
-### cloudManagerAPI.deleteEnvironment(programId, environmentId) ⇒ <code>object</code>
+### cloudManagerAPI.deleteEnvironment(programId, environmentId) ⇒ <code>Promise.&lt;object&gt;</code>
 Delete an environment
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>object</code> - a truthy value  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
 
 | Param | Type | Description |
 | --- | --- | --- |

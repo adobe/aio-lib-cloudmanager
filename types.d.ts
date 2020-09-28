@@ -57,14 +57,14 @@ declare class CloudManagerAPI {
      * @param pipelineId - the pipeline id
      * @returns the execution url
      */
-    startExecution(programId: string, pipelineId: string): string;
+    startExecution(programId: string, pipelineId: string): Promise<string>;
     /**
      * Get the current execution for a pipeline
      * @param programId - the program id
      * @param pipelineId - the pipeline id
      * @returns the execution
      */
-    getCurrentExecution(programId: string, pipelineId: string): PipelineExecution;
+    getCurrentExecution(programId: string, pipelineId: string): Promise<PipelineExecution>;
     /**
      * Get an execution for a pipeline
      * @param programId - the program id
@@ -72,7 +72,7 @@ declare class CloudManagerAPI {
      * @param executionId - the execution id
      * @returns the execution
      */
-    getExecution(programId: string, pipelineId: string, executionId: string): PipelineExecution;
+    getExecution(programId: string, pipelineId: string, executionId: string): Promise<PipelineExecution>;
     /**
      * Get the quality gate results for a pipeline step
      * @param programId - the program id
@@ -81,27 +81,27 @@ declare class CloudManagerAPI {
      * @param action - the action name
      * @returns the execution
      */
-    getQualityGateResults(programId: string, pipelineId: string, executionId: string, action: string): PipelineStepMetrics;
+    getQualityGateResults(programId: string, pipelineId: string, executionId: string, action: string): Promise<PipelineStepMetrics>;
     /**
      * Cancel current execution
      * @param programId - the program id
      * @param pipelineId - the pipeline id
      * @returns a truthy value
      */
-    cancelCurrentExecution(programId: string, pipelineId: string): any;
+    cancelCurrentExecution(programId: string, pipelineId: string): Promise<object>;
     /**
      * Advance current execution
      * @param programId - the program id
      * @param pipelineId - the pipeline id
      * @returns a truthy value
      */
-    advanceCurrentExecution(programId: string, pipelineId: string): any;
+    advanceCurrentExecution(programId: string, pipelineId: string): Promise<object>;
     /**
      * List environments for a program
      * @param programId - the program id
      * @returns a list of environments
      */
-    listEnvironments(programId: string): Environment[];
+    listEnvironments(programId: string): Promise<Environment[]>;
     /**
      * Write step log to an output stream.
      * @param programId - the program id
@@ -110,16 +110,16 @@ declare class CloudManagerAPI {
      * @param action - the action
      * @param logFile - the log file to select a non-default value
      * @param outputStream - the output stream to write to
-     * @returns a list of environments
+     * @returns a truthy value
      */
-    getExecutionStepLog(programId: string, pipelineId: string, executionId: string, action: string, logFile: string, outputStream: any): Environment[];
+    getExecutionStepLog(programId: string, pipelineId: string, executionId: string, action: string, logFile: string, outputStream: any): Promise<object>;
     /**
      * List the log options available for an environment
      * @param programId - the program id
      * @param environmentId - the environment id
      * @returns the log options for the environment
      */
-    listAvailableLogOptions(programId: string, environmentId: string): LogOptionRepresentation[];
+    listAvailableLogOptions(programId: string, environmentId: string): Promise<LogOptionRepresentation[]>;
     /**
      * Download log files from the environment to a specified directory.
      * @param programId - the program id
@@ -130,14 +130,14 @@ declare class CloudManagerAPI {
      * @param outputDirectory - the output directory
      * @returns the list of downloaded logs
      */
-    downloadLogs(programId: string, environmentId: string, service: string, name: string, days: number, outputDirectory: string): DownloadedLog[];
+    downloadLogs(programId: string, environmentId: string, service: string, name: string, days: number, outputDirectory: string): Promise<DownloadedLog[]>;
     /**
      * Delete a pipeline
      * @param programId - the program id
      * @param pipelineId - the pipeline id
      * @returns a truthy object
      */
-    deletePipeline(programId: string, pipelineId: string): any;
+    deletePipeline(programId: string, pipelineId: string): Promise<object>;
     /**
      * Update a pipeline
      * @param programId - the program id
@@ -145,21 +145,21 @@ declare class CloudManagerAPI {
      * @param changes - the changes
      * @returns the new pipeline definition
      */
-    updatePipeline(programId: string, pipelineId: string, changes: PipelineUpdate): Pipeline;
+    updatePipeline(programId: string, pipelineId: string, changes: PipelineUpdate): Promise<Pipeline>;
     /**
      * Get the link to the developer console
      * @param programId - the program id
      * @param environmentId - the environment id
      * @returns the console url
      */
-    getDeveloperConsoleUrl(programId: string, environmentId: string): string;
+    getDeveloperConsoleUrl(programId: string, environmentId: string): Promise<string>;
     /**
      * Get the list of variables for an environment
      * @param programId - the program id
      * @param environmentId - the environment id
      * @returns the variables
      */
-    getEnvironmentVariables(programId: string, environmentId: string): Variable[];
+    getEnvironmentVariables(programId: string, environmentId: string): Promise<Variable[]>;
     /**
      * Set the variables for an environment
      * @param programId - the program id
@@ -167,14 +167,14 @@ declare class CloudManagerAPI {
      * @param variables - the variables
      * @returns a truthy value
      */
-    setEnvironmentVariables(programId: string, environmentId: string, variables: Variable[]): any;
+    setEnvironmentVariables(programId: string, environmentId: string, variables: Variable[]): Promise<object>;
     /**
      * Get the list of variables for a pipeline
      * @param programId - the program id
      * @param pipelineId - the pipeline id
      * @returns the variables
      */
-    getPipelineVariables(programId: string, pipelineId: string): Variable[];
+    getPipelineVariables(programId: string, pipelineId: string): Promise<Variable[]>;
     /**
      * Set the variables for a pipeline
      * @param programId - the program id
@@ -182,20 +182,20 @@ declare class CloudManagerAPI {
      * @param variables - the variables
      * @returns a truthy value
      */
-    setPipelineVariables(programId: string, pipelineId: string, variables: Variable[]): any;
+    setPipelineVariables(programId: string, pipelineId: string, variables: Variable[]): Promise<object>;
     /**
      * Delete a program
      * @param programId - the program id
      * @returns a truthy value
      */
-    deleteProgram(programId: string): any;
+    deleteProgram(programId: string): Promise<object>;
     /**
      * Delete an environment
      * @param programId - the program id
      * @param environmentId - the environment id
      * @returns a truthy value
      */
-    deleteEnvironment(programId: string, environmentId: string): any;
+    deleteEnvironment(programId: string, environmentId: string): Promise<object>;
 }
 
 /**
