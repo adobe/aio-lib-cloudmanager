@@ -43,7 +43,7 @@ function init (orgId, apiKey, accessToken, baseUrl) {
   return new Promise((resolve, reject) => {
     const clientWrapper = new CloudManagerAPI()
 
-    clientWrapper.init(orgId, apiKey, accessToken)
+    clientWrapper.init(orgId, apiKey, accessToken, baseUrl)
       .then(initializedSDK => {
         logger.debug('sdk initialized successfully')
         resolve(initializedSDK)
