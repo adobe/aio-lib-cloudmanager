@@ -942,5 +942,7 @@ class CloudManagerAPI {
 }
 
 module.exports = {
-  init: init
+  init: init,
+  getCurrentStep: getCurrentStep,
+  getWaitingStep: getWaitingStep
 }

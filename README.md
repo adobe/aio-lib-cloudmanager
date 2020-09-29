@@ -72,6 +72,12 @@ with valid values for tenantId, apiKey and accessToken</p>
 ## Functions
 
 <dl>
+<dt><a href="#getCurrentStep">getCurrentStep(execution)</a> ⇒ <code><a href="#PipelineExecutionStepState">PipelineExecutionStepState</a></code></dt>
+<dd><p>Find the first non-finished step in a pipeline execution</p>
+</dd>
+<dt><a href="#getWaitingStep">getWaitingStep(execution)</a> ⇒ <code><a href="#PipelineExecutionStepState">PipelineExecutionStepState</a></code></dt>
+<dd><p>Find the first waiting step in a pipeline execution</p>
+</dd>
 <dt><a href="#init">init(orgId, apiKey, accessToken, baseUrl)</a> ⇒ <code><a href="#CloudManagerAPI">Promise.&lt;CloudManagerAPI&gt;</a></code></dt>
 <dd><p>Returns a Promise that resolves with a new CloudManagerAPI object.</p>
 </dd>
@@ -91,6 +97,9 @@ with valid values for tenantId, apiKey and accessToken</p>
 </dd>
 <dt><a href="#PipelineExecution">PipelineExecution</a> : <code>object</code></dt>
 <dd><p>A representation of an execution of a CI/CD Pipeline.</p>
+</dd>
+<dt><a href="#PipelineExecutionStepState">PipelineExecutionStepState</a> : <code>object</code></dt>
+<dd><p>Describes the status of a particular pipeline execution step for display purposes</p>
 </dd>
 <dt><a href="#PipelineStepMetrics">PipelineStepMetrics</a> : <code>object</code></dt>
 <dd></dd>
@@ -469,6 +478,30 @@ Delete an environment
 | programId | <code>string</code> | the program id |
 | environmentId | <code>string</code> | the environment id |
 
+<a name="getCurrentStep"></a>
+
+## getCurrentStep(execution) ⇒ [<code>PipelineExecutionStepState</code>](#PipelineExecutionStepState)
+Find the first non-finished step in a pipeline execution
+
+**Kind**: global function  
+**Returns**: [<code>PipelineExecutionStepState</code>](#PipelineExecutionStepState) - the step state or a falsy object if all steps are finished  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| execution | [<code>PipelineExecution</code>](#PipelineExecution) | the execution |
+
+<a name="getWaitingStep"></a>
+
+## getWaitingStep(execution) ⇒ [<code>PipelineExecutionStepState</code>](#PipelineExecutionStepState)
+Find the first waiting step in a pipeline execution
+
+**Kind**: global function  
+**Returns**: [<code>PipelineExecutionStepState</code>](#PipelineExecutionStepState) - the step state or a falsy object if no step is waiting  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| execution | [<code>PipelineExecution</code>](#PipelineExecution) | the execution |
+
 <a name="init"></a>
 
 ## init(orgId, apiKey, accessToken, baseUrl) ⇒ [<code>Promise.&lt;CloudManagerAPI&gt;</code>](#CloudManagerAPI)
@@ -556,6 +589,29 @@ A representation of an execution of a CI/CD Pipeline.
 | createdAt | <code>string</code> | Start time |
 | updatedAt | <code>string</code> | Date of last status change |
 | finishedAt | <code>string</code> | Date the execution reached a final state |
+
+<a name="PipelineExecutionStepState"></a>
+
+## PipelineExecutionStepState : <code>object</code>
+Describes the status of a particular pipeline execution step for display purposes
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> |  |
+| stepId | <code>string</code> |  |
+| phaseId | <code>string</code> |  |
+| action | <code>string</code> | Name of the action |
+| repository | <code>string</code> | Target repository |
+| branch | <code>string</code> | Target branch |
+| environment | <code>string</code> | Target environment |
+| environmentType | <code>string</code> | Target environment type |
+| startedAt | <code>string</code> | Start time |
+| finishedAt | <code>string</code> | Date the execution reached a final state |
+| details | <code>object</code> | Information about step result |
+| status | <code>string</code> | Action status |
 
 <a name="PipelineStepMetrics"></a>
 

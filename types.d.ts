@@ -1,4 +1,18 @@
 /**
+ * Find the first non-finished step in a pipeline execution
+ * @param execution - the execution
+ * @returns the step state or a falsy object if all steps are finished
+ */
+declare function getCurrentStep(execution: PipelineExecution): PipelineExecutionStepState;
+
+/**
+ * Find the first waiting step in a pipeline execution
+ * @param execution - the execution
+ * @returns the step state or a falsy object if no step is waiting
+ */
+declare function getWaitingStep(execution: PipelineExecution): PipelineExecutionStepState;
+
+/**
  * Returns a Promise that resolves with a new CloudManagerAPI object.
  * @param orgId - the organization id
  * @param apiKey - the API key for your integration
@@ -280,6 +294,33 @@ declare type PipelineExecution = {
     createdAt: string;
     updatedAt: string;
     finishedAt: string;
+};
+
+/**
+ * Describes the status of a particular pipeline execution step for display purposes
+ * @property action - Name of the action
+ * @property repository - Target repository
+ * @property branch - Target branch
+ * @property environment - Target environment
+ * @property environmentType - Target environment type
+ * @property startedAt - Start time
+ * @property finishedAt - Date the execution reached a final state
+ * @property details - Information about step result
+ * @property status - Action status
+ */
+declare type PipelineExecutionStepState = {
+    id: string;
+    stepId: string;
+    phaseId: string;
+    action: string;
+    repository: string;
+    branch: string;
+    environment: string;
+    environmentType: string;
+    startedAt: string;
+    finishedAt: string;
+    details: any;
+    status: string;
 };
 
 /**

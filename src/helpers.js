@@ -9,16 +9,29 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* eslint jsdoc/require-jsdoc: "off" */
+/* global PipelineExecution, PipelineExecutionStepState */ // for linter
 
+/**
+ * Find the first non-finished step in a pipeline execution
+ *
+ * @param {PipelineExecution} execution the execution
+ * @returns {PipelineExecutionStepState} the step state or a falsy object if all steps are finished
+ */
 function getCurrentStep (execution) {
-  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status !== 'FINISHED')[0]) || {}
+  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status !== 'FINISHED')[0]) || undefined
 }
 
+/**
+ * Find the first waiting step in a pipeline execution
+ *
+ * @param {PipelineExecution} execution the execution
+ * @returns {PipelineExecutionStepState} the step state or a falsy object if no step is waiting
+ */
 function getWaitingStep (execution) {
-  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status === 'WAITING')[0]) || {}
+  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status === 'WAITING')[0]) || undefined
 }
 
+/** @private */
 function findStepState (execution, action) {
   let gates
 
@@ -43,6 +56,7 @@ function findStepState (execution, action) {
   }
 }
 
+/** @private */
 function isWithinFiveMinutesOfUTCMidnight (date) {
   const currentUTCHours = date.getUTCHours()
   const currentUTCMinutes = date.getUTCMinutes()
@@ -53,6 +67,7 @@ function isWithinFiveMinutesOfUTCMidnight (date) {
   }
 }
 
+/** @private */
 async function sleep (msec) {
   return new Promise(resolve => setTimeout(resolve, msec))
 }
