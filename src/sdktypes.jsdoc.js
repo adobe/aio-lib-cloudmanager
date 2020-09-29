@@ -77,6 +77,25 @@ Mandatory if type=BUILD
 
 
 /**
+ * Describes the status of a particular pipeline execution step for display purposes
+ *
+ * @typedef {object} PipelineExecutionStepState
+ * @property {string} id
+ * @property {string} stepId
+ * @property {string} phaseId
+ * @property {string} action - Name of the action
+ * @property {string} repository - Target repository
+ * @property {string} branch - Target branch
+ * @property {string} environment - Target environment
+ * @property {string} environmentType - Target environment type
+ * @property {string} startedAt - Start time
+ * @property {string} finishedAt - Date the execution reached a final state
+ * @property {object} details - Information about step result
+ * @property {string} status - Action status
+ */
+
+
+/**
  * @typedef {object} PipelineStepMetrics
  * @property {Metric[]} metrics - metrics
  */
