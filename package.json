@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^3.0.0",
-    "@adobe/aio-lib-core-logging": "1.1.1",
+    "@adobe/aio-lib-core-logging": "^1.1.2",
     "cross-fetch": "^3.0.4",
     "halfred": "^2.0.0",
     "lodash": "^4.17.20",
