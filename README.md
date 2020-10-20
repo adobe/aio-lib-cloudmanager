@@ -114,7 +114,7 @@ with valid values for tenantId, apiKey and accessToken</p>
 </dd>
 <dt><a href="#LogOptionRepresentation">LogOptionRepresentation</a> : <code>object</code></dt>
 <dd></dd>
-<dt><a href="#ListProgramOptions">ListProgramOptions</a> : <code>object</code></dt>
+<dt><a href="#ListPipelineOptions">ListPipelineOptions</a> : <code>object</code></dt>
 <dd><p>Options to the listPipeline function</p>
 </dd>
 <dt><a href="#DownloadedLog">DownloadedLog</a> : <code>object</code></dt>
@@ -217,7 +217,7 @@ Obtain a list of pipelines for the target program.
 | Param | Type | Description |
 | --- | --- | --- |
 | programId | <code>string</code> | the program id |
-| options | [<code>ListProgramOptions</code>](#ListProgramOptions) | options |
+| options | [<code>ListPipelineOptions</code>](#ListPipelineOptions) | options |
 
 <a name="CloudManagerAPI+startExecution"></a>
 
@@ -545,7 +545,7 @@ A representation of a CI/CD Pipeline
 | id | <code>string</code> | Identifier of the pipeline. Unique within the program. |
 | programId | <code>string</code> | Identifier of the program. Unique within the space. |
 | name | <code>string</code> | Name of the pipeline |
-| trigger | <code>string</code> | How should the execution be triggered. ON_COMMIT: each time a PR is available and the Pipeline is idle then a execution is triggered. MANUAL: triggerd through UI or API. SCHEDULE: recurring schedule (not yet implemented} |
+| trigger | <code>string</code> | How should the execution be triggered. ON_COMMIT: each time one or more commits are pushed and the Pipeline is idle then a execution is triggered. MANUAL: triggerd through UI or API. |
 | status | <code>string</code> | Pipeline status |
 | createdAt | <code>string</code> | Create date |
 | updatedAt | <code>string</code> | Update date |
@@ -684,9 +684,9 @@ A named value than can be set on an Environment or Pipeline
 | service | <code>string</code> | Name of the service in environment. Example: author |
 | name | <code>string</code> | Name of the log for service in environment. Example: aemerror |
 
-<a name="ListProgramOptions"></a>
+<a name="ListPipelineOptions"></a>
 
-## ListProgramOptions : <code>object</code>
+## ListPipelineOptions : <code>object</code>
 Options to the listPipeline function
 
 **Kind**: global typedef  

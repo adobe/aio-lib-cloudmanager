@@ -13,8 +13,8 @@ const yaml = require('js-yaml')
 const fs = require('fs')
 const Handlebars = require('handlebars')
 
-const desiredDefinitions = ['Embedded Program', 'Pipeline', 'Pipeline Phase', 'PipelineExecution', 'Pipeline Step Metrics', 'Metric', 'Environment',
-  'LogOptionRepresentation', 'Variable', 'Pipeline Execution Step State']
+const desiredDefinitions = ['EmbeddedProgram', 'Pipeline', 'PipelinePhase', 'PipelineExecution', 'PipelineStepMetrics', 'Metric', 'Environment',
+  'LogOptionRepresentation', 'Variable', 'PipelineExecutionStepState']
 
 const cleanName = value => value.replace(/\W/g, '')
 const wrapCurly = value => `{${value}}`
