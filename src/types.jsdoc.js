@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 /**
  * Options to the listPipeline function
  *
- * @typedef {object} ListProgramOptions
+ * @typedef {object} ListPipelineOptions
  * @property {boolean} busy - if true, only busy pipelines will be returned
  */
 

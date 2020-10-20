@@ -26,7 +26,7 @@ const { getCurrentStep, getWaitingStep, findStepState, isWithinFiveMinutesOfUTCM
 require('./sdktypes.jsdoc') // for VS Code autocomplete
 require('./types.jsdoc') // for VS Code autocomplete
 
-/* global EmbeddedProgram, Pipeline, PipelineExecution, ListProgramOptions,
+/* global EmbeddedProgram, Pipeline, PipelineExecution, ListPipelineOptions,
    PipelineStepMetrics, Environment, LogOptionRepresentation,
    DownloadedLog, PipelineUpdate, Variable */ // for linter
 
@@ -226,7 +226,7 @@ class CloudManagerAPI {
    * Obtain a list of pipelines for the target program.
    *
    * @param {string} programId the program id
-   * @param {ListProgramOptions} options options
+   * @param {ListPipelineOptions} options options
    *
    * @returns {Promise<Pipeline[]>} an array of Pipelines
    */

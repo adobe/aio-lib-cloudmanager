@@ -64,7 +64,7 @@ declare class CloudManagerAPI {
      * @param options - options
      * @returns an array of Pipelines
      */
-    listPipelines(programId: string, options: ListProgramOptions): Promise<Pipeline[]>;
+    listPipelines(programId: string, options: ListPipelineOptions): Promise<Pipeline[]>;
     /**
      * Start an execution for a pipeline
      * @param programId - the program id
@@ -231,7 +231,7 @@ declare type EmbeddedProgram = {
  * @property id - Identifier of the pipeline. Unique within the program.
  * @property programId - Identifier of the program. Unique within the space.
  * @property name - Name of the pipeline
- * @property trigger - How should the execution be triggered. ON_COMMIT: each time a PR is available and the Pipeline is idle then a execution is triggered. MANUAL: triggerd through UI or API. SCHEDULE: recurring schedule (not yet implemented}
+ * @property trigger - How should the execution be triggered. ON_COMMIT: each time one or more commits are pushed and the Pipeline is idle then a execution is triggered. MANUAL: triggerd through UI or API.
  * @property status - Pipeline status
  * @property createdAt - Create date
  * @property updatedAt - Update date
@@ -395,7 +395,7 @@ declare type LogOptionRepresentation = {
  * Options to the listPipeline function
  * @property busy - if true, only busy pipelines will be returned
  */
-declare type ListProgramOptions = {
+declare type ListPipelineOptions = {
     busy: boolean;
 };
 

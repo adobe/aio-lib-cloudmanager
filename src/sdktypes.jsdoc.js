@@ -35,7 +35,7 @@ governing permissions and limitations under the License.
  * @property {string} id - Identifier of the pipeline. Unique within the program.
  * @property {string} programId - Identifier of the program. Unique within the space.
  * @property {string} name - Name of the pipeline
- * @property {string} trigger - How should the execution be triggered. ON_COMMIT: each time a PR is available and the Pipeline is idle then a execution is triggered. MANUAL: triggerd through UI or API. SCHEDULE: recurring schedule (not yet implemented}
+ * @property {string} trigger - How should the execution be triggered. ON_COMMIT: each time one or more commits are pushed and the Pipeline is idle then a execution is triggered. MANUAL: triggerd through UI or API.
  * @property {string} status - Pipeline status
  * @property {string} createdAt - Create date
  * @property {string} updatedAt - Update date
