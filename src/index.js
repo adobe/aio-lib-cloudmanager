@@ -759,8 +759,8 @@ class CloudManagerAPI {
       phases: []
     }
 
-    if (changes.branch || changes.repositoryId) {
-      const buildPhase = pipeline.phases.find(phase => phase.type === 'BUILD')
+    if (changes && (changes.branch || changes.repositoryId)) {
+      const buildPhase = pipeline.phases && pipeline.phases.find(phase => phase.type === 'BUILD')
       if (!buildPhase) {
         throw new codes.ERROR_NO_BUILD_PHASE({ messageValues: pipelineId })
       }
@@ -774,9 +774,10 @@ class CloudManagerAPI {
       patch.phases.push(newBuildPhase)
     }
 
-    return this._patch(pipeline.link(rels.self).href, patch).then((res) => {
-      if (res.ok) return res.json()
-      else throw new Error(`Cannot update pipeline: ${res.url} (${res.status} ${res.statusText})`)
+    return this._patch(pipeline.link(rels.self).href, patch, codes.ERROR_UPDATE_PIPELINE).then(res => {
+      return res.json()
+    }, e => {
+      throw e
     })
   }
 

@@ -497,6 +497,18 @@ fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipelines', {
         id: '8',
         name: 'test4',
         status: 'IDLE',
+        phases: [
+          {
+            name: 'VALIDATE',
+            type: 'VALIDATE'
+          },
+          {
+            name: 'BUILD_1',
+            type: 'BUILD',
+            repositoryId: '1',
+            branch: 'yellow'
+          }
+        ],
         _links: {
           self: {
             href: '/api/program/5/pipeline/8'
@@ -539,6 +551,8 @@ mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5',
   }
   return newPipeline
 })
+
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8', 'PATCH', 405)
 
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'GET', require('./data/execution1000.json'))
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'PUT', 412)
