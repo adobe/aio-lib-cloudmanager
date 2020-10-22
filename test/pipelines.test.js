@@ -121,6 +121,20 @@ test('updatePipeline - bad pipeline', async () => {
   )
 })
 
+test('updatePipeline - failure pipeline', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.updatePipeline('5', '8', {
+    branch: 'develop'
+  })
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_UPDATE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8 (405 Method Not Allowed)' })
+  )
+})
+
 test('updatePipeline - branch success', async () => {
   expect.assertions(2)
 
