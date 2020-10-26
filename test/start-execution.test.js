@@ -55,5 +55,5 @@ test('startExecution - success', async () => {
   const result = sdkClient.startExecution('5', '5')
 
   await expect(result instanceof Promise).toBeTruthy()
-  await expect(result).resolves.toEqual('https://cloudmanager.adobe.io/api/program/4/pipeline/8555/execution/12742')
+  await expect(result).resolves.toEqual('https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/5000')
 })

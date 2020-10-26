@@ -140,7 +140,8 @@ with valid values for tenantId, apiKey and accessToken
     * [.init(orgId, apiKey, accessToken, baseUrl)](#CloudManagerAPI+init) ⇒ [<code>Promise.&lt;CloudManagerAPI&gt;</code>](#CloudManagerAPI)
     * [.listPrograms()](#CloudManagerAPI+listPrograms) ⇒ <code>Promise.&lt;Array.&lt;EmbeddedProgram&gt;&gt;</code>
     * [.listPipelines(programId, options)](#CloudManagerAPI+listPipelines) ⇒ <code>Promise.&lt;Array.&lt;Pipeline&gt;&gt;</code>
-    * [.startExecution(programId, pipelineId)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.createExecution(programId, pipelineId)](#CloudManagerAPI+createExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
+    * ~~[.startExecution(programId, pipelineId)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>~~
     * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.getExecution(programId, pipelineId, executionId)](#CloudManagerAPI+getExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.getQualityGateResults(programId, pipelineId, executionId, action)](#CloudManagerAPI+getQualityGateResults) ⇒ [<code>Promise.&lt;PipelineStepMetrics&gt;</code>](#PipelineStepMetrics)
@@ -219,10 +220,25 @@ Obtain a list of pipelines for the target program.
 | programId | <code>string</code> | the program id |
 | options | [<code>ListPipelineOptions</code>](#ListPipelineOptions) | options |
 
+<a name="CloudManagerAPI+createExecution"></a>
+
+### cloudManagerAPI.createExecution(programId, pipelineId) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
+Create a new execution for a pipeline, returning the execution.
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution) - the new execution  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| pipelineId | <code>string</code> | the pipeline id |
+
 <a name="CloudManagerAPI+startExecution"></a>
 
-### cloudManagerAPI.startExecution(programId, pipelineId) ⇒ <code>Promise.&lt;string&gt;</code>
-Start an execution for a pipeline
+### ~~cloudManagerAPI.startExecution(programId, pipelineId) ⇒ <code>Promise.&lt;string&gt;</code>~~
+***Deprecated***
+
+Start an execution for a pipeline, returning the url of the new execution
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
 **Returns**: <code>Promise.&lt;string&gt;</code> - the execution url  
