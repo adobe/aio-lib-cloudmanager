@@ -66,7 +66,14 @@ declare class CloudManagerAPI {
      */
     listPipelines(programId: string, options: ListPipelineOptions): Promise<Pipeline[]>;
     /**
-     * Start an execution for a pipeline
+     * Create a new execution for a pipeline, returning the execution.
+     * @param programId - the program id
+     * @param pipelineId - the pipeline id
+     * @returns the new execution
+     */
+    createExecution(programId: string, pipelineId: string): Promise<PipelineExecution>;
+    /**
+     * Start an execution for a pipeline, returning the url of the new execution
      * @param programId - the program id
      * @param pipelineId - the pipeline id
      * @returns the execution url

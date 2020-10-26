@@ -251,13 +251,13 @@ class CloudManagerAPI {
   }
 
   /**
-   * Start an execution for a pipeline
+   * Create a new execution for a pipeline, returning the execution.
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
-   * @returns {Promise<string>} the execution url
+   * @returns {Promise<PipelineExecution>} the new execution
    */
-  async startExecution (programId, pipelineId) {
+  async createExecution (programId, pipelineId) {
     const pipelines = await this.listPipelines(programId)
     const pipeline = pipelines.find(p => p.id === pipelineId)
     if (!pipeline) {
@@ -265,11 +265,28 @@ class CloudManagerAPI {
     }
 
     return this._put(pipeline.link(rels.execution).href, null, codes.ERROR_PIPELINE_START).then(res => {
-      return res.headers.get('location')
+      return new Promise((resolve, reject) => {
+        res.json().then(body => {
+          resolve(halfred.parse(body))
+        })
+      })
     }, e => {
       if (e.sdkDetails.response.status === 412) throw new codes.ERROR_PIPELINE_START_RUNNING()
       else throw e
     })
+  }
+
+  /**
+   * Start an execution for a pipeline, returning the url of the new execution
+   *
+   * @param {string} programId the program id
+   * @param {string} pipelineId the pipeline id
+   * @returns {Promise<string>} the execution url
+   * @deprecated use createExecution instead
+   */
+  async startExecution (programId, pipelineId) {
+    const execution = await this.createExecution(programId, pipelineId)
+    return this.baseUrl + execution.link(rels.self).href
   }
 
   /**

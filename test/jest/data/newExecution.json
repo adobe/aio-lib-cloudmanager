@@ -1,0 +1,16 @@
+{
+    "_links" : {
+        "self" : {
+            "href" : "/api/program/5/pipeline/5/execution/5000"
+        }
+    },
+    "id": "5000",
+    "programId": "5",
+    "pipelineId": "5",
+    "artifactsVersion": "2019.523.134947.0000006554",
+    "trigger": "MANUAL",
+    "user": "3E8367615C0A78710A495EEF@AdobeID",
+    "status": "RUNNING",
+    "createdAt": "2019-05-23T13:49:47.688+0000",
+    "updatedAt": "2019-05-23T13:56:43.811+0000"
+}
