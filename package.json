@@ -15,7 +15,7 @@
     "typings": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/*.js -d .",
     "jsdoc": "jsdoc2md -t ./docs/readme_template.md src/**/*.js > README.md",
     "generate-docs": "npm run generate-jsdoc-types && npm run typings && npm run jsdoc",
-    "update-release": "gren release",
+    "update-release": "gren release --override",
     "update-changelog": "gren changelog -G --override && sed -i '' 's+# Changelog+---+' CHANGELOG.md && awk 'BEGIN{print\"\"}1' CHANGELOG.md > CHANGELOG-premerge.md && sed -n 'p' CHANGELOG-add.md CHANGELOG-premerge.md > CHANGELOG.md && rm CHANGELOG-add.md && rm CHANGELOG-premerge.md"
   },
   "dependencies": {
