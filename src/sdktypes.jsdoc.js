@@ -87,6 +87,7 @@ Mandatory if type=BUILD
  * @property {string} repository - Target repository
  * @property {string} branch - Target branch
  * @property {string} environment - Target environment
+ * @property {string} environmentId - Target environment id
  * @property {string} environmentType - Target environment type
  * @property {string} startedAt - Start time
  * @property {string} finishedAt - Date the execution reached a final state
