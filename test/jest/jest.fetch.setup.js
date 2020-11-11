@@ -89,6 +89,16 @@ mockResponseWithOrgId('https://cloudmanager.adobe.io/api/programs', 'good', {
           },
         },
       },
+      {
+        id: '9',
+        name: 'test4',
+        enabled: true,
+        _links: {
+          self: {
+            href: '/api/program/9',
+          },
+        },
+      },
     ],
   },
 })
@@ -105,6 +115,9 @@ fetchMock.mock('https://cloudmanager.adobe.io/api/program/4', {
     },
     'http://ns.adobe.com/adobecloud/rel/environments': {
       href: '/api/program/4/environments',
+    },
+    'http://ns.adobe.com/adobecloud/rel/ipAllowlists': {
+      href: '/api/program/4/ipAllowlists',
     },
   },
 })
@@ -412,6 +425,93 @@ fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/variab
   },
   _totalNumberOfItems: 0,
 })
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlists', 'GET', {
+  _embedded: {
+    ipAllowlists: [{
+      id: '1',
+      name: 'test',
+      ipCidrSet: ['1.1.1.1/5'],
+      programId: '4',
+      bindings: [{
+        environmentId: '5',
+        tier: 'publish',
+        _links: {
+          self: {
+            href: '/api/program/4/ipAllowlist/1/binding/1',
+            templated: false,
+          },
+        },
+      }, {
+        environmentId: '6',
+        tier: 'publish',
+        _links: {
+          self: {
+            href: '/api/program/4/ipAllowlist/1/binding/2',
+            templated: false,
+          },
+        },
+      }],
+      _links: {
+        self: {
+          href: '/api/program/4/ipAllowlist/1',
+          templated: false,
+        },
+        'http://ns.adobe.com/adobecloud/rel/ipAllowlistBindings': {
+          href: '/api/program/4/ipAllowlist/1/bindings',
+          templated: false,
+        },
+      },
+    }, {
+      id: '2',
+      name: 'test2-cannotbeupdated',
+      ipCidrSet: ['1.1.1.1/5'],
+      programId: '4',
+      bindings: [],
+      _links: {
+        self: {
+          href: '/api/program/4/ipAllowlist/2',
+          templated: false,
+        },
+        'http://ns.adobe.com/adobecloud/rel/ipAllowlistBindings': {
+          href: '/api/program/4/ipAllowlist/2/bindings',
+          templated: false,
+        },
+      },
+    }],
+  },
+})
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlists', 'POST', (url, opts) => {
+  const body = JSON.parse(opts.body)
+  if (body.name === 'test') {
+    return {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/problem+json',
+      },
+      body: {
+        type: 'http://ns.adobe.com/adobecloud/ipallowlist-generic-exception',
+        status: 400,
+        title: 'IP Allowlist exception',
+        errors: [{ code: 'IP_ALLOWLIST_NAME_ALREADY_EXISTS', message: 'IP Allowlist name should be unique' }],
+      },
+    }
+  } else {
+    return {
+      id: '3',
+      name: body.name,
+      ipCidrSet: body.ipCidrSet,
+      programId: '4',
+    }
+  }
+})
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/1', 'PUT', 204)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/1/bindings', 'POST', 204)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/1/binding/1', 'DELETE', 204)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/1/binding/2', 'DELETE', 400)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/1', 'DELETE', 204)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/2', 'PUT', 400)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/2', 'DELETE', 400)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/ipAllowlist/2/bindings', 'POST', 400)
 
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5', 'DELETE', {
   status: 400,
@@ -663,10 +763,20 @@ fetchMock.mock('https://cloudmanager.adobe.io/api/program/6', {
     'http://ns.adobe.com/adobecloud/rel/environments': {
       href: '/api/program/6/environments',
     },
+    'http://ns.adobe.com/adobecloud/rel/ipAllowlists': {
+      href: '/api/program/6/ipAllowlists',
+    },
   },
 })
 fetchMock.mock('https://cloudmanager.adobe.io/api/program/6/pipelines', 404)
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/6/environments', 'GET', 404)
+
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/6/ipAllowlists', 'GET', {
+  _embedded: {
+    ipAllowlists: [],
+  },
+})
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/6/ipAllowlists', 'POST', 400)
 
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1001', 'GET', require('./data/execution1001.json'))
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002', 'GET', 404)
@@ -780,3 +890,17 @@ mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/
     ],
   },
 })
+fetchMock.mock('https://cloudmanager.adobe.io/api/program/9', {
+  id: '9',
+  name: 'test4',
+  enabled: true,
+  _links: {
+    self: {
+      href: '/api/program/9',
+    },
+    'http://ns.adobe.com/adobecloud/rel/ipAllowlists': {
+      href: '/api/program/9/ipAllowlists',
+    },
+  },
+})
+fetchMock.mock('https://cloudmanager.adobe.io/api/program/9/ipAllowlists', 400)
