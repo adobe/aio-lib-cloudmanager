@@ -309,6 +309,7 @@ declare type PipelineExecution = {
  * @property repository - Target repository
  * @property branch - Target branch
  * @property environment - Target environment
+ * @property environmentId - Target environment id
  * @property environmentType - Target environment type
  * @property startedAt - Start time
  * @property finishedAt - Date the execution reached a final state
@@ -323,6 +324,7 @@ declare type PipelineExecutionStepState = {
     repository: string;
     branch: string;
     environment: string;
+    environmentId: string;
     environmentType: string;
     startedAt: string;
     finishedAt: string;
