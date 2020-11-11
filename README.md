@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 [![Version](https://img.shields.io/npm/v/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
 [![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
-[![Build Status](https://travis-ci.com/adobe/aio-lib-cloudmanager.svg?branch=main)](https://travis-ci.com/adobe/aio-lib-cloudmanager)
+[![Build Status](https://github.com/adobe/aio-lib-cloudmanager/workflows/CI%20Build/badge.svg?branch=main)](https://github.com/adobe/aio-lib-cloudmanager/actions?query=workflow%3A%22CI+Build%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-cloudmanager/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-cloudmanager/)
 
@@ -623,6 +623,7 @@ Describes the status of a particular pipeline execution step for display purpose
 | repository | <code>string</code> | Target repository |
 | branch | <code>string</code> | Target branch |
 | environment | <code>string</code> | Target environment |
+| environmentId | <code>string</code> | Target environment id |
 | environmentType | <code>string</code> | Target environment type |
 | startedAt | <code>string</code> | Start time |
 | finishedAt | <code>string</code> | Date the execution reached a final state |
