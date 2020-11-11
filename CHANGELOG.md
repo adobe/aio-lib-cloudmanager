@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 (11/11/2020)
+
+- No functional changes. Purely to test releasing via GitHub Actions
+
+---
+
 ## 0.1.1 (11/11/2020)
 -  Add environmentId to generated pipeline step state type [#15](https://github.com/adobe/aio-lib-cloudmanager/issues/15)
 -  Error code ERROR_RETRIEVE_ENVIRONMENTS is misworded [#12](https://github.com/adobe/aio-lib-cloudmanager/issues/12)
