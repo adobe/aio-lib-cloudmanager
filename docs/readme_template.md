@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 [![Version](https://img.shields.io/npm/v/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
 [![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-lib-cloudmanager.svg)](https://npmjs.org/package/@adobe/aio-lib-cloudmanager)
-[![Build Status](https://travis-ci.com/adobe/aio-lib-cloudmanager.svg?branch=main)](https://travis-ci.com/adobe/aio-lib-cloudmanager)
+[![Build Status](https://github.com/adobe/aio-lib-cloudmanager/workflows/Node.js%20CI/badge.svg?branch=main)](https://github.com/adobe/aio-lib-cloudmanager/actions?query=workflow%3A%22Node.js+CI%22)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/adobe/aio-lib-cloudmanager/master.svg?style=flat-square)](https://codecov.io/gh/adobe/aio-lib-cloudmanager/)
 
