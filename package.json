@@ -8,6 +8,7 @@
   "scripts": {
     "generate-jsdoc-types": "curl https://raw.githubusercontent.com/AdobeDocs/cloudmanager-api-docs/master/swagger-specs/api.yaml > api.yaml && node ./tools/generate-jsdoc-types.js > ./src/sdktypes.jsdoc.js",
     "test": "npm run lint && npm run unit-tests",
+    "jscpd": "jscpd --pattern 'src/**/*.js'",
     "lint": "eslint src test e2e",
     "lint-fix": "eslint src test e2e --fix",
     "unit-tests": "jest --config test/jest.config.js --maxWorkers=2",
@@ -46,6 +47,7 @@
     "jest": "^24.8.0",
     "jest-junit": "^10.0.0",
     "js-yaml": "^3.14.0",
+    "jscpd": "^3.3.19",
     "jsdoc": "^3.6.3",
     "jsdoc-to-markdown": "^5.0.0",
     "sinon": "^9.0.3",
