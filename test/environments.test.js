@@ -491,7 +491,7 @@ test('deleteEnvironment - delete environment returns 400', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_DELETE_ENVIRONMENT({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3 (400 Bad Request)' })
+    new codes.ERROR_DELETE_ENVIRONMENT({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3 (400 Bad Request) - Uncategorized Error(s): some error' })
   )
 })
 

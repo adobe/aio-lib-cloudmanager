@@ -83,7 +83,7 @@ test('deletePipeline - delete pipeline returns 400', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_DELETE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7 (400 Bad Request)' })
+    new codes.ERROR_DELETE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7 (400 Bad Request) - Test Exception(s): some error message' })
   )
 })
 

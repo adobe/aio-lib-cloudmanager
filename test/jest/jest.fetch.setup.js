@@ -246,7 +246,18 @@ fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environments', {
   _totalNumberOfItems: 3
 
 })
-mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/3', 'DELETE', 400)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/3', 'DELETE', {
+  status: 400,
+  headers: {
+    'content-type': 'application/problem+json'
+  },
+  body: {
+    type: 'http://ns.adobe.com/adobecloud/random-exception-with-no-title',
+    errors: [
+      'some error'
+    ]
+  }
+})
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/11', 'DELETE', 204)
 
 fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=author&name=aemerror&days=1', {
@@ -402,7 +413,19 @@ fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/variab
   _totalNumberOfItems: 0
 })
 
-mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5', 'DELETE', 400)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5', 'DELETE', {
+  status: 400,
+  headers: {
+    'content-type': 'application/problem+json'
+  },
+  body: {
+    type: 'http://ns.adobe.com/adobecloud/random-exception-with-a-title',
+    title: 'Test Exception',
+    errors: [
+      'some error'
+    ]
+  }
+})
 
 fetchMock.mock('https://cloudmanager.adobe.io/api/program/5', {
   id: '5',
@@ -558,7 +581,19 @@ mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8',
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'GET', require('./data/execution1000.json'))
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'PUT', 412)
 
-mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7', 'DELETE', 400)
+mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7', 'DELETE', {
+  status: 400,
+  headers: {
+    'content-type': 'application/problem+json'
+  },
+  body: {
+    type: 'http://ns.adobe.com/adobecloud/random-exception-with-a-message',
+    title: 'Test Exception',
+    errors: [
+      { message: 'some error message' }
+    ]
+  }
+})
 mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution', 'PUT', 404)
 fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipeline/5/variables', {
   _links: {

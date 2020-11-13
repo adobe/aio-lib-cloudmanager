@@ -82,7 +82,7 @@ test('deleteProgram - delete program returns 400', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_DELETE_PROGRAM({ messageValues: 'https://cloudmanager.adobe.io/api/program/5 (400 Bad Request)' })
+    new codes.ERROR_DELETE_PROGRAM({ messageValues: 'https://cloudmanager.adobe.io/api/program/5 (400 Bad Request) - Test Exception(s): some error' })
   )
 })
 

@@ -140,32 +140,33 @@ class CloudManagerAPI {
         if (res.ok) resolve(res)
         else {
           res.text().then(text => {
-            if (res.ok) resolve(res)
-            else {
-              const sdkDetails = { orgId: this.orgId, apiKey: this.apiKey, accessToken: this.accessToken, url, response: res }
-              let messageValues = `${res.url} (${res.status} ${res.statusText})`
-              const resContentType = res.headers.get('content-type')
-              if (resContentType) {
-                if (resContentType.indexOf('application/problem+json') === 0) {
-                  const problem = JSON.parse(text)
-                  if (problemTypes.validation === problem.type && problem.errors && problem.errors.length > 0) {
-                    const errors = problem.errors.join(', ')
-                    sdkDetails.validationErrors = problem.errors
-                    messageValues = messageValues + ` - Validation Error(s): ${errors}`
+            const sdkDetails = { orgId: this.orgId, apiKey: this.apiKey, accessToken: this.accessToken, url, response: res }
+            let messageValues = `${res.url} (${res.status} ${res.statusText})`
+            const resContentType = res.headers.get('content-type')
+            if (resContentType) {
+              if (resContentType.indexOf('application/problem+json') === 0) {
+                const problem = JSON.parse(text)
+                if (problem.errors && problem.errors.length > 0) {
+                  const errors = problem.errors.map(error => error.message || error).join(', ')
+                  const handler = problemTypes[problem.type] || problemTypes.other
+                  sdkDetails.errors = problem.errors
+                  if (handler.extraDetailsKey) {
+                    sdkDetails[handler.extraDetailsKey] = problem.errors
                   }
-                } else if (resContentType === 'application/json') {
-                  const parsedBody = JSON.parse(text)
-                  sdkDetails.errorDetails = parsedBody
-                  if (parsedBody.message) {
-                    messageValues = messageValues + ` - Detail: ${parsedBody.message}`
-                    if (parsedBody.error_code) {
-                      messageValues = messageValues + ` (Code: ${parsedBody.error_code})`
-                    }
+                  messageValues = `${messageValues} - ${handler.prefix(problem)}: ${errors}`
+                }
+              } else if (resContentType === 'application/json') {
+                const parsedBody = JSON.parse(text)
+                sdkDetails.errorDetails = parsedBody
+                if (parsedBody.message) {
+                  messageValues = messageValues + ` - Detail: ${parsedBody.message}`
+                  if (parsedBody.error_code) {
+                    messageValues = messageValues + ` (Code: ${parsedBody.error_code})`
                   }
                 }
               }
-              reject(new ErrorClass({ sdkDetails, messageValues }))
             }
+            reject(new ErrorClass({ sdkDetails, messageValues }))
           })
         }
       })

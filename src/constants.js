@@ -31,6 +31,12 @@ module.exports = {
     programId: 'cloudmanager_programid'
   },
   problemTypes: {
-    validation: 'http://ns.adobe.com/adobecloud/validation-exception'
+    'http://ns.adobe.com/adobecloud/validation-exception': {
+      prefix: () => 'Validation Error(s)',
+      extraDetailsKey: 'validationErrors'
+    },
+    other: {
+      prefix: (problem) => `${problem.title || 'Uncategorized Error'}(s)`
+    }
   }
 }
