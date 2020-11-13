@@ -215,6 +215,17 @@ class CloudManagerAPI {
     })
   }
 
+  async _findProgram (programId) {
+    const programs = await this.listPrograms()
+    let program = programs.find(p => p.id === programId)
+    if (!program) {
+      throw new codes.ERROR_FIND_PROGRAM({ messageValues: programId })
+    }
+    program = await this._getProgram(program.link(rels.self).href)
+    program = halfred.parse(program)
+    return program
+  }
+
   async _listPipelines (path) {
     return this._get(path, codes.ERROR_LIST_PIPELINES).then(res => {
       return res.json()
@@ -232,13 +243,7 @@ class CloudManagerAPI {
    * @returns {Promise<Pipeline[]>} an array of Pipelines
    */
   async listPipelines (programId, options) {
-    const programs = await this.listPrograms()
-    let program = programs.find(p => p.id === programId)
-    if (!program) {
-      throw new codes.ERROR_FIND_PROGRAM({ messageValues: programId })
-    }
-    program = await this._getProgram(program.link(rels.self).href)
-    program = halfred.parse(program)
+    const program = await this._findProgram(programId)
 
     const result = await this._listPipelines(program.link(rels.pipelines).href)
     let pipelines = result && halfred.parse(result).embeddedArray('pipelines')
@@ -290,6 +295,15 @@ class CloudManagerAPI {
     return this.baseUrl + execution.link(rels.self).href
   }
 
+  async _findPipeline (programId, pipelineId) {
+    const pipelines = await this.listPipelines(programId)
+    const pipeline = pipelines.find(p => p.id === pipelineId)
+    if (!pipeline) {
+      throw new codes.ERROR_FIND_PIPELINE({ messageValues: [pipelineId, programId] })
+    }
+    return pipeline
+  }
+
   /**
    * Get the current execution for a pipeline
    *
@@ -298,11 +312,7 @@ class CloudManagerAPI {
    * @returns {Promise<PipelineExecution>} the execution
    */
   async getCurrentExecution (programId, pipelineId) {
-    const pipelines = await this.listPipelines(programId)
-    const pipeline = pipelines.find(p => p.id === pipelineId)
-    if (!pipeline) {
-      throw new codes.ERROR_FIND_PIPELINE({ messageValues: [pipelineId, programId] })
-    }
+    const pipeline = await this._findPipeline(programId, pipelineId)
 
     return this._get(pipeline.link(rels.execution).href, codes.ERROR_GET_EXECUTION).then(res => {
       return res.json()
@@ -320,11 +330,7 @@ class CloudManagerAPI {
    * @returns {Promise<PipelineExecution>} the execution
    */
   async getExecution (programId, pipelineId, executionId) {
-    const pipelines = await this.listPipelines(programId)
-    const pipeline = pipelines.find(p => p.id === pipelineId)
-    if (!pipeline) {
-      throw new codes.ERROR_FIND_PIPELINE({ messageValues: [pipelineId, programId] })
-    }
+    const pipeline = await this._findPipeline(programId, pipelineId)
     const executionTemplate = UriTemplate.parse(pipeline.link(rels.executionId).href)
     const executionLink = executionTemplate.expand({ executionId: executionId })
     return this._get(executionLink, codes.ERROR_GET_EXECUTION).then(res => {
@@ -332,6 +338,17 @@ class CloudManagerAPI {
     }, e => {
       throw e
     })
+  }
+
+  async _findStepState (programId, pipelineId, executionId, action) {
+    const execution = halfred.parse(await this.getExecution(programId, pipelineId, executionId))
+
+    const stepState = findStepState(execution, action)
+
+    if (!stepState) {
+      throw new codes.ERROR_FIND_STEP_STATE({ messageValues: [action, executionId] })
+    }
+    return stepState
   }
 
   /**
@@ -344,13 +361,7 @@ class CloudManagerAPI {
    * @returns {Promise<PipelineStepMetrics>} the execution
    */
   async getQualityGateResults (programId, pipelineId, executionId, action) {
-    const execution = halfred.parse(await this.getExecution(programId, pipelineId, executionId))
-
-    const stepState = findStepState(execution, action)
-
-    if (!stepState) {
-      throw new codes.ERROR_FIND_STEP_STATE({ messageValues: [action, executionId] })
-    }
+    const stepState = await this._findStepState(programId, pipelineId, executionId, action)
 
     return this._getMetricsForStepState(stepState)
   }
@@ -467,13 +478,7 @@ class CloudManagerAPI {
    * @returns {Promise<Environment[]>} a list of environments
    */
   async listEnvironments (programId) {
-    const programs = await this.listPrograms()
-    let program = programs.find(p => p.id === programId)
-    if (!program) {
-      throw new codes.ERROR_FIND_PROGRAM({ messageValues: programId })
-    }
-    program = await this._getProgram(program.link(rels.self).href)
-    program = halfred.parse(program)
+    const program = await this._findProgram(programId)
 
     const result = await this._listEnvironments(program.link(rels.environments).href)
     const environments = result && halfred.parse(result).embeddedArray('environments')
@@ -520,18 +525,12 @@ class CloudManagerAPI {
       outputStream = logFile
       logFile = undefined
     }
-    const execution = halfred.parse(await this.getExecution(programId, pipelineId, executionId))
-
-    const stepState = findStepState(execution, action)
-
-    if (!stepState) {
-      throw new codes.ERROR_FIND_STEP_STATE({ messageValues: [action, executionId] })
-    }
+    const stepState = await this._findStepState(programId, pipelineId, executionId, action)
 
     return this._getLogsForStepState(stepState, logFile, outputStream)
   }
 
-  async _getEnvironment (programId, environmentId) {
+  async _findEnvironment (programId, environmentId) {
     const environments = await this.listEnvironments(programId)
     const environment = environments.find(e => e.id === environmentId)
     if (!environment) {
@@ -549,7 +548,7 @@ class CloudManagerAPI {
    * @returns {Promise<LogOptionRepresentation[]>} the log options for the environment
    */
   async listAvailableLogOptions (programId, environmentId) {
-    const environment = await this._getEnvironment(programId, environmentId)
+    const environment = await this._findEnvironment(programId, environmentId)
 
     return environment.availableLogOptions || []
   }
@@ -618,11 +617,7 @@ class CloudManagerAPI {
    * @returns {Promise<DownloadedLog[]>} the list of downloaded logs
    */
   async downloadLogs (programId, environmentId, service, name, days, outputDirectory) {
-    const environments = await this.listEnvironments(programId)
-    const environment = environments.find(e => e.id === environmentId)
-    if (!environment) {
-      throw new codes.ERROR_FIND_ENVIRONMENT({ messageValues: [environmentId, programId] })
-    }
+    const environment = await this._findEnvironment(programId, environmentId)
     let logs = await this._getLogs(environment, service, name, days)
     logs = halfred.parse(logs)
 
@@ -673,11 +668,7 @@ class CloudManagerAPI {
   }
 
   async tailLog (programId, environmentId, service, name, outputStream) {
-    const environments = await this.listEnvironments(programId)
-    const environment = environments.find(e => e.id === environmentId)
-    if (!environment) {
-      throw new codes.ERROR_FIND_ENVIRONMENT({ messageValues: [environmentId, programId] })
-    }
+    const environment = await this._findEnvironment(programId, environmentId)
     const tailingSasUrl = await this._getTailingSasUrl(programId, environment, service, name)
     const contentLength = await this._getLogFileSizeInitialSize(tailingSasUrl)
     await this._getLiveStream(programId, environment, service, name, tailingSasUrl, contentLength, outputStream)
@@ -743,23 +734,13 @@ class CloudManagerAPI {
    * @returns {Promise<object>} a truthy object
    */
   async deletePipeline (programId, pipelineId) {
-    const pipeline = await this._getPipeline(programId, pipelineId)
+    const pipeline = await this._findPipeline(programId, pipelineId)
 
     return this._delete(pipeline.link(rels.self).href, codes.ERROR_DELETE_PIPELINE).then(() => {
       return {}
     }, e => {
       throw e
     })
-  }
-
-  async _getPipeline (programId, pipelineId) {
-    const pipelines = await this.listPipelines(programId)
-    const pipeline = pipelines.find(p => p.id === pipelineId)
-    if (!pipeline) {
-      throw new codes.ERROR_FIND_PIPELINE({ messageValues: [pipelineId, programId] })
-    }
-
-    return pipeline
   }
 
   /**
@@ -771,7 +752,7 @@ class CloudManagerAPI {
    * @returns {Promise<Pipeline>} the new pipeline definition
    */
   async updatePipeline (programId, pipelineId, changes) {
-    const pipeline = await this._getPipeline(programId, pipelineId)
+    const pipeline = await this._findPipeline(programId, pipelineId)
 
     const patch = {
       phases: []
@@ -807,7 +788,7 @@ class CloudManagerAPI {
    * @returns {Promise<string>} the console url
    */
   async getDeveloperConsoleUrl (programId, environmentId) {
-    const environment = await this._getEnvironment(programId, environmentId)
+    const environment = await this._findEnvironment(programId, environmentId)
 
     let link = environment.link('http://ns.adobe.com/adobecloud/rel/developerConsole')
     if (!link && environment.namespace && environment.cluster) {
@@ -823,8 +804,31 @@ class CloudManagerAPI {
     }
   }
 
+  async _getVariables (linkGetterFunction, args) {
+    const variablesLink = await linkGetterFunction.apply(this, args)
+
+    const variables = await this._get(variablesLink, codes.ERROR_GET_VARIABLES).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+
+    const result = halfred.parse(variables).embeddedArray('variables')
+    return result ? result.map(v => v.original()) : []
+  }
+
+  async _setVariables (linkGetterFunction, args, variables) {
+    const variablesLink = await linkGetterFunction.apply(this, args)
+
+    return await this._patch(variablesLink, variables, codes.ERROR_SET_VARIABLES).then(() => {
+      return true
+    }, e => {
+      throw e
+    })
+  }
+
   async _getEnvironmentVariablesLink (programId, environmentId) {
-    const environment = await this._getEnvironment(programId, environmentId)
+    const environment = await this._findEnvironment(programId, environmentId)
 
     const variablesLink = environment.link(rels.variables)
     if (!variablesLink) {
@@ -841,16 +845,7 @@ class CloudManagerAPI {
    * @returns {Promise<Variable[]>} the variables
    */
   async getEnvironmentVariables (programId, environmentId) {
-    const variablesLink = await this._getEnvironmentVariablesLink(programId, environmentId)
-
-    const variables = await this._get(variablesLink, codes.ERROR_GET_VARIABLES).then(res => {
-      return res.json()
-    }, e => {
-      throw e
-    })
-
-    const result = halfred.parse(variables).embeddedArray('variables')
-    return result ? result.map(v => v.original()) : []
+    return this._getVariables(this._getEnvironmentVariablesLink, [programId, environmentId])
   }
 
   /**
@@ -862,17 +857,11 @@ class CloudManagerAPI {
    * @returns {Promise<object>} a truthy value
    */
   async setEnvironmentVariables (programId, environmentId, variables) {
-    const variablesLink = await this._getEnvironmentVariablesLink(programId, environmentId)
-
-    return await this._patch(variablesLink, variables, codes.ERROR_SET_VARIABLES).then(() => {
-      return true
-    }, e => {
-      throw e
-    })
+    return this._setVariables(this._getEnvironmentVariablesLink, [programId, environmentId], variables)
   }
 
   async _getPipelineVariablesLink (programId, pipelineId) {
-    const pipeline = await this._getPipeline(programId, pipelineId)
+    const pipeline = await this._findPipeline(programId, pipelineId)
 
     const variablesLink = pipeline.link(rels.variables)
     if (!variablesLink) {
@@ -889,16 +878,7 @@ class CloudManagerAPI {
    * @returns {Promise<Variable[]>} the variables
    */
   async getPipelineVariables (programId, pipelineId) {
-    const variablesLink = await this._getPipelineVariablesLink(programId, pipelineId)
-
-    const variables = await this._get(variablesLink, codes.ERROR_GET_VARIABLES).then(res => {
-      return res.json()
-    }, e => {
-      throw e
-    })
-
-    const result = halfred.parse(variables).embeddedArray('variables')
-    return result ? result.map(v => v.original()) : []
+    return this._getVariables(this._getPipelineVariablesLink, [programId, pipelineId])
   }
 
   /**
@@ -910,13 +890,7 @@ class CloudManagerAPI {
    * @returns {Promise<object>} a truthy value
    */
   async setPipelineVariables (programId, pipelineId, variables) {
-    const variablesLink = await this._getPipelineVariablesLink(programId, pipelineId)
-
-    return await this._patch(variablesLink, variables, codes.ERROR_SET_VARIABLES).then(() => {
-      return true
-    }, e => {
-      throw e
-    })
+    return this._setVariables(this._getPipelineVariablesLink, [programId, pipelineId], variables)
   }
 
   /**
@@ -926,11 +900,7 @@ class CloudManagerAPI {
    * @returns {Promise<object>} a truthy value
    */
   async deleteProgram (programId) {
-    const programs = await this.listPrograms()
-    const program = programs.find(p => p.id === programId)
-    if (!program) {
-      throw new codes.ERROR_FIND_PROGRAM({ messageValues: programId })
-    }
+    const program = await this._findProgram(programId)
     return this._delete(program.link(rels.self).href, codes.ERROR_DELETE_PROGRAM).then(() => {
       return {}
     }, e => {
@@ -946,11 +916,7 @@ class CloudManagerAPI {
    * @returns {Promise<object>} a truthy value
    */
   async deleteEnvironment (programId, environmentId) {
-    const environments = await this.listEnvironments(programId)
-    const environment = environments.find(e => e.id === environmentId)
-    if (!environment) {
-      throw new codes.ERROR_FIND_ENVIRONMENT({ messageValues: [environmentId, programId] })
-    }
+    const environment = await this._findEnvironment(programId, environmentId)
 
     return this._delete(environment.link(rels.self).href, codes.ERROR_DELETE_ENVIRONMENT).then(() => {
       return {}
