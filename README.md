@@ -688,7 +688,7 @@ A named value than can be set on an Environment or Pipeline
 | --- | --- | --- |
 | name | <code>string</code> | Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number. |
 | value | <code>string</code> | Value of the variable. Read-Write for non-secrets, write-only for secrets. |
-| type | <code>string</code> | Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. Cannot be changed after creation. |
+| type | <code>string</code> | Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated. |
 
 <a name="LogOptionRepresentation"></a>
 
@@ -750,3 +750,23 @@ Contributions are welcome! Read the [Contributing Guide](./.github/CONTRIBUTING.
 ### Licensing
 
 This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
+
+## Commits and Releasing
+
+Commits (generally via merged pull requests) to the `main` branch of this repository will automatically generate [semantically versioned releases](https://github.com/semantic-release). To accomplish this, commit messages must follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) syntax, specifically:
+
+For bug fixes:
+```
+fix(scope): <description>
+
+[optional content]
+```
+
+For features:
+```
+feat(scope): <description>
+
+[optional content]
+```
+
+In general, the scope should be the related entity type (program, environment, pipeline), but there may be exceptions.

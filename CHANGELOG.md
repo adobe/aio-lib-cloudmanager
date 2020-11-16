@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/adobe/aio-lib-cloudmanager/compare/0.1.4...0.1.5) (2020-11-16)
+
+
+### Bug Fixes
+
+* **build:** testing semantic release ([390e33b](https://github.com/adobe/aio-lib-cloudmanager/commit/390e33b02518655173bdaeeb7b0c2e0611675188))
+
 ## 0.1.4 (16/11/2020)
 - [**bug**] Some unnecessary code duplication around finding entities [#19](https://github.com/adobe/aio-lib-cloudmanager/issues/19)
 - [**bug**] Not all problem types are handled [#17](https://github.com/adobe/aio-lib-cloudmanager/issues/17)
