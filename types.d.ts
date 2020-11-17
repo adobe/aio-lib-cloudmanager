@@ -383,7 +383,7 @@ declare type Environment = {
  * A named value than can be set on an Environment or Pipeline
  * @property name - Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number.
  * @property value - Value of the variable. Read-Write for non-secrets, write-only for secrets.
- * @property type - Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. Cannot be changed after creation.
+ * @property type - Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated.
  */
 declare type Variable = {
     name: string;

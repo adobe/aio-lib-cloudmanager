@@ -136,7 +136,7 @@ Mandatory if type=BUILD
  * @typedef {object} Variable
  * @property {string} name - Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number.
  * @property {string} value - Value of the variable. Read-Write for non-secrets, write-only for secrets.
- * @property {string} type - Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. Cannot be changed after creation.
+ * @property {string} type - Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated.
  */
 
 
