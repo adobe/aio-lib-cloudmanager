@@ -21,7 +21,7 @@ test('startExecution - bad pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE_START({ messageValues: ['10', '5'] })
+    new codes.ERROR_FIND_PIPELINE_START({ messageValues: ['10', '5'] }),
   )
 })
 
@@ -32,7 +32,7 @@ test('startExecution - failed 412', async () => {
   const result = sdkClient.startExecution('5', '6')
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_PIPELINE_START_RUNNING()
+    new codes.ERROR_PIPELINE_START_RUNNING(),
   )
 })
 
@@ -44,7 +44,7 @@ test('startExecution - failed 404', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_PIPELINE_START({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution (404 Not Found)' })
+    new codes.ERROR_PIPELINE_START({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution (404 Not Found)' }),
   )
 })
 

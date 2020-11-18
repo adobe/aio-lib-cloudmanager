@@ -32,22 +32,22 @@ test('listPipelines - success', async () => {
   await expect(result).resolves.toMatchObject([{
     id: '5',
     name: 'test1',
-    status: 'IDLE'
+    status: 'IDLE',
   },
   {
     id: '6',
     name: 'test2',
-    status: 'BUSY'
+    status: 'BUSY',
   },
   {
     id: '7',
     name: 'test3',
-    status: 'BUSY'
+    status: 'BUSY',
   },
   {
     id: '8',
     name: 'test4',
-    status: 'IDLE'
+    status: 'IDLE',
   }])
 })
 
@@ -59,7 +59,7 @@ test('listPipelines - program in programs list but not found', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_PROGRAM({ messageValues: 'https://cloudmanager.adobe.io/api/program/7 (404 Not Found)' })
+    new codes.ERROR_GET_PROGRAM({ messageValues: 'https://cloudmanager.adobe.io/api/program/7 (404 Not Found)' }),
   )
 })
 
@@ -71,7 +71,7 @@ test('listPipelines - program doesnt exist', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' })
+    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' }),
   )
 })
 
@@ -83,7 +83,7 @@ test('deletePipeline - delete pipeline returns 400', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_DELETE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7 (400 Bad Request) - Test Exception(s): some error message' })
+    new codes.ERROR_DELETE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7 (400 Bad Request) - Test Exception(s): some error message' }),
   )
 })
 
@@ -95,7 +95,7 @@ test('deletePipeline - bad pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] }),
   )
 })
 
@@ -117,7 +117,7 @@ test('updatePipeline - bad pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] }),
   )
 })
 
@@ -126,12 +126,12 @@ test('updatePipeline - failure pipeline', async () => {
 
   const sdkClient = await createSdkClient()
   const result = sdkClient.updatePipeline('5', '8', {
-    branch: 'develop'
+    branch: 'develop',
   })
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_UPDATE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8 (405 Method Not Allowed)' })
+    new codes.ERROR_UPDATE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8 (405 Method Not Allowed)' }),
   )
 })
 
@@ -140,7 +140,7 @@ test('updatePipeline - branch success', async () => {
 
   const sdkClient = await createSdkClient()
   const result = sdkClient.updatePipeline('5', '5', {
-    branch: 'develop'
+    branch: 'develop',
   })
 
   await expect(result instanceof Promise).toBeTruthy()
@@ -149,8 +149,8 @@ test('updatePipeline - branch success', async () => {
       name: 'BUILD_1',
       branch: 'develop',
       type: 'BUILD',
-      repositoryId: '1'
-    }])
+      repositoryId: '1',
+    }]),
   })
 })
 
@@ -160,7 +160,7 @@ test('updatePipeline - repository and branch success', async () => {
   const sdkClient = await createSdkClient()
   const result = sdkClient.updatePipeline('5', '5', {
     branch: 'develop',
-    repositoryId: '4'
+    repositoryId: '4',
   })
 
   await expect(result instanceof Promise).toBeTruthy()
@@ -169,8 +169,8 @@ test('updatePipeline - repository and branch success', async () => {
       name: 'BUILD_1',
       branch: 'develop',
       type: 'BUILD',
-      repositoryId: '4'
-    }])
+      repositoryId: '4',
+    }]),
   })
 })
 
@@ -182,7 +182,7 @@ test('getPipelineVariables - pipelines not found', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_LIST_PIPELINES({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/pipelines (404 Not Found)' })
+    new codes.ERROR_LIST_PIPELINES({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/pipelines (404 Not Found)' }),
   )
 })
 
@@ -194,7 +194,7 @@ test('getPipelineVariables - no pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['4', '4'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['4', '4'] }),
   )
 })
 
@@ -206,7 +206,7 @@ test('getPipelineVariables - no variables link', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_VARIABLES_LINK_PIPELINE({ messageValues: ['6', '5'] })
+    new codes.ERROR_FIND_VARIABLES_LINK_PIPELINE({ messageValues: ['6', '5'] }),
   )
 })
 
@@ -218,7 +218,7 @@ test('getPipelineVariables - link returns 404', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/variables (404 Not Found)' })
+    new codes.ERROR_GET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/variables (404 Not Found)' }),
   )
 })
 
@@ -242,10 +242,10 @@ test('getPipelineVariables - success', async () => {
   await expect(result).resolves.toMatchObject([{
     name: 'KEY',
     type: 'string',
-    value: 'value'
+    value: 'value',
   }, {
     name: 'I_AM_A_SECRET',
-    type: 'secretString'
+    type: 'secretString',
   }])
 })
 
@@ -257,7 +257,7 @@ test('setPipelineVariables - pipelines not found', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_LIST_PIPELINES({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/pipelines (404 Not Found)' })
+    new codes.ERROR_LIST_PIPELINES({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/pipelines (404 Not Found)' }),
   )
 })
 
@@ -269,7 +269,7 @@ test('setPipelineVariables - no pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['4', '4'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['4', '4'] }),
   )
 })
 
@@ -281,7 +281,7 @@ test('setPipelineVariables - no variables link', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_VARIABLES_LINK_PIPELINE({ messageValues: ['6', '5'] })
+    new codes.ERROR_FIND_VARIABLES_LINK_PIPELINE({ messageValues: ['6', '5'] }),
   )
 })
 
@@ -293,13 +293,13 @@ test('setPipelineVariables - PATCH fails', async () => {
     {
       name: 'foo',
       value: 'bar',
-      type: 'string'
-    }
+      type: 'string',
+    },
   ])
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_SET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables (400 Bad Request)' })
+    new codes.ERROR_SET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables (400 Bad Request)' }),
   )
 })
 
@@ -311,12 +311,12 @@ test('setPipelineVariables - variables only', async () => {
     {
       name: 'foo',
       type: 'string',
-      value: 'bar'
+      value: 'bar',
     }, {
       name: 'foo2',
       type: 'string',
-      value: 'bar2'
-    }
+      value: 'bar2',
+    },
   ])
 
   await expect(result instanceof Promise).toBeTruthy()
@@ -325,11 +325,11 @@ test('setPipelineVariables - variables only', async () => {
   await expect(JSON.parse(patchCall[1].body)).toMatchObject([{
     name: 'foo',
     type: 'string',
-    value: 'bar'
+    value: 'bar',
   }, {
     name: 'foo2',
     type: 'string',
-    value: 'bar2'
+    value: 'bar2',
   }])
 })
 
@@ -341,12 +341,12 @@ test('setPipelineVariables - secrets only', async () => {
     {
       name: 'foo',
       type: 'secretString',
-      value: 'bar'
+      value: 'bar',
     }, {
       name: 'foo2',
       type: 'secretString',
-      value: 'bar2'
-    }
+      value: 'bar2',
+    },
   ])
 
   await expect(result instanceof Promise).toBeTruthy()
@@ -355,10 +355,10 @@ test('setPipelineVariables - secrets only', async () => {
   await expect(JSON.parse(patchCall[1].body)).toMatchObject([{
     name: 'foo',
     type: 'secretString',
-    value: 'bar'
+    value: 'bar',
   }, {
     name: 'foo2',
     type: 'secretString',
-    value: 'bar2'
+    value: 'bar2',
   }])
 })

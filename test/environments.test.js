@@ -22,7 +22,7 @@ test('listEnvironments - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' })
+    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' }),
   )
 })
 
@@ -46,27 +46,27 @@ test('listEnvironments - success', async () => {
   await expect(result).resolves.toMatchObject([{
     id: '1',
     name: 'TestProgram_prod',
-    type: 'prod'
+    type: 'prod',
   },
   {
     id: '2',
     name: 'TestProgram_stage',
-    type: 'stage'
+    type: 'stage',
   },
   {
     id: '3',
     name: 'TestProgram_dev',
-    type: 'dev'
+    type: 'dev',
   },
   {
     id: '10',
     name: 'TestProgram_dev2',
-    type: 'dev'
+    type: 'dev',
   },
   {
     id: '11',
     name: 'TestProgram_dev3',
-    type: 'dev'
+    type: 'dev',
   }])
 })
 
@@ -78,7 +78,7 @@ test('listEnvironments - bad program', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' })
+    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' }),
   )
 })
 
@@ -90,7 +90,7 @@ test('listAvailableLogOptions - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' })
+    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' }),
   )
 })
 
@@ -123,39 +123,39 @@ test('listAvailableLogOptions - success', async () => {
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).resolves.toMatchObject([{
     service: 'author',
-    name: 'aemerror'
+    name: 'aemerror',
   },
   {
     service: 'author',
-    name: 'aemrequest'
+    name: 'aemrequest',
   },
   {
     service: 'author',
-    name: 'aemaccess'
+    name: 'aemaccess',
   },
   {
     service: 'publish',
-    name: 'aemerror'
+    name: 'aemerror',
   },
   {
     service: 'publish',
-    name: 'aemrequest'
+    name: 'aemrequest',
   },
   {
     service: 'publish',
-    name: 'aemaccess'
+    name: 'aemaccess',
   },
   {
     service: 'dispatcher',
-    name: 'httpdaccess'
+    name: 'httpdaccess',
   },
   {
     service: 'dispatcher',
-    name: 'httpderror'
+    name: 'httpderror',
   },
   {
     service: 'dispatcher',
-    name: 'aemdispatcher'
+    name: 'aemdispatcher',
   }])
 })
 
@@ -167,7 +167,7 @@ test('listAvailableLogOptions - bad program', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' })
+    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' }),
   )
 })
 
@@ -179,7 +179,7 @@ test('listAvailableLogOptions - bad environment', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['5', '4'] })
+    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['5', '4'] }),
   )
 })
 
@@ -191,7 +191,7 @@ test('openDeveloperConsoleUrl - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['5', '4'] })
+    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['5', '4'] }),
   )
 })
 
@@ -203,7 +203,7 @@ test('openDeveloperConsoleUrl - missing properties', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_NO_DEVELOPER_CONSOLE({ messageValues: ['3', '4'] })
+    new codes.ERROR_NO_DEVELOPER_CONSOLE({ messageValues: ['3', '4'] }),
   )
 })
 
@@ -235,7 +235,7 @@ test('openDeveloperConsoleUrl - bad program', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' })
+    new codes.ERROR_FIND_PROGRAM({ messageValues: '8' }),
   )
 })
 
@@ -247,7 +247,7 @@ test('openDeveloperConsoleUrl - bad environment', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['5', '4'] })
+    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['5', '4'] }),
   )
 })
 
@@ -259,7 +259,7 @@ test('getEnvironmentVariables - environments not found', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' })
+    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' }),
   )
 })
 
@@ -271,7 +271,7 @@ test('getEnvironmentVariables - no environment', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['4', '4'] })
+    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['4', '4'] }),
   )
 })
 
@@ -283,7 +283,7 @@ test('getEnvironmentVariables - no variables link', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_VARIABLES_LINK_ENVIRONMENT({ messageValues: ['2', '4'] })
+    new codes.ERROR_FIND_VARIABLES_LINK_ENVIRONMENT({ messageValues: ['2', '4'] }),
   )
 })
 
@@ -295,7 +295,7 @@ test('getEnvironmentVariables - link returns 404', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/10/variables (404 Not Found)' })
+    new codes.ERROR_GET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/10/variables (404 Not Found)' }),
   )
 })
 
@@ -319,10 +319,10 @@ test('getEnvironmentVariables - success', async () => {
   await expect(result).resolves.toMatchObject([{
     name: 'KEY',
     type: 'string',
-    value: 'value'
+    value: 'value',
   }, {
     name: 'I_AM_A_SECRET',
-    type: 'secretString'
+    type: 'secretString',
   }])
 })
 
@@ -334,7 +334,7 @@ test('setEnvironmentVariables - environments not found', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' })
+    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' }),
   )
 })
 
@@ -346,7 +346,7 @@ test('setEnvironmentVariables - no environment', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['4', '4'] })
+    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['4', '4'] }),
   )
 })
 
@@ -358,7 +358,7 @@ test('setEnvironmentVariables - no variables link', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_VARIABLES_LINK_ENVIRONMENT({ messageValues: ['2', '4'] })
+    new codes.ERROR_FIND_VARIABLES_LINK_ENVIRONMENT({ messageValues: ['2', '4'] }),
   )
 })
 
@@ -370,13 +370,13 @@ test('setEnvironmentVariables - PATCH fails', async () => {
     {
       name: 'foo',
       type: 'string',
-      value: 'bar'
-    }
+      value: 'bar',
+    },
   ])
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_SET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/11/variables (400 Bad Request) - Validation Error(s): some error' })
+    new codes.ERROR_SET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/11/variables (400 Bad Request) - Validation Error(s): some error' }),
   )
 })
 
@@ -398,13 +398,13 @@ test('setEnvironmentVariables - variables only', async () => {
     {
       name: 'foo',
       type: 'string',
-      value: 'bar'
+      value: 'bar',
     },
     {
       name: 'foo2',
       type: 'string',
-      value: 'bar2'
-    }
+      value: 'bar2',
+    },
   ])
 
   await expect(result instanceof Promise).toBeTruthy()
@@ -413,11 +413,11 @@ test('setEnvironmentVariables - variables only', async () => {
   await expect(JSON.parse(patchCall[1].body)).toMatchObject([{
     name: 'foo',
     type: 'string',
-    value: 'bar'
+    value: 'bar',
   }, {
     name: 'foo2',
     type: 'string',
-    value: 'bar2'
+    value: 'bar2',
   }])
 })
 
@@ -429,13 +429,13 @@ test('setEnvironmentVariables - secrets only', async () => {
     {
       name: 'foo',
       type: 'secretString',
-      value: 'bar'
+      value: 'bar',
     },
     {
       name: 'foo2',
       type: 'secretString',
-      value: 'bar2'
-    }
+      value: 'bar2',
+    },
   ])
 
   await expect(result instanceof Promise).toBeTruthy()
@@ -444,11 +444,11 @@ test('setEnvironmentVariables - secrets only', async () => {
   await expect(JSON.parse(patchCall[1].body)).toMatchObject([{
     name: 'foo',
     type: 'secretString',
-    value: 'bar'
+    value: 'bar',
   }, {
     name: 'foo2',
     type: 'secretString',
-    value: 'bar2'
+    value: 'bar2',
   }])
 })
 
@@ -460,13 +460,13 @@ test('setEnvironmentVariables - secret and variable', async () => {
     {
       name: 'foo',
       type: 'string',
-      value: 'bar'
+      value: 'bar',
     },
     {
       name: 'foo2',
       type: 'secretString',
-      value: 'bar2'
-    }
+      value: 'bar2',
+    },
   ])
 
   await expect(result instanceof Promise).toBeTruthy()
@@ -475,11 +475,11 @@ test('setEnvironmentVariables - secret and variable', async () => {
   await expect(JSON.parse(patchCall[1].body)).toMatchObject([{
     name: 'foo',
     type: 'string',
-    value: 'bar'
+    value: 'bar',
   }, {
     name: 'foo2',
     type: 'secretString',
-    value: 'bar2'
+    value: 'bar2',
   }])
 })
 
@@ -491,7 +491,7 @@ test('deleteEnvironment - delete environment returns 400', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_DELETE_ENVIRONMENT({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3 (400 Bad Request) - Uncategorized Error(s): some error' })
+    new codes.ERROR_DELETE_ENVIRONMENT({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3 (400 Bad Request) - Uncategorized Error(s): some error' }),
   )
 })
 
@@ -503,7 +503,7 @@ test('deleteEnvironment - bad environment', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['12', '4'] })
+    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['12', '4'] }),
   )
 })
 

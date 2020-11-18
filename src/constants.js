@@ -25,18 +25,18 @@ module.exports = {
     logs: 'http://ns.adobe.com/adobecloud/rel/logs',
     logsDownload: 'http://ns.adobe.com/adobecloud/rel/logs/download',
     logsTail: 'http://ns.adobe.com/adobecloud/rel/logs/tail',
-    variables: 'http://ns.adobe.com/adobecloud/rel/variables'
+    variables: 'http://ns.adobe.com/adobecloud/rel/variables',
   },
   config: {
-    programId: 'cloudmanager_programid'
+    programId: 'cloudmanager_programid',
   },
   problemTypes: {
     'http://ns.adobe.com/adobecloud/validation-exception': {
       prefix: () => 'Validation Error(s)',
-      extraDetailsKey: 'validationErrors'
+      extraDetailsKey: 'validationErrors',
     },
     other: {
-      prefix: (problem) => `${problem.title || 'Uncategorized Error'}(s)`
-    }
-  }
+      prefix: (problem) => `${problem.title || 'Uncategorized Error'}(s)`,
+    },
+  },
 }

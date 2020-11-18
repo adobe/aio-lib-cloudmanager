@@ -23,18 +23,18 @@ test('sdk init test', async () => {
 
 test('sdk init test - no orgId', async () => {
   return expect(sdk.init(null, gApiKey, gAccessToken)).rejects.toEqual(
-    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'orgId' })
+    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'orgId' }),
   )
 })
 
 test('sdk init test - no apiKey', async () => {
   return expect(sdk.init(gOrgId, null, gAccessToken)).rejects.toEqual(
-    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'apiKey' })
+    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'apiKey' }),
   )
 })
 
 test('sdk init test - no accessToken', async () => {
   return expect(sdk.init(gOrgId, gApiKey, null)).rejects.toEqual(
-    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'accessToken' })
+    new codes.ERROR_SDK_INITIALIZATION({ messageValues: 'accessToken' }),
   )
 })

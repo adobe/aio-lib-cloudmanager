@@ -20,7 +20,7 @@ test('listPrograms - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_LIST_PROGRAMS({ messageValues: 'https://cloudmanager.adobe.io/api/programs (404 Not Found)' })
+    new codes.ERROR_LIST_PROGRAMS({ messageValues: 'https://cloudmanager.adobe.io/api/programs (404 Not Found)' }),
   )
 })
 
@@ -32,7 +32,7 @@ test('listPrograms - forbideen', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_LIST_PROGRAMS({ messageValues: 'https://cloudmanager.adobe.io/api/programs (403 Forbidden) - Detail: some message (Code: 1234)' })
+    new codes.ERROR_LIST_PROGRAMS({ messageValues: 'https://cloudmanager.adobe.io/api/programs (403 Forbidden) - Detail: some message (Code: 1234)' }),
   )
 })
 
@@ -56,21 +56,21 @@ test('list-programs - success', async () => {
   await expect(result).resolves.toMatchObject([{
     id: '4',
     name: 'test0',
-    enabled: true
+    enabled: true,
   }, {
     id: '5',
     name: 'test1',
-    enabled: true
+    enabled: true,
   },
   {
     id: '6',
     name: 'test2',
-    enabled: false
+    enabled: false,
   },
   {
     id: '7',
     name: 'test3',
-    enabled: true
+    enabled: true,
   }])
 })
 
@@ -82,7 +82,7 @@ test('deleteProgram - delete program returns 400', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_DELETE_PROGRAM({ messageValues: 'https://cloudmanager.adobe.io/api/program/5 (400 Bad Request) - Test Exception(s): some error' })
+    new codes.ERROR_DELETE_PROGRAM({ messageValues: 'https://cloudmanager.adobe.io/api/program/5 (400 Bad Request) - Test Exception(s): some error' }),
   )
 })
 
@@ -94,7 +94,7 @@ test('deleteProgram - bad program', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PROGRAM({ messageValues: '11' })
+    new codes.ERROR_FIND_PROGRAM({ messageValues: '11' }),
   )
 })
 

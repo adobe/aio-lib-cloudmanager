@@ -13,18 +13,18 @@ module.exports = {
   rootDir: '..',
   collectCoverage: true,
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.js'
+    '<rootDir>/src/**/*.js',
   ],
   coverageThreshold: {
     global: {
       branches: 70,
       lines: 70,
-      statements: 70
-    }
+      statements: 70,
+    },
   },
   reporters: [
     'default',
-    'jest-junit'
+    'jest-junit',
   ],
   testEnvironment: 'node',
   setupFilesAfterEnv: [
@@ -32,6 +32,6 @@ module.exports = {
     // remove any of the lines below if you don't want to use any of the mocks
     '<rootDir>/test/jest/jest.fetch.setup.js',
     '<rootDir>/test/jest/jest.fixture.setup.js',
-    '<rootDir>/test/jest/jest.sdk.setup.js'
-  ]
+    '<rootDir>/test/jest/jest.sdk.setup.js',
+  ],
 }

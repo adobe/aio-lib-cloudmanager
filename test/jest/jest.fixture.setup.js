@@ -33,7 +33,7 @@ expect.extend({
     // eslint-disable-next-line jest/no-standalone-expect
     expect(eol.auto(received)).toEqual(eol.auto(val))
     return { pass: true }
-  }
+  },
 })
 
 expect.extend({
@@ -42,5 +42,5 @@ expect.extend({
     // eslint-disable-next-line jest/no-standalone-expect
     expect(received).toEqual(val)
     return { pass: true }
-  }
+  },
 })

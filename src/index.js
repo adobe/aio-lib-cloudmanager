@@ -126,8 +126,8 @@ class CloudManagerAPI {
         'x-gw-ims-org-id': this.orgId,
         'X-Api-Key': this.apiKey,
         Authorization: `Bearer ${this.accessToken}`,
-        accept: 'application/json'
-      }
+        accept: 'application/json',
+      },
     }
     if (body) {
       options.body = JSON.stringify(body)
@@ -451,7 +451,7 @@ class CloudManagerAPI {
       body.metrics = results.metrics.filter(metric => metric.severity === 'important' && metric.passed === false).map(metric => {
         return {
           ...metric,
-          override: true
+          override: true,
         }
       })
     }
@@ -582,7 +582,7 @@ class CloudManagerAPI {
     const logRes = await fetch(redirectUrl)
     if (!logRes.ok) {
       throw new codes.ERROR_LOG_DOWNLOAD({
-        messageValues: [logRes.url, outputPath, logRes.status, logRes.statusText]
+        messageValues: [logRes.url, outputPath, logRes.status, logRes.statusText],
       })
     }
 
@@ -591,13 +591,13 @@ class CloudManagerAPI {
         if (error.errno !== -5 || error.code !== 'Z_BUF_ERROR') {
           throw new codes.ERROR_LOG_UNZIP({ messageValues: [logRes.url, outputPath] })
         }
-      }
+      },
     )
 
     return {
       ...resultObject,
       path: outputPath,
-      url: downloadUrl
+      url: downloadUrl,
     }
   }
 
@@ -639,7 +639,7 @@ class CloudManagerAPI {
         const path = `${outputDirectory}/${environmentId}-${downloadName}`
         downloadPromises.push(this._download(downloadLinks[0].href, path, {
           ...download,
-          index: 0
+          index: 0,
         }))
       } else {
         for (let i = 0; i < downloadLinks.length; i++) {
@@ -647,7 +647,7 @@ class CloudManagerAPI {
           const path = `${outputDirectory}/${environmentId}-${downloadName}`
           downloadPromises.push(this._download(downloadLinks[i].href, path, {
             ...download,
-            index: i
+            index: i,
           }))
         }
       }
@@ -660,7 +660,7 @@ class CloudManagerAPI {
 
   async _getLogFileSizeInitialSize (url) {
     const options = {
-      method: 'HEAD'
+      method: 'HEAD',
     }
     const res = await fetch(url, options)
     if (!res.ok) throw new codes.ERROR_LOG_INITIAL_SIZE({ messageValues: url })
@@ -678,8 +678,8 @@ class CloudManagerAPI {
     for (;;) {
       const options = {
         headers: {
-          Range: 'bytes=' + currentStartLimit + '-'
-        }
+          Range: 'bytes=' + currentStartLimit + '-',
+        },
       }
       const res = await fetch(tailingSasUrl, options)
       if (res.status === 206) {
@@ -755,7 +755,7 @@ class CloudManagerAPI {
     const pipeline = await this._findPipeline(programId, pipelineId)
 
     const patch = {
-      phases: []
+      phases: [],
     }
 
     if (changes && (changes.branch || changes.repositoryId)) {
@@ -793,7 +793,7 @@ class CloudManagerAPI {
     let link = environment.link('http://ns.adobe.com/adobecloud/rel/developerConsole')
     if (!link && environment.namespace && environment.cluster) {
       link = {
-        href: `https://dev-console-${environment.namespace}.${environment.cluster}.dev.adobeaemcloud.com/dc/`
+        href: `https://dev-console-${environment.namespace}.${environment.cluster}.dev.adobeaemcloud.com/dc/`,
       }
     }
 
@@ -929,5 +929,5 @@ class CloudManagerAPI {
 module.exports = {
   init: init,
   getCurrentStep: getCurrentStep,
-  getWaitingStep: getWaitingStep
+  getWaitingStep: getWaitingStep,
 }

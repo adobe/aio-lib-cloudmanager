@@ -36,7 +36,7 @@ test('download-logs - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['17', '5'] })
+    new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['17', '5'] }),
   )
 })
 
@@ -49,9 +49,9 @@ test('download-logs - success', async () => {
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).resolves.toHaveLength(2)
   await expect(result).resolves.toMatchObject([{
-    path: outputDirectory + '/1-author-aemerror-2019-09-8.log'
+    path: outputDirectory + '/1-author-aemerror-2019-09-8.log',
   },
   {
-    path: outputDirectory + '/1-author-aemerror-2019-09-7.log'
+    path: outputDirectory + '/1-author-aemerror-2019-09-7.log',
   }])
 })

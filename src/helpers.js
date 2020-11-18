@@ -77,5 +77,5 @@ module.exports = {
   getWaitingStep,
   findStepState,
   isWithinFiveMinutesOfUTCMidnight,
-  sleep
+  sleep,
 }

@@ -23,7 +23,7 @@ const Updater = createUpdater(
   // object that stores the error classes (to be exported)
   codes,
   // Map that stores the error strings (to be exported)
-  messages
+  messages,
 )
 
 /**
@@ -37,14 +37,14 @@ const E = ErrorWrapper(
   // The name of your SDK. This will be a property in your Error objects
   'CloudManagerSDK',
   // the object returned from the CreateUpdater call above
-  Updater
+  Updater,
   // the base class that your Error class is extending. AioCoreSDKError is the default
   /* AioCoreSDKError, */
 )
 
 module.exports = {
   codes,
-  messages
+  messages,
 }
 
 // Define your error codes with the wrapper

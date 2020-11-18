@@ -35,7 +35,7 @@ test('getCurrentExecution - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution (404 Not Found)' })
+    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution (404 Not Found)' }),
   )
 })
 
@@ -49,7 +49,7 @@ test('getCurrentExecution - success', async () => {
   await expect(result).resolves.toMatchObject({
     id: '1000',
     programId: '5',
-    pipelineId: '6'
+    pipelineId: '6',
   })
 })
 
@@ -61,7 +61,7 @@ test('getExecution - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002 (404 Not Found)' })
+    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002 (404 Not Found)' }),
   )
 })
 
@@ -85,7 +85,7 @@ test('getExecution - bad pipeline', async () => {
   const result = sdkClient.getExecution('5', '100', '1001')
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['100', '5'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['100', '5'] }),
   )
 })
 
@@ -97,7 +97,7 @@ test('getQualityGateResults - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002 (404 Not Found)' })
+    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002 (404 Not Found)' }),
   )
 })
 
@@ -118,7 +118,7 @@ test('getQualityGateResults - success', async () => {
     kpi: 'security_rating',
     override: false,
     passed: true,
-    severity: 'critical'
+    severity: 'critical',
   }]))
   await expect(actual.metrics).toHaveLength(8)
 })
@@ -131,7 +131,7 @@ test('cancelCurrentExecution - bad pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] }),
   )
 })
 
@@ -171,7 +171,7 @@ test('cancelCurrentExecution - code quality waiting with no cancel (error state)
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_CANCEL_LINK({ messageValues: 'codeQuality' })
+    new codes.ERROR_FIND_CANCEL_LINK({ messageValues: 'codeQuality' }),
   )
 })
 
@@ -211,7 +211,7 @@ test('cancelCurrentExecution - deploy waiting with no advance (error state)', as
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_ADVANCE_LINK({ messageValues: 'deploy' })
+    new codes.ERROR_FIND_ADVANCE_LINK({ messageValues: 'deploy' }),
   )
 })
 
@@ -223,7 +223,7 @@ test('advanceCurrentExecution - bad pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['10', '5'] }),
   )
 })
 
@@ -237,7 +237,7 @@ test('advanceCurrentExecution - build running', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_WAITING_STEP({ messageValues: '7' })
+    new codes.ERROR_FIND_WAITING_STEP({ messageValues: '7' }),
   )
 })
 
@@ -275,7 +275,7 @@ test('getExecutionStepLog - failure', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002 (404 Not Found)' })
+    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002 (404 Not Found)' }),
   )
 })
 
@@ -320,7 +320,7 @@ test('getExecutionStepLog - not found', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_LOG({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1001/phase/4597/step/8494/logs (404 Not Found)' })
+    new codes.ERROR_GET_LOG({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1001/phase/4597/step/8494/logs (404 Not Found)' }),
   )
 })
 
@@ -332,7 +332,7 @@ test('getExecutionStepLog - empty', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_NO_LOG_REDIRECT({ messageValues: ['https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1001/phase/4598/step/8500/logs', '{}'] })
+    new codes.ERROR_NO_LOG_REDIRECT({ messageValues: ['https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1001/phase/4598/step/8500/logs', '{}'] }),
   )
 })
 
@@ -344,7 +344,7 @@ test('getExecutionStepLog - missing step', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_STEP_STATE({ messageValues: ['devDeploy', '1003'] })
+    new codes.ERROR_FIND_STEP_STATE({ messageValues: ['devDeploy', '1003'] }),
   )
 })
 
@@ -356,6 +356,6 @@ test('getExecutionStepLog - bad pipeline', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_FIND_PIPELINE({ messageValues: ['100', '5'] })
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['100', '5'] }),
   )
 })
