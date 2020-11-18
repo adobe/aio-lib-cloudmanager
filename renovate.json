@@ -1,5 +1,12 @@
 {
   "extends": [
-    "config:base"
+    "config:js-lib",
+    ":semanticCommits"
+  ],
+  "packageRules": [
+    {
+      "packageNames": ["fetch-mock"],
+      "allowedVersions": "9.10.1"
+    }
   ]
 }
