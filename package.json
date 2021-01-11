@@ -57,7 +57,7 @@
     "js-yaml": "4.0.0",
     "jscpd": "3.3.19",
     "jsdoc": "3.6.6",
-    "jsdoc-to-markdown": "5.0.3",
+    "jsdoc-to-markdown": "6.0.1",
     "semantic-release": "17.3.1",
     "sinon": "9.2.3",
     "stdout-stderr": "0.1.13",
