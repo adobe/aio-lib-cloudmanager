@@ -632,16 +632,14 @@ class CloudManagerAPI {
     downloads.forEach(download => {
       const downloadLinks = download.linkArray(rels.logsDownload)
 
-      if (downloadLinks.length === 0) {
-
-      } else if (downloadLinks.length === 1) {
+      if (downloadLinks.length === 1) {
         const downloadName = `${download.service}-${download.name}-${download.date}.log`
         const path = `${outputDirectory}/${environmentId}-${downloadName}`
         downloadPromises.push(this._download(downloadLinks[0].href, path, {
           ...download,
           index: 0,
         }))
-      } else {
+      } else if (downloadLinks.length !== 0) {
         for (let i = 0; i < downloadLinks.length; i++) {
           const downloadName = `${download.service}-${download.name}-${download.date}-${i}.log`
           const path = `${outputDirectory}/${environmentId}-${downloadName}`
