@@ -28,7 +28,7 @@ require('./types.jsdoc') // for VS Code autocomplete
 
 /* global EmbeddedProgram, Pipeline, PipelineExecution, ListPipelineOptions,
    PipelineStepMetrics, Environment, LogOptionRepresentation,
-   DownloadedLog, PipelineUpdate, Variable */ // for linter
+   DownloadedLog, PipelineUpdate, Variable, IPAllowedList */ // for linter
 
 /**
  * Returns a Promise that resolves with a new CloudManagerAPI object.
@@ -187,6 +187,10 @@ class CloudManagerAPI {
 
   async _patch (path, body, ErrorClass) {
     return this._doRequest(path, 'PATCH', body, ErrorClass)
+  }
+
+  async _post (path, body, ErrorClass) {
+    return this._doRequest(path, 'POST', body, ErrorClass)
   }
 
   async _listPrograms () {
@@ -917,6 +921,155 @@ class CloudManagerAPI {
     const environment = await this._findEnvironment(programId, environmentId)
 
     return this._delete(environment.link(rels.self).href, codes.ERROR_DELETE_ENVIRONMENT).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
+
+  async _listIpAllowlists (path) {
+    return this._get(path, codes.ERROR_LIST_IP_ALLOWLISTS).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+  }
+
+  async _findIpAllowlistsLink (programId) {
+    const program = await this._findProgram(programId)
+
+    const link = program.link(rels.ipAllowlists)
+    if (!link) {
+      throw new codes.ERROR_NO_IP_ALLOWLISTS({ messageValues: programId })
+    }
+    return link
+  }
+
+  /**
+   * List the program's defined IP Allow Lists
+   *
+   * @param {string} programId - the program id
+   * @returns {Promise<IPAllowedList>} - the IP Allow Lists
+   */
+  async listIpAllowlists (programId) {
+    const link = await this._findIpAllowlistsLink(programId)
+
+    const result = await this._listIpAllowlists(link.href)
+    return result && halfred.parse(result).embeddedArray('ipAllowlists')
+  }
+
+  async _findIpAllowlist (programId, ipAllowlistId) {
+    const ipAllowlists = await this.listIpAllowlists(programId)
+    const ipAllowlist = ipAllowlists.find(i => i.id === ipAllowlistId)
+    if (!ipAllowlist) {
+      throw new codes.ERROR_FIND_IP_ALLOWLIST({ messageValues: [ipAllowlistId, programId] })
+    }
+    return ipAllowlist
+  }
+
+  /**
+   * Create IP Allow List
+   *
+   * @param {string} programId - the program id
+   * @param {string} name - the name
+   * @param {string[]} cidrBlocks - the CIDR blocks
+   * @returns {Promise<IPAllowedList>} a truthy value
+   */
+  async createIpAllowlist (programId, name, cidrBlocks) {
+    const link = await this._findIpAllowlistsLink(programId)
+    const ipAllowlist = {
+      programId,
+      name,
+      ipCidrSet: cidrBlocks,
+    }
+
+    return this._post(link.href, ipAllowlist, codes.ERROR_CREATE_IP_ALLOWLIST).then(res => {
+      return new Promise((resolve, reject) => {
+        res.json().then(body => {
+          resolve(halfred.parse(body))
+        })
+      })
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Update the CIDR blocks of an IP Allow List
+   *
+   * @param {string} programId - the program id
+   * @param {string} ipAllowlistId - the allow list id
+   * @param {string[]} cidrBlocks - the replacement CIDR blocks
+   * @returns {Promise<object>} a truthy value
+   */
+  async updateIpAllowlist (programId, ipAllowlistId, cidrBlocks) {
+    const ipAllowlist = await this._findIpAllowlist(programId, ipAllowlistId)
+    const updated = _.cloneDeep(ipAllowlist.original())
+    updated.ipCidrSet = cidrBlocks
+    delete updated._links
+    delete updated.bindings
+    return this._put(ipAllowlist.link(rels.self).href, updated, codes.ERROR_UPDATE_IP_ALLOWLIST).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Update the CIDR blocks of an IP Allow List
+   *
+   * @param {string} programId - the program id
+   * @param {string} ipAllowlistId - the allow list id
+   * @returns {Promise<object>} a truthy value
+   */
+  async deleteIpAllowlist (programId, ipAllowlistId) {
+    const ipAllowlist = await this._findIpAllowlist(programId, ipAllowlistId)
+    return this._delete(ipAllowlist.link(rels.self).href, codes.ERROR_DELETE_IP_ALLOWLIST).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Bind an IP Allow List to an environment
+   *
+   * @param {string} programId - the program id
+   * @param {string} ipAllowlistId - the allow list id
+   * @param {string} environmentId - the environment id
+   * @param {string} service - the service name
+   * @returns {Promise<object>} a truthy value
+   */
+  async addIpAllowlistBinding (programId, ipAllowlistId, environmentId, service) {
+    const ipAllowlist = await this._findIpAllowlist(programId, ipAllowlistId)
+    const body = {
+      environmentId,
+      tier: service,
+    }
+    return this._post(ipAllowlist.link(rels.ipAllowlistBindings).href, body, codes.ERROR_CREATE_IP_ALLOWLIST_BINDING).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Unbind an IP Allow List from an environment
+   *
+   * @param {string} programId - the program id
+   * @param {string} ipAllowlistId - the allow list id
+   * @param {string} environmentId - the environment id
+   * @param {string} service - the service name
+   * @returns {Promise<object>} a truthy value
+   */
+  async removeIpAllowlistBinding (programId, ipAllowlistId, environmentId, service) {
+    const ipAllowlist = await this._findIpAllowlist(programId, ipAllowlistId)
+    let binding = ipAllowlist.bindings.find(b => b.environmentId === environmentId && b.tier === service)
+    if (!binding) {
+      throw new codes.ERROR_FIND_IP_ALLOWLIST_BINDING({ messageValues: [ipAllowlistId, environmentId, service, programId] })
+    }
+    binding = halfred.parse(binding)
+    return this._delete(binding.link(rels.self).href, codes.ERROR_DELETE_IP_ALLOWLIST_BINDING).then(() => {
       return {}
     }, e => {
       throw e

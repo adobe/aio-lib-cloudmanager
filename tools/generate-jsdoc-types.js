@@ -14,7 +14,7 @@ const fs = require('fs')
 const Handlebars = require('handlebars')
 
 const desiredDefinitions = ['EmbeddedProgram', 'Pipeline', 'PipelinePhase', 'PipelineExecution', 'PipelineStepMetrics', 'Metric', 'Environment',
-  'LogOptionRepresentation', 'Variable', 'PipelineExecutionStepState']
+  'LogOptionRepresentation', 'Variable', 'PipelineExecutionStepState', 'IPAllowedListBinding', 'IPAllowedList']
 
 const cleanName = value => value.replace(/\W/g, '')
 const wrapCurly = value => `{${value}}`
@@ -31,10 +31,13 @@ Handlebars.registerHelper('isNormalProperty', value => !value.startsWith('_'))
 Handlebars.registerHelper('isDesired', value => desiredDefinitions.indexOf(value) >= 0)
 Handlebars.registerHelper('type', value => {
   if (value.type === 'array') {
-    return wrapCurly(`${cleanName(toType(value.items.$ref))}[]`)
-  } else {
-    return wrapCurly(value.type)
+    if (value.items.$ref) {
+      return wrapCurly(`${cleanName(toType(value.items.$ref))}[]`)
+    } else if (value.items.type) {
+      return wrapCurly(`${value.items.type}[]`)
+    }
   }
+  return wrapCurly(value.type)
 })
 
 const template = Handlebars.compile(`/*

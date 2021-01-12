@@ -26,6 +26,8 @@ module.exports = {
     logsDownload: 'http://ns.adobe.com/adobecloud/rel/logs/download',
     logsTail: 'http://ns.adobe.com/adobecloud/rel/logs/tail',
     variables: 'http://ns.adobe.com/adobecloud/rel/variables',
+    ipAllowlists: 'http://ns.adobe.com/adobecloud/rel/ipAllowlists',
+    ipAllowlistBindings: 'http://ns.adobe.com/adobecloud/rel/ipAllowlistBindings',
   },
   config: {
     programId: 'cloudmanager_programid',
@@ -34,6 +36,10 @@ module.exports = {
     'http://ns.adobe.com/adobecloud/validation-exception': {
       prefix: () => 'Validation Error(s)',
       extraDetailsKey: 'validationErrors',
+    },
+    'http://ns.adobe.com/adobecloud/ipallowlist-generic-exception': {
+      prefix: () => 'IP Allowlist Error(s)',
+      extraDetailsKey: 'ipAllowlistErrors',
     },
     other: {
       prefix: (problem) => `${problem.title || 'Uncategorized Error'}(s)`,
