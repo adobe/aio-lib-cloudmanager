@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/adobe/aio-lib-cloudmanager/compare/0.1.5...0.1.6) (2021-01-12)
+
+
+### Bug Fixes
+
+* **build:** correct jsdoc generation to work with js-yaml v4 ([#44](https://github.com/adobe/aio-lib-cloudmanager/issues/44)) ([e2b57ab](https://github.com/adobe/aio-lib-cloudmanager/commit/e2b57ab15c88908ff001406c813955ec9d75e705))
+
 ## [0.1.5](https://github.com/adobe/aio-lib-cloudmanager/compare/0.1.4...0.1.5) (2020-11-16)
 
 
