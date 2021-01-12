@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.2.0](https://github.com/adobe/aio-lib-cloudmanager/compare/0.1.6...0.2.0) (2021-01-12)
+
+
+### Features
+
+* **ip-allowlists:** implement IP allow list in SDK. fixes [#45](https://github.com/adobe/aio-lib-cloudmanager/issues/45) ([#46](https://github.com/adobe/aio-lib-cloudmanager/issues/46)) ([6f95342](https://github.com/adobe/aio-lib-cloudmanager/commit/6f95342e6694023e8a648f2b7181fb6eb11f55c5))
+
 ## [0.1.6](https://github.com/adobe/aio-lib-cloudmanager/compare/0.1.5...0.1.6) (2021-01-12)
 
 

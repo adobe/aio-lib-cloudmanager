@@ -114,6 +114,12 @@ with valid values for tenantId, apiKey and accessToken</p>
 </dd>
 <dt><a href="#LogOptionRepresentation">LogOptionRepresentation</a> : <code>object</code></dt>
 <dd></dd>
+<dt><a href="#IPAllowedListBinding">IPAllowedListBinding</a> : <code>object</code></dt>
+<dd><p>Describes an <strong>IP Allowed List Binding</strong></p>
+</dd>
+<dt><a href="#IPAllowedList">IPAllowedList</a> : <code>object</code></dt>
+<dd><p>Describes an <strong>IP Allowed List</strong></p>
+</dd>
 <dt><a href="#ListPipelineOptions">ListPipelineOptions</a> : <code>object</code></dt>
 <dd><p>Options to the listPipeline function</p>
 </dd>
@@ -160,6 +166,12 @@ with valid values for tenantId, apiKey and accessToken
     * [.setPipelineVariables(programId, pipelineId, variables)](#CloudManagerAPI+setPipelineVariables) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deleteProgram(programId)](#CloudManagerAPI+deleteProgram) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deleteEnvironment(programId, environmentId)](#CloudManagerAPI+deleteEnvironment) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.listIpAllowlists(programId)](#CloudManagerAPI+listIpAllowlists) ⇒ [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList)
+    * [.createIpAllowlist(programId, name, cidrBlocks)](#CloudManagerAPI+createIpAllowlist) ⇒ [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList)
+    * [.updateIpAllowlist(programId, ipAllowlistId, cidrBlocks)](#CloudManagerAPI+updateIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.deleteIpAllowlist(programId, ipAllowlistId)](#CloudManagerAPI+deleteIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+addIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="CloudManagerAPI+orgId"></a>
 
@@ -494,6 +506,89 @@ Delete an environment
 | programId | <code>string</code> | the program id |
 | environmentId | <code>string</code> | the environment id |
 
+<a name="CloudManagerAPI+listIpAllowlists"></a>
+
+### cloudManagerAPI.listIpAllowlists(programId) ⇒ [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList)
+List the program's defined IP Allow Lists
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList) - - the IP Allow Lists  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+
+<a name="CloudManagerAPI+createIpAllowlist"></a>
+
+### cloudManagerAPI.createIpAllowlist(programId, name, cidrBlocks) ⇒ [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList)
+Create IP Allow List
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList) - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| name | <code>string</code> | the name |
+| cidrBlocks | <code>Array.&lt;string&gt;</code> | the CIDR blocks |
+
+<a name="CloudManagerAPI+updateIpAllowlist"></a>
+
+### cloudManagerAPI.updateIpAllowlist(programId, ipAllowlistId, cidrBlocks) ⇒ <code>Promise.&lt;object&gt;</code>
+Update the CIDR blocks of an IP Allow List
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| ipAllowlistId | <code>string</code> | the allow list id |
+| cidrBlocks | <code>Array.&lt;string&gt;</code> | the replacement CIDR blocks |
+
+<a name="CloudManagerAPI+deleteIpAllowlist"></a>
+
+### cloudManagerAPI.deleteIpAllowlist(programId, ipAllowlistId) ⇒ <code>Promise.&lt;object&gt;</code>
+Update the CIDR blocks of an IP Allow List
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| ipAllowlistId | <code>string</code> | the allow list id |
+
+<a name="CloudManagerAPI+addIpAllowlistBinding"></a>
+
+### cloudManagerAPI.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service) ⇒ <code>Promise.&lt;object&gt;</code>
+Bind an IP Allow List to an environment
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| ipAllowlistId | <code>string</code> | the allow list id |
+| environmentId | <code>string</code> | the environment id |
+| service | <code>string</code> | the service name |
+
+<a name="CloudManagerAPI+removeIpAllowlistBinding"></a>
+
+### cloudManagerAPI.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service) ⇒ <code>Promise.&lt;object&gt;</code>
+Unbind an IP Allow List from an environment
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| ipAllowlistId | <code>string</code> | the allow list id |
+| environmentId | <code>string</code> | the environment id |
+| service | <code>string</code> | the service name |
+
 <a name="getCurrentStep"></a>
 
 ## getCurrentStep(execution) ⇒ [<code>PipelineExecutionStepState</code>](#PipelineExecutionStepState)
@@ -700,6 +795,39 @@ A named value than can be set on an Environment or Pipeline
 | --- | --- | --- |
 | service | <code>string</code> | Name of the service in environment. Example: author |
 | name | <code>string</code> | Name of the log for service in environment. Example: aemerror |
+
+<a name="IPAllowedListBinding"></a>
+
+## IPAllowedListBinding : <code>object</code>
+Describes an __IP Allowed List Binding__
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Identifier of the IP Allowed List Binding to an Environment |
+| tier | <code>string</code> | Tier of the environment. |
+| status | <code>string</code> | Status of the binding. |
+| programId | <code>string</code> | Identifier of the program. |
+| ipAllowListId | <code>string</code> | Identifier of the IP allow list. |
+| environmentId | <code>string</code> | Identifier of the environment. |
+
+<a name="IPAllowedList"></a>
+
+## IPAllowedList : <code>object</code>
+Describes an __IP Allowed List__
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Identifier of the IP Allowed List |
+| name | <code>string</code> | Name of the IP Allowed List |
+| ipCidrSet | <code>Array.&lt;string&gt;</code> | IP CIDR Set |
+| programId | <code>string</code> | Identifier of the program. |
+| bindings | [<code>Array.&lt;IPAllowedListBinding&gt;</code>](#IPAllowedListBinding) | IP Allowlist bindings |
 
 <a name="ListPipelineOptions"></a>
 
