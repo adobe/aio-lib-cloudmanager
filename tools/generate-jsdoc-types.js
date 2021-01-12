@@ -65,7 +65,7 @@ governing permissions and limitations under the License.
 
 {{/if}}{{/each}}`)
 
-const api = yaml.safeLoad(fs.readFileSync('./api.yaml', 'utf8'))
+const api = yaml.load(fs.readFileSync('./api.yaml', 'utf8'))
 
 const result = template(api)
 

@@ -24,6 +24,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm version
     - run: npm install
+    - run: npm run generate-docs
     - run: npm test
     - name: Codecov
       uses: codecov/codecov-action@v1.2.1
