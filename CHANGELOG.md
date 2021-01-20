@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/adobe/aio-lib-cloudmanager/compare/0.2.0...0.2.1) (2021-01-20)
+
+
+### Bug Fixes
+
+* **auth:** some response bodies were not correctly handled. fixes [#53](https://github.com/adobe/aio-lib-cloudmanager/issues/53) ([#54](https://github.com/adobe/aio-lib-cloudmanager/issues/54)) ([5ee68ee](https://github.com/adobe/aio-lib-cloudmanager/commit/5ee68ee0dd8b2294dae877d9ef3a50eec459d0f0))
+
 # [0.2.0](https://github.com/adobe/aio-lib-cloudmanager/compare/0.1.6...0.2.0) (2021-01-12)
 
 
