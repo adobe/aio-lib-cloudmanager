@@ -36,6 +36,18 @@ test('listPrograms - forbideen', async () => {
   )
 })
 
+test('listPrograms - unauthorized', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient('unauthorized')
+  const result = sdkClient.listPrograms()
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_LIST_PROGRAMS({ messageValues: 'https://cloudmanager.adobe.io/api/programs (401 Unauthorized)' }),
+  )
+})
+
 test('listPrograms - success empty', async () => {
   expect.assertions(2)
 

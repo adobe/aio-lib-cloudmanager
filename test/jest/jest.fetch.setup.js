@@ -46,6 +46,13 @@ mockResponseWithOrgId('https://cloudmanager.adobe.io/api/programs', 'forbidden',
 })
 mockResponseWithOrgId('https://cloudmanager.adobe.io/api/programs', 'not-found', 404)
 mockResponseWithOrgId('https://cloudmanager.adobe.io/api/programs', 'empty', {})
+mockResponseWithOrgId('https://cloudmanager.adobe.io/api/programs', 'unauthorized', {
+  status: 401,
+  headers: {
+    'content-type': 'application/problem+json',
+  },
+  body: 'Unauthorized',
+})
 mockResponseWithOrgId('https://cloudmanager.adobe.io/api/programs', 'good', {
   _embedded: {
     programs: [
