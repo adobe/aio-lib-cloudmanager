@@ -59,7 +59,7 @@
     "jsdoc": "3.6.6",
     "jsdoc-to-markdown": "6.0.1",
     "semantic-release": "17.3.3",
-    "sinon": "9.2.3",
+    "sinon": "9.2.4",
     "stdout-stderr": "0.1.13",
     "tsd-jsdoc": "2.5.0"
   },
