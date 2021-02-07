@@ -16,6 +16,7 @@ module.exports = {
     self: 'self',
     pipelines: 'http://ns.adobe.com/adobecloud/rel/pipelines',
     execution: 'http://ns.adobe.com/adobecloud/rel/execution',
+    executions: 'http://ns.adobe.com/adobecloud/rel/executions',
     metrics: 'http://ns.adobe.com/adobecloud/rel/pipeline/metrics',
     cancel: 'http://ns.adobe.com/adobecloud/rel/pipeline/cancel',
     advance: 'http://ns.adobe.com/adobecloud/rel/pipeline/advance',

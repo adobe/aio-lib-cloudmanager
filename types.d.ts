@@ -87,6 +87,14 @@ declare class CloudManagerAPI {
      */
     getCurrentExecution(programId: string, pipelineId: string): Promise<PipelineExecution>;
     /**
+     * List the most recent executions for a pipeline
+     * @param programId - the program id
+     * @param pipelineId - the pipeline id
+     * @param limit - the maximum number of executions to return (defaults to 20)
+     * @returns the execution
+     */
+    listExecutions(programId: string, pipelineId: string, limit?: number): Promise<PipelineExecution[]>;
+    /**
      * Get an execution for a pipeline
      * @param programId - the program id
      * @param pipelineId - the pipeline id
@@ -217,6 +225,53 @@ declare class CloudManagerAPI {
      * @returns a truthy value
      */
     deleteEnvironment(programId: string, environmentId: string): Promise<object>;
+    /**
+     * List the program's defined IP Allow Lists
+     * @param programId - the program id
+     * @returns - the IP Allow Lists
+     */
+    listIpAllowlists(programId: string): Promise<IPAllowedList>;
+    /**
+     * Create IP Allow List
+     * @param programId - the program id
+     * @param name - the name
+     * @param cidrBlocks - the CIDR blocks
+     * @returns a truthy value
+     */
+    createIpAllowlist(programId: string, name: string, cidrBlocks: string[]): Promise<IPAllowedList>;
+    /**
+     * Update the CIDR blocks of an IP Allow List
+     * @param programId - the program id
+     * @param ipAllowlistId - the allow list id
+     * @param cidrBlocks - the replacement CIDR blocks
+     * @returns a truthy value
+     */
+    updateIpAllowlist(programId: string, ipAllowlistId: string, cidrBlocks: string[]): Promise<object>;
+    /**
+     * Update the CIDR blocks of an IP Allow List
+     * @param programId - the program id
+     * @param ipAllowlistId - the allow list id
+     * @returns a truthy value
+     */
+    deleteIpAllowlist(programId: string, ipAllowlistId: string): Promise<object>;
+    /**
+     * Bind an IP Allow List to an environment
+     * @param programId - the program id
+     * @param ipAllowlistId - the allow list id
+     * @param environmentId - the environment id
+     * @param service - the service name
+     * @returns a truthy value
+     */
+    addIpAllowlistBinding(programId: string, ipAllowlistId: string, environmentId: string, service: string): Promise<object>;
+    /**
+     * Unbind an IP Allow List from an environment
+     * @param programId - the program id
+     * @param ipAllowlistId - the allow list id
+     * @param environmentId - the environment id
+     * @param service - the service name
+     * @returns a truthy value
+     */
+    removeIpAllowlistBinding(programId: string, ipAllowlistId: string, environmentId: string, service: string): Promise<object>;
 }
 
 /**
@@ -398,6 +453,40 @@ declare type Variable = {
 declare type LogOptionRepresentation = {
     service: string;
     name: string;
+};
+
+/**
+ * Describes an __IP Allowed List Binding__
+ * @property id - Identifier of the IP Allowed List Binding to an Environment
+ * @property tier - Tier of the environment.
+ * @property status - Status of the binding.
+ * @property programId - Identifier of the program.
+ * @property ipAllowListId - Identifier of the IP allow list.
+ * @property environmentId - Identifier of the environment.
+ */
+declare type IPAllowedListBinding = {
+    id: string;
+    tier: string;
+    status: string;
+    programId: string;
+    ipAllowListId: string;
+    environmentId: string;
+};
+
+/**
+ * Describes an __IP Allowed List__
+ * @property id - Identifier of the IP Allowed List
+ * @property name - Name of the IP Allowed List
+ * @property ipCidrSet - IP CIDR Set
+ * @property programId - Identifier of the program.
+ * @property bindings - IP Allowlist bindings
+ */
+declare type IPAllowedList = {
+    id: string;
+    name: string;
+    ipCidrSet: string[];
+    programId: string;
+    bindings: IPAllowedListBinding[];
 };
 
 /**
