@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.3.0](https://github.com/adobe/aio-lib-cloudmanager/compare/0.2.1...0.3.0) (2021-02-07)
+
+
+### Features
+
+* add listExecutions() method. fixes [#60](https://github.com/adobe/aio-lib-cloudmanager/issues/60) ([#61](https://github.com/adobe/aio-lib-cloudmanager/issues/61)) ([5e6e9b9](https://github.com/adobe/aio-lib-cloudmanager/commit/5e6e9b958db2940743a96938d02bfef73ac6bd66))
+
 ## [0.2.1](https://github.com/adobe/aio-lib-cloudmanager/compare/0.2.0...0.2.1) (2021-01-20)
 
 

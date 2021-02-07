@@ -280,7 +280,7 @@ Get the current execution for a pipeline
 List the most recent executions for a pipeline
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code> - the execution  
+**Returns**: <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code> - the list of executions  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
