@@ -329,6 +329,54 @@ class CloudManagerAPI {
     })
   }
 
+  async _getExecutions (href, result, limit) {
+    return new Promise((resolve, reject) => {
+      this._get(href, codes.ERROR_LIST_EXECUTIONS).then(res => {
+        res.json().then(json => {
+          const remaining = limit - result.length
+          const executionResponse = halfred.parse(json)
+          const newlyRetrievedExecutions = executionResponse.embeddedArray('executions')
+          if (newlyRetrievedExecutions.length === 0) {
+            // no more executions. resolve
+            resolve()
+          } else if (remaining <= newlyRetrievedExecutions.length) {
+            // this will be the last batch. add to the result and resolve
+            Array.prototype.push.apply(result, newlyRetrievedExecutions.slice(0, remaining))
+            resolve()
+          } else {
+            // add and do another batch
+            Array.prototype.push.apply(result, newlyRetrievedExecutions)
+            const nextLink = executionResponse.link('next')
+            if (!nextLink) {
+              resolve()
+            } else {
+              this._getExecutions(nextLink.href, result, limit).then(resolve, reject)
+            }
+          }
+        })
+      }, reject)
+    })
+  }
+
+  /**
+   * List the most recent executions for a pipeline
+   *
+   * @param {string} programId the program id
+   * @param {string} pipelineId the pipeline id
+   * @param {number} limit the maximum number of executions to return (defaults to 20)
+   * @returns {Promise<Array<PipelineExecution>>} the list of executions
+   */
+  async listExecutions (programId, pipelineId, limit = 20) {
+    const pipeline = await this._findPipeline(programId, pipelineId)
+
+    const result = []
+    return this._getExecutions(pipeline.link(rels.executions).href, result, limit).then(() => {
+      return result
+    }, e => {
+      throw e
+    })
+  }
+
   /**
    * Get an execution for a pipeline
    *

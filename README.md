@@ -149,6 +149,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.createExecution(programId, pipelineId)](#CloudManagerAPI+createExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * ~~[.startExecution(programId, pipelineId)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>~~
     * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
+    * [.listExecutions(programId, pipelineId, limit)](#CloudManagerAPI+listExecutions) ⇒ <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code>
     * [.getExecution(programId, pipelineId, executionId)](#CloudManagerAPI+getExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.getQualityGateResults(programId, pipelineId, executionId, action)](#CloudManagerAPI+getQualityGateResults) ⇒ [<code>Promise.&lt;PipelineStepMetrics&gt;</code>](#PipelineStepMetrics)
     * [.cancelCurrentExecution(programId, pipelineId)](#CloudManagerAPI+cancelCurrentExecution) ⇒ <code>Promise.&lt;object&gt;</code>
@@ -272,6 +273,20 @@ Get the current execution for a pipeline
 | --- | --- | --- |
 | programId | <code>string</code> | the program id |
 | pipelineId | <code>string</code> | the pipeline id |
+
+<a name="CloudManagerAPI+listExecutions"></a>
+
+### cloudManagerAPI.listExecutions(programId, pipelineId, limit) ⇒ <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code>
+List the most recent executions for a pipeline
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code> - the execution  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| programId | <code>string</code> |  | the program id |
+| pipelineId | <code>string</code> |  | the pipeline id |
+| limit | <code>number</code> | <code>20</code> | the maximum number of executions to return (defaults to 20) |
 
 <a name="CloudManagerAPI+getExecution"></a>
 

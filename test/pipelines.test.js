@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 
 const { codes } = require('../src/SDKErrors')
 
-/* global createSdkClient, fetchMock */ // for linter
+/* global createSdkClient, fetchMock, mockFetchResponseWithMethod */ // for linter
 test('listPipelines - success empty', async () => {
   expect.assertions(2)
 
@@ -361,4 +361,121 @@ test('setPipelineVariables - secrets only', async () => {
     type: 'secretString',
     value: 'bar2',
   }])
+})
+
+test('listExecutions - 404 on executions link', async () => {
+  mockFetchResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions', 'GET', 404)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.listExecutions('5', '5')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_LIST_EXECUTIONS({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions (404 Not Found)' }),
+  )
+  const getExecutionCalls = fetchMock.calls().filter(call => call[0].indexOf('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions') === 0 && call[1].method === 'GET')
+  expect(getExecutionCalls.length).toBe(1)
+})
+
+test('listExecutions - page has more than limit', async () => {
+  mockFetchResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions', 'GET', {
+    _links: {
+      next: {
+        href: '/api/program/5/pipeline/5/executions?page=2',
+      },
+    },
+    _embedded: {
+      executions: [
+        {}, // 1
+        {}, // 2
+        {}, // 3
+        {}, // 4
+        {}, // 5
+        {}, // 6
+        {}, // 7
+        {}, // 8
+        {}, // 9
+        {}, // 10
+        {}, // 11
+        {}, // 12
+      ],
+    },
+  })
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.listExecutions('5', '5', 10)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toHaveLength(10)
+  const getExecutionCalls = fetchMock.calls().filter(call => call[0].indexOf('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions') === 0 && call[1].method === 'GET')
+  expect(getExecutionCalls.length).toBe(1)
+})
+
+test('listExecutions - second page is empty', async () => {
+  mockFetchResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions', 'GET', {
+    _links: {
+      next: {
+        href: '/api/program/5/pipeline/5/executions?page=2',
+      },
+    },
+    _embedded: {
+      executions: [
+        {}, // 1
+        {}, // 2
+        {}, // 3
+        {}, // 4
+        {}, // 5
+        {}, // 6
+        {}, // 7
+        {}, // 8
+        {}, // 9
+        {}, // 10
+        {}, // 11
+        {}, // 12
+      ],
+    },
+  })
+  mockFetchResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions?page=2', 'GET', {
+    _embedded: {
+      executions: [
+      ],
+    },
+  })
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.listExecutions('5', '5', 15)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toHaveLength(12)
+  const getExecutionCalls = fetchMock.calls().filter(call => call[0].indexOf('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions') === 0 && call[1].method === 'GET')
+  expect(getExecutionCalls.length).toBe(2)
+})
+
+test('listExecutions - no link to second page', async () => {
+  mockFetchResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions', 'GET', {
+    _embedded: {
+      executions: [
+        {}, // 1
+        {}, // 2
+        {}, // 3
+        {}, // 4
+        {}, // 5
+        {}, // 6
+        {}, // 7
+        {}, // 8
+        {}, // 9
+        {}, // 10
+        {}, // 11
+        {}, // 12
+      ],
+    },
+  })
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.listExecutions('5', '5', 15)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toHaveLength(12)
+  const getExecutionCalls = fetchMock.calls().filter(call => call[0].indexOf('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions') === 0 && call[1].method === 'GET')
+  expect(getExecutionCalls.length).toBe(1)
 })
