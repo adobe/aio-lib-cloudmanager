@@ -21,6 +21,8 @@ jobs:
         run: npm install
       - name: Test
         run: npm test
+      - name: Codecov
+        uses: codecov/codecov-action@v1.2.1
       - name: Generate Docs
         run: npm run generate-docs
       - name: Release
