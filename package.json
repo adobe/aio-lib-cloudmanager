@@ -21,7 +21,10 @@
     "generate-docs": "npm run generate-jsdoc-types && npm run typings && npm run jsdoc",
     "semantic-release": "semantic-release",
     "prepack": "npm run generate-jsdoc-types && npm run typings",
-    "version": "npm run generate-docs && git add README.md"
+    "version": "npm run generate-docs && git add README.md",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "dependencies": {
     "@adobe/aio-lib-core-errors": "^3.0.0",
@@ -50,13 +53,14 @@
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-standard": "4.1.0",
     "fetch-mock": "9.10.1",
-    "husky": "4.3.8",
+    "husky": "^5.0.9",
     "jest": "26.6.3",
     "jest-junit": "12.0.0",
     "js-yaml": "4.0.0",
     "jscpd": "3.3.23",
     "jsdoc": "3.6.6",
     "jsdoc-to-markdown": "6.0.1",
+    "pinst": "^2.1.4",
     "semantic-release": "17.3.9",
     "sinon": "9.2.4",
     "stdout-stderr": "0.1.13",
@@ -64,11 +68,6 @@
   },
   "engines": {
     "node": ">=10.22.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "commitlint": {
     "extends": [
