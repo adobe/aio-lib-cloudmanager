@@ -91,7 +91,7 @@ declare class CloudManagerAPI {
      * @param programId - the program id
      * @param pipelineId - the pipeline id
      * @param limit - the maximum number of executions to return (defaults to 20)
-     * @returns the execution
+     * @returns the list of executions
      */
     listExecutions(programId: string, pipelineId: string, limit?: number): Promise<PipelineExecution[]>;
     /**
