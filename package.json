@@ -57,7 +57,7 @@
     "jest": "26.6.3",
     "jest-junit": "12.0.0",
     "js-yaml": "4.0.0",
-    "jscpd": "3.3.23",
+    "jscpd": "3.3.24",
     "jsdoc": "3.6.6",
     "jsdoc-to-markdown": "6.0.1",
     "pinst": "2.1.4",
