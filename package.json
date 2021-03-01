@@ -59,7 +59,7 @@
     "js-yaml": "4.0.0",
     "jscpd": "3.3.24",
     "jsdoc": "3.6.6",
-    "jsdoc-to-markdown": "6.0.1",
+    "jsdoc-to-markdown": "7.0.0",
     "pinst": "2.1.6",
     "semantic-release": "17.3.9",
     "sinon": "9.2.4",
