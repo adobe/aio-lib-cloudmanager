@@ -22,7 +22,7 @@ jobs:
       - name: Test
         run: npm test
       - name: Codecov
-        uses: codecov/codecov-action@v1.2.1
+        uses: codecov/codecov-action@v1.2.2
       - name: Generate Docs
         run: npm run generate-docs
       - name: Release
