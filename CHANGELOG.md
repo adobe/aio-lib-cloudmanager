@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.0...0.3.1) (2021-03-15)
+
+
+### Bug Fixes
+
+* **deps:** allow renovate to automerge all dev dependencies except husky ([a2ce038](https://github.com/adobe/aio-lib-cloudmanager/commit/a2ce0383fb2886cbd3f0600418ae289806fe945a))
+
 # [0.3.0](https://github.com/adobe/aio-lib-cloudmanager/compare/0.2.1...0.3.0) (2021-02-07)
 
 
