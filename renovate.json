@@ -7,6 +7,14 @@
     {
       "packageNames": ["fetch-mock"],
       "allowedVersions": "9.10.1"
+    },
+    {
+      "packageNames": ["husky"],
+      "allowedVersions": "<6.0"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
     }
   ]
 }
