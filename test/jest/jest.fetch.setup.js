@@ -760,7 +760,25 @@ beforeEach(() => {
     },
     _totalNumberOfItems: 0,
   })
-  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables', 'PATCH', 400)
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables', 'PATCH', {
+    status: 400,
+    headers: {
+      'content-type': 'application/problem+json',
+      'x-request-id': 'abcdefg',
+    },
+    body: {
+      type: 'http://ns.adobe.com/adobecloud/validation-exception',
+      title: 'Constraint Violations',
+      errors: {
+        'patchPipelineVariables.arg2[0].name': {
+          field: 'patchPipelineVariables.arg2[0].name',
+          code: 'VALIDATION_ERROR_CODE',
+          message: 'must match "[a-zA-Z_][a-zA-Z_0-9.]*"',
+          invalidValue: 'some-name',
+        },
+      },
+    },
+  })
 
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/6', {
     id: '6',
