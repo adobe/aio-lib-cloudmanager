@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.1...0.3.2) (2021-04-01)
+
+
+### Bug Fixes
+
+* **variables:** output variables validation issues in error message. fixes [#96](https://github.com/adobe/aio-lib-cloudmanager/issues/96) ([#97](https://github.com/adobe/aio-lib-cloudmanager/issues/97)) ([26c363d](https://github.com/adobe/aio-lib-cloudmanager/commit/26c363d496b9affe0863d26379fb2406d9981c02))
+
 ## [0.3.1](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.0...0.3.1) (2021-03-15)
 
 
