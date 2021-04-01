@@ -118,6 +118,22 @@ class CloudManagerAPI {
     return this
   }
 
+  _getErrors (problem) {
+    if (problem.errors) {
+      if (_.isArray(problem.errors) && problem.errors.length > 0) {
+        return problem.errors.map(error => error.message || error).join(', ')
+      } else if (_.isObject(problem.errors)) {
+        return Object.values(problem.errors).map(error => {
+          if (error.field && error.message && error.invalidValue) {
+            return `${error.field} (${error.invalidValue}) ${error.message}`
+          } else {
+            return error.message
+          }
+        }).join(', ')
+      }
+    }
+  }
+
   async _doRequest (path, method, body, ErrorClass) {
     const url = `${this.baseUrl}${path}`
     const options = {
@@ -137,6 +153,10 @@ class CloudManagerAPI {
     logger.debug(`fetch: ${method} ${url}`)
     return new Promise((resolve, reject) => {
       fetch(url, options).then(res => {
+        const requestId = res.headers.get('x-request-id')
+        if (requestId) {
+          logger.debug(`request id: ${requestId}`)
+        }
         if (res.ok) resolve(res)
         else {
           res.text().then(text => {
@@ -147,8 +167,8 @@ class CloudManagerAPI {
               try {
                 if (resContentType.indexOf('application/problem+json') === 0) {
                   const problem = JSON.parse(text)
-                  if (problem.errors && problem.errors.length > 0) {
-                    const errors = problem.errors.map(error => error.message || error).join(', ')
+                  const errors = this._getErrors(problem)
+                  if (errors) {
                     const handler = problemTypes[problem.type] || problemTypes.other
                     sdkDetails.errors = problem.errors
                     if (handler.extraDetailsKey) {

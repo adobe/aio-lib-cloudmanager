@@ -291,7 +291,7 @@ test('setPipelineVariables - PATCH fails', async () => {
   const sdkClient = await createSdkClient()
   const result = sdkClient.setPipelineVariables('5', '8', [
     {
-      name: 'foo',
+      name: 'some-name',
       value: 'bar',
       type: 'string',
     },
@@ -299,7 +299,7 @@ test('setPipelineVariables - PATCH fails', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_SET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables (400 Bad Request)' }),
+    new codes.ERROR_SET_VARIABLES({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables (400 Bad Request) - Validation Error(s): patchPipelineVariables.arg2[0].name (some-name) must match "[a-zA-Z_][a-zA-Z_0-9.]*"' }),
   )
 })
 
