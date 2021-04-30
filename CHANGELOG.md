@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.2...0.3.3) (2021-04-30)
+
+
+### Bug Fixes
+
+* **logs:** correct error handling in _getLogs. fixes [#114](https://github.com/adobe/aio-lib-cloudmanager/issues/114) ([#115](https://github.com/adobe/aio-lib-cloudmanager/issues/115)) ([5ad7712](https://github.com/adobe/aio-lib-cloudmanager/commit/5ad77127de0d2c457f8b7e3eaa8cfcb286c52cce))
+
 ## [0.3.2](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.1...0.3.2) (2021-04-01)
 
 

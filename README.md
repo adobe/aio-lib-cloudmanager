@@ -797,8 +797,9 @@ A named value than can be set on an Environment or Pipeline
 | Name | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number. |
-| value | <code>string</code> | Value of the variable. Read-Write for non-secrets, write-only for secrets. |
+| value | <code>string</code> | Value of the variable. Read-Write for non-secrets, write-only for secrets. The length of `secretString` values must be less than 500 characters. |
 | type | <code>string</code> | Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated. |
+| service | <code>string</code> | Service of the variable. When not provided, the variable applies to all services. Currently only the values 'author' and 'publish' are supported. Note - this value is case-sensitive. |
 
 <a name="LogOptionRepresentation"></a>
 
