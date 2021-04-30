@@ -79,3 +79,39 @@ test('download-logs - success', async () => {
     path: outputDirectory + '/1-author-aemerror-2019-09-7.log',
   }])
 })
+
+test('download-logs - failure - download url is empty object', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.downloadLogs('4', '1', 'publish', 'empty', '1', outputDirectory)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_NO_LOG_REDIRECT({ messageValues: ['https://cloudmanager.adobe.io/api/program/4/environment/2/logs/download?service=publish&name=empty&date=2019-09-7', '{}'] }),
+  )
+})
+
+test('download-logs - failure - download url return 404', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.downloadLogs('4', '1', 'publish', '404', '1', outputDirectory)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_LOG({ messageValues: ['https://cloudmanager.adobe.io/api/program/4/environment/2/logs/download?service=publish&name=404&date=2019-09-7 (404 Not Found)'] }),
+  )
+})
+
+test('download-logs - failure - redirect url return 404', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.downloadLogs('4', '1', 'publish', 'redirect_fails', '1', outputDirectory)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_LOG_DOWNLOAD({ messageValues: ['https://filestore/logs/bad.log.gz', './log-output/1-publish-404-2019-09-8.log', '404', 'Not Found'] }),
+  )
+})
