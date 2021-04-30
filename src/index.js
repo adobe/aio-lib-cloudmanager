@@ -631,14 +631,15 @@ class CloudManagerAPI {
 
   async _getLogs (environment, service, name, days) {
     if (!environment.link(rels.logs)) {
-      throw new Error(`Could not find logs link for environment ${environment.id} for program ${environment.programId}`)
+      throw new codes.ERROR_FIND_LOGS_LINK_ENVIRONMENT({ messageValues: [environment.id, environment.programId] })
     }
     const logsTemplate = UriTemplate.parse(environment.link(rels.logs).href)
     const logsLink = logsTemplate.expand({ service: service, name: name, days: days })
 
-    return this._get(logsLink).then((res) => {
-      if (res.ok) return res.json()
-      else throw new Error(`Cannot get logs: ${res.url} (${res.status} ${res.statusText})`)
+    return this._get(logsLink, codes.ERROR_GET_LOGS).then(res => {
+      return res.json()
+    }, e => {
+      throw e
     })
   }
 

@@ -225,6 +225,10 @@ beforeEach(() => {
             'http://ns.adobe.com/adobecloud/rel/variables': {
               href: '/api/program/4/environment/3/variables',
             },
+            'http://ns.adobe.com/adobecloud/rel/logs': {
+              href: '/api/program/4/environment/3/logs?service={service}&name={name}&days={days}',
+              templated: true,
+            },
           },
           id: '3',
           programId: '4',
@@ -384,6 +388,7 @@ beforeEach(() => {
   fetchMock.mock('https://filestore/logs/author_aemerror_2019-09-7.log.gz', () => {
     return new nodeFetch.Response(fs.createReadStream(path.join(__dirname, 'data/file.log.gz')))
   })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/logs?service=author&name=aemerror&days=1', 404)
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/variables', {
     _links: {
       'http://ns.adobe.com/adobecloud/rel/environment': {
