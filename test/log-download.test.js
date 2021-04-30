@@ -28,7 +28,7 @@ afterEach(() => {
   del.sync(outputDirectory)
 })
 
-test('download-logs - failure', async () => {
+test('download-logs - failure -- no environment', async () => {
   expect.assertions(2)
 
   const sdkClient = await createSdkClient()
@@ -37,6 +37,30 @@ test('download-logs - failure', async () => {
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
     new codes.ERROR_FIND_ENVIRONMENT({ messageValues: ['17', '5'] }),
+  )
+})
+
+test('download-logs - failure -- no link', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.downloadLogs('4', '2', 'author', 'aemerror')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_LOGS_LINK_ENVIRONMENT({ messageValues: ['2', '4'] }),
+  )
+})
+
+test('download-logs - failure -- logs link 404', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.downloadLogs('4', '3', 'author', 'aemerror', '1')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_LOGS({ messageValues: ['https://cloudmanager.adobe.io/api/program/4/environment/3/logs?service=author&name=aemerror&days=1 (404 Not Found)'] }),
   )
 })
 
