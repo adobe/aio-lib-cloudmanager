@@ -644,14 +644,13 @@ class CloudManagerAPI {
   }
 
   async _download (href, outputPath, resultObject) {
-    const res = await this._get(href, 'Could not obtain download link')
+    const res = await this._get(href, codes.ERROR_GET_LOG)
 
     const downloadUrl = res.url
 
     const json = await res.json()
     if (!json || !json.redirect) {
-      logger.debug(json)
-      throw new Error(`Could not retrieve redirect from ${res.url} (${res.status} ${res.statusText})`)
+      throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
     }
 
     const redirectUrl = json.redirect

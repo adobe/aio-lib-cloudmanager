@@ -339,7 +339,58 @@ beforeEach(() => {
     },
   })
 
-  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=publish&name=aemerror&days=1', {
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=author&name=aemerror&date=2019-09-8', {
+    redirect: 'https://filestore/logs/author_aemerror_2019-09-8.log.gz',
+  })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=author&name=aemerror&date=2019-09-7', {
+    redirect: 'https://filestore/logs/author_aemerror_2019-09-7.log.gz',
+  })
+
+  fetchMock.mock('https://filestore/logs/author_aemerror_2019-09-8.log.gz', () => {
+    return new nodeFetch.Response(fs.createReadStream(path.join(__dirname, 'data/file.log.gz')))
+  })
+  fetchMock.mock('https://filestore/logs/author_aemerror_2019-09-7.log.gz', () => {
+    return new nodeFetch.Response(fs.createReadStream(path.join(__dirname, 'data/file.log.gz')))
+  })
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=publish&name=empty&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=publish&name=empty&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['publish'],
+    name: ['empty'],
+    days: 1,
+    _embedded: {
+      downloads: [
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/2/logs/download?service=publish&name=empty&date=2019-09-7',
+              templated: false,
+            },
+          },
+          service: 'publish',
+          name: 'aemerror',
+          date: '2019-09-8',
+          programId: 4,
+          environmentId: 2,
+        },
+      ],
+    },
+  })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/2/logs/download?service=publish&name=empty&date=2019-09-7', {})
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=publish&name=aemerror&days=2', {
     _links: {
       self: {
         href: '/api/program/4/environment/1/logs?service=publish&type=aemerror&days=1',
@@ -371,23 +422,100 @@ beforeEach(() => {
           programId: 4,
           environmentId: 2,
         },
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/2/logs/download?service=publish&name=aemerror&date=2019-09-6',
+              templated: false,
+            },
+          },
+          service: 'publish',
+          name: 'aemerror',
+          date: '2019-09-7',
+          programId: 4,
+          environmentId: 2,
+        },
       ],
     },
   })
 
-  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=author&name=aemerror&date=2019-09-8', {
-    redirect: 'https://filestore/logs/author_aemerror_2019-09-8.log.gz',
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=publish&name=404&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=publish&name=404&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['publish'],
+    name: ['404'],
+    days: 1,
+    _embedded: {
+      downloads: [
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/2/logs/download?service=publish&name=404&date=2019-09-7',
+              templated: false,
+            },
+          },
+          service: 'publish',
+          name: '404',
+          date: '2019-09-8',
+          programId: 4,
+          environmentId: 2,
+        },
+      ],
+    },
   })
-  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=author&name=aemerror&date=2019-09-7', {
-    redirect: 'https://filestore/logs/author_aemerror_2019-09-7.log.gz',
-  })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/2/logs/download?service=publish&name=404&date=2019-09-7', 404)
 
-  fetchMock.mock('https://filestore/logs/author_aemerror_2019-09-8.log.gz', () => {
-    return new nodeFetch.Response(fs.createReadStream(path.join(__dirname, 'data/file.log.gz')))
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=publish&name=redirect_fails&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=publish&name=404&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['publish'],
+    name: ['redirect_fails'],
+    days: 1,
+    _embedded: {
+      downloads: [
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/2/logs/download?service=publish&name=redirect_fails&date=2019-09-7',
+              templated: false,
+            },
+          },
+          service: 'publish',
+          name: '404',
+          date: '2019-09-8',
+          programId: 4,
+          environmentId: 2,
+        },
+      ],
+    },
   })
-  fetchMock.mock('https://filestore/logs/author_aemerror_2019-09-7.log.gz', () => {
-    return new nodeFetch.Response(fs.createReadStream(path.join(__dirname, 'data/file.log.gz')))
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/2/logs/download?service=publish&name=redirect_fails&date=2019-09-7', {
+    redirect: 'https://filestore/logs/bad.log.gz',
   })
+  fetchMock.mock('https://filestore/logs/bad.log.gz', 404)
+
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/logs?service=author&name=aemerror&days=1', 404)
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/variables', {
     _links: {
