@@ -1,4 +1,7 @@
 {
     "jest.pathToConfig": "test/jest.config.js",
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "eslint.options" : {
+        "rulePaths" : "eslint_rules"
+    }
 }
