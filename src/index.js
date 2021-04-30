@@ -519,7 +519,7 @@ class CloudManagerAPI {
     } else if (step.action === 'managed') {
       body.start = true
     } else if (step.action === 'schedule') {
-      throw new Error('Cannot advanced schedule step (yet)')
+      throw new codes.ERROR_UNSUPPORTED_ADVANCE_STEP({ messageValues: step.action })
     } else if (step.action === 'deploy') {
       body.resume = true
     } else {

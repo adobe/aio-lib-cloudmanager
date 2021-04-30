@@ -853,6 +853,7 @@ beforeEach(() => {
     1008: require('./data/execution1008.json'),
     1009: require('./data/execution1009.json'),
     1010: require('./data/execution1010.json'),
+    1011: require('./data/execution1011.json'),
   }
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution', 'GET', () => pipeline7Executions[executionForPipeline7])
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1006/phase/4596/step/8493/metrics', 'GET', require('./data/codequality-metrics.json'))

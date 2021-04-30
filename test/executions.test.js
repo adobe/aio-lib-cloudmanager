@@ -267,6 +267,20 @@ test('advanceCurrentExecution - approval waiting', async () => {
   await expect(fetchMock.called('advance-1007')).toBe(true)
 })
 
+test('advanceCurrentExecution - schedule waiting', async () => {
+  fetchMock.setPipeline7Execution('1011')
+
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.advanceCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_UNSUPPORTED_ADVANCE_STEP({ messageValues: 'schedule' }),
+  )
+})
+
 test('getExecutionStepLog - failure', async () => {
   expect.assertions(2)
 
