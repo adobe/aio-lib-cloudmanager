@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.5](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.4...0.3.5) (2021-04-30)
+
+
+### Bug Fixes
+
+* **advance:** fix error code usage in advance for unsupported step. fixes [#117](https://github.com/adobe/aio-lib-cloudmanager/issues/117) ([#119](https://github.com/adobe/aio-lib-cloudmanager/issues/119)) ([9ea7662](https://github.com/adobe/aio-lib-cloudmanager/commit/9ea7662e572fd4ac5194ceb8737cfb7ace438772))
+
 ## [0.3.4](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.3...0.3.4) (2021-04-30)
 
 
