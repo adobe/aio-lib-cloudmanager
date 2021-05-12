@@ -61,7 +61,7 @@
     "jsdoc": "3.6.6",
     "jsdoc-to-markdown": "7.0.1",
     "pinst": "2.1.6",
-    "semantic-release": "17.4.2",
+    "semantic-release": "17.4.3",
     "sinon": "10.0.0",
     "stdout-stderr": "0.1.13",
     "tsd-jsdoc": "2.5.0"
