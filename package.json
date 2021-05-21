@@ -42,7 +42,7 @@
     "@semantic-release/git": "9.0.0",
     "codecov": "3.8.2",
     "del": "6.0.0",
-    "dotenv": "9.0.2",
+    "dotenv": "10.0.0",
     "eol": "0.9.1",
     "eslint": "7.26.0",
     "eslint-config-standard": "16.0.2",
