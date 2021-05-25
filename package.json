@@ -55,7 +55,7 @@
     "fetch-mock": "9.11.0",
     "husky": "5.2.0",
     "jest": "27.0.1",
-    "jest-junit": "12.0.0",
+    "jest-junit": "12.1.0",
     "js-yaml": "4.1.0",
     "jscpd": "3.3.26",
     "jsdoc": "3.6.7",
