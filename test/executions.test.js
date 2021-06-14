@@ -89,7 +89,7 @@ test('getExecution - bad pipeline', async () => {
   )
 })
 
-test('getQualityGateResults - failure', async () => {
+test('getQualityGateResults - execution not found', async () => {
   expect.assertions(2)
 
   const sdkClient = await createSdkClient()
@@ -98,6 +98,18 @@ test('getQualityGateResults - failure', async () => {
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
     new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/1002 (404 Not Found)' }),
+  )
+})
+
+test('getQualityGateResults - metrics not found', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getQualityGateResults('5', '7', '1001', 'reportPerformanceTest')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_METRICS({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1001/phase/4597/step/8495/metrics (404 Not Found)' }),
   )
 })
 
@@ -188,6 +200,18 @@ test('cancelCurrentExecution - approval waiting', async () => {
   await expect(fetchMock.called('cancel-1007')).toBe(true)
 })
 
+test('cancelCurrentExecution - managed pipeline', async () => {
+  fetchMock.setPipeline7Execution('1013')
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.cancelCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toEqual({})
+  await expect(fetchMock.called('cancel-1013')).toBe(true)
+})
+
 test('cancelCurrentExecution - deploy waiting', async () => {
   fetchMock.setPipeline7Execution('1008')
 
@@ -212,6 +236,34 @@ test('cancelCurrentExecution - deploy waiting with no advance (error state)', as
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
     new codes.ERROR_FIND_ADVANCE_LINK({ messageValues: 'deploy' }),
+  )
+})
+
+test('cancelCurrentExecution - all finished (error state)', async () => {
+  fetchMock.setPipeline7Execution('1012')
+
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.cancelCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_CURRENT_STEP({ messageValues: '7' }),
+  )
+})
+
+test('cancelCurrentExecution - approval failed', async () => {
+  fetchMock.setPipeline7Execution('1014')
+
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.cancelCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_CANCEL_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1014/phase/8567/step/15490/cancel (500 Internal Server Error)' }),
   )
 })
 
@@ -279,6 +331,59 @@ test('advanceCurrentExecution - schedule waiting', async () => {
   await expect(result).rejects.toEqual(
     new codes.ERROR_UNSUPPORTED_ADVANCE_STEP({ messageValues: 'schedule' }),
   )
+})
+
+test('advanceCurrentExecution - managed pipeline', async () => {
+  fetchMock.setPipeline7Execution('1013')
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.advanceCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toEqual({})
+  await expect(fetchMock.called('advance-1013')).toBe(true)
+})
+
+test('advanceCurrentExecution - no advance link (edge case)', async () => {
+  fetchMock.setPipeline7Execution('1015')
+
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.advanceCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_ADVANCE_LINK({ messageValues: 'approval' }),
+  )
+})
+
+test('advanceCurrentExecution - advance failed', async () => {
+  fetchMock.setPipeline7Execution('1016')
+
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.advanceCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_ADVANCE_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1016/phase/8567/step/15490/advance (500 Internal Server Error)' }),
+  )
+})
+
+test('advanceCurrentExecution - deploy waiting', async () => {
+  fetchMock.setPipeline7Execution('1008')
+
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.advanceCurrentExecution('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toEqual({})
+  await expect(fetchMock.called('advance-1008')).toBe(true)
 })
 
 test('getExecutionStepLog - failure', async () => {

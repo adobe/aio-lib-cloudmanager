@@ -1,4 +1,3 @@
-
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -12,6 +11,8 @@ governing permissions and limitations under the License.
 
 const fs = require('fs')
 const del = require('del')
+const zlib = require('zlib')
+const actualZlib = jest.requireActual('zlib')
 const { codes } = require('../src/SDKErrors')
 
 /* global createSdkClient */ // for linter
@@ -22,10 +23,12 @@ beforeEach(() => {
   if (fs.existsSync(outputDirectory)) {
     del.sync(outputDirectory)
   }
+  zlib.createGunzip.mockImplementation(actualZlib.createGunzip)
 })
 
 afterEach(() => {
   del.sync(outputDirectory)
+  zlib.createGunzip.mockReset()
 })
 
 test('download-logs - failure -- no environment', async () => {
@@ -74,6 +77,43 @@ test('download-logs - success', async () => {
   await expect(result).resolves.toHaveLength(2)
   await expect(result).resolves.toMatchObject([{
     path: outputDirectory + '/1-author-aemerror-2019-09-8.log',
+  },
+  {
+    path: outputDirectory + '/1-author-aemerror-2019-09-7.log',
+  }])
+})
+
+test('download-logs - uncaught unzip error', async () => {
+  zlib.createGunzip.mockImplementation(() => {
+    const error = new Error() // eslint-disable-line aio-lib-cloudmanager-error-codes
+    error.errno = 6
+    throw error
+  })
+
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.downloadLogs('4', '1', 'author', 'aemerror', '1', outputDirectory)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_LOG_UNZIP({ messageValues: ['https://filestore/logs/author_aemerror_2019-09-8.log.gz', './log-output/1-author-aemerror-2019-09-8.log'] }),
+  )
+})
+
+test('download-logs - success - multiple', async () => {
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.downloadLogs('4', '1', 'preview', 'aemerror', '1', outputDirectory)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toHaveLength(3)
+  await expect(result).resolves.toMatchObject([{
+    path: outputDirectory + '/1-author-aemerror-2019-09-8-0.log',
+  },
+  {
+    path: outputDirectory + '/1-author-aemerror-2019-09-8-1.log',
   },
   {
     path: outputDirectory + '/1-author-aemerror-2019-09-7.log',

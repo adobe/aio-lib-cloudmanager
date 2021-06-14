@@ -14,6 +14,10 @@ const { codes } = require('../src/SDKErrors')
 
 /* global createSdkClient, fetchMock */ // for linter
 
+beforeEach(() => {
+  fetchMock.resetProgram4EmbeddedEnvironments()
+})
+
 test('listEnvironments - failure', async () => {
   expect.assertions(2)
 
@@ -34,6 +38,19 @@ test('listEnvironments - success empty', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).resolves.toEqual([])
+})
+
+test('listEnvironments - no embedded list', async () => {
+  fetchMock.setProgram4EmbeddedEnvironmentsToEmptyObject()
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.listEnvironments('4')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_ENVIRONMENTS({ messageValues: '4' }),
+  )
 })
 
 test('listEnvironments - success', async () => {

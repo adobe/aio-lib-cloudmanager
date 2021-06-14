@@ -40,7 +40,7 @@ function findStepState (execution, action) {
       return execution.embeddedArray('stepStates').find(stepState => stepState.action === 'securityTest')
     case 'performance':
       gates = execution.embeddedArray('stepStates').filter(stepState => stepState.action === 'loadTest' || stepState.action === 'assetsTest' || stepState.action === 'reportPerformanceTest')
-      if (gates) {
+      if (gates && gates.length > 0) {
         return gates[gates.length - 1]
       } else {
         return
