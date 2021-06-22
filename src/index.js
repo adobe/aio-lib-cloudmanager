@@ -658,14 +658,14 @@ class CloudManagerAPI {
     const logRes = await fetch(redirectUrl)
     if (!logRes.ok) {
       throw new codes.ERROR_LOG_DOWNLOAD({
-        messageValues: [logRes.url, outputPath, logRes.status, logRes.statusText],
+        messageValues: [redirectUrl, outputPath, logRes.status, logRes.statusText],
       })
     }
 
     await this._streamAndUnzip(logRes.body, fs.createWriteStream(outputPath)).catch(
       function (error) {
         if (error.errno !== -5 || error.code !== 'Z_BUF_ERROR') {
-          throw new codes.ERROR_LOG_UNZIP({ messageValues: [logRes.url, outputPath] })
+          throw new codes.ERROR_LOG_UNZIP({ messageValues: [redirectUrl, outputPath] })
         }
       },
     )
@@ -748,6 +748,13 @@ class CloudManagerAPI {
     await this._getLiveStream(programId, environment, service, name, tailingSasUrl, contentLength, outputStream)
   }
 
+  _pipeBody (body, writeStream) {
+    return new Promise((resolve) => {
+      body.pipe(writeStream, { end: false })
+      body.on('end', () => resolve({}))
+    })
+  }
+
   async _getLiveStream (programId, environment, service, name, tailingSasUrl, currentStartLimit, writeStream) {
     for (;;) {
       const options = {
@@ -758,7 +765,7 @@ class CloudManagerAPI {
       const res = await fetch(tailingSasUrl, options)
       if (res.status === 206) {
         const contentLength = res.headers.get('content-length')
-        res.body.pipe(writeStream)
+        await this._pipeBody(res.body, writeStream)
         currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
       } else if (res.status === 416) {
         await sleep(2000)
@@ -766,7 +773,7 @@ class CloudManagerAPI {
          * Handles the rollover around UTC midnight using delta of 5 minutes before and after midnight
          * to account for client's clock synchronisation
          */
-        if (isWithinFiveMinutesOfUTCMidnight(new Date())) {
+        if (isWithinFiveMinutesOfUTCMidnight(new Date(Date.now()))) {
           tailingSasUrl = await this._getTailingSasUrl(programId, environment, service, name)
           const startLimit = await this._getLogFileSizeInitialSize(tailingSasUrl)
           if (parseInt(startLimit) < parseInt(currentStartLimit)) {

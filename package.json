@@ -13,7 +13,7 @@
     "test": "npm run lint && npm run unit-tests",
     "jscpd": "jscpd --pattern 'src/**/*.js'",
     "lint": "eslint src test e2e --rulesdir eslint_rules",
-    "lint-fix": "eslint src test e2e --fix",
+    "lint-fix": "eslint src test e2e --fix --rulesdir eslint_rules",
     "unit-tests": "jest --config test/jest.config.js --maxWorkers=2",
     "e2e": "jest --config e2e/jest.config.js",
     "typings": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/*.js -d .",

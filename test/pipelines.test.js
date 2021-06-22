@@ -12,6 +12,11 @@ governing permissions and limitations under the License.
 const { codes } = require('../src/SDKErrors')
 
 /* global createSdkClient, fetchMock, mockFetchResponseWithMethod */ // for linter
+
+beforeEach(() => {
+  fetchMock.resetProgram5EmbeddedPipelines()
+})
+
 test('listPipelines - success empty', async () => {
   expect.assertions(2)
 
@@ -48,7 +53,46 @@ test('listPipelines - success', async () => {
     id: '8',
     name: 'test4',
     status: 'IDLE',
+  },
+  {
+    id: '9',
+    name: 'test5',
+    status: 'IDLE',
   }])
+})
+
+test('listPipelines - busy -- success', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.listPipelines('5', { busy: true })
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toMatchObject([
+    {
+      id: '6',
+      name: 'test2',
+      status: 'BUSY',
+    },
+    {
+      id: '7',
+      name: 'test3',
+      status: 'BUSY',
+    },
+  ])
+})
+
+test('listPipelines - no embedded list', async () => {
+  fetchMock.setProgram5EmbeddedPipelinesToEmptyObject()
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.listPipelines('5')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_PIPELINES({ messageValues: '5' }),
+  )
 })
 
 test('listPipelines - program in programs list but not found', async () => {
@@ -84,6 +128,18 @@ test('deletePipeline - delete pipeline returns 400', async () => {
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
     new codes.ERROR_DELETE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/7 (400 Bad Request) - Test Exception(s): some error message' }),
+  )
+})
+
+test('deletePipeline - delete pipeline returns 400 -- different error cases', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.deletePipeline('5', '8')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_DELETE_PIPELINE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8 (400 Bad Request) - Test Exception(s): some error message' }),
   )
 })
 
@@ -152,6 +208,20 @@ test('updatePipeline - branch success', async () => {
       repositoryId: '1',
     }]),
   })
+})
+
+test('updatePipeline - no build phase', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.updatePipeline('5', '9', {
+    branch: 'develop',
+  })
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_NO_BUILD_PHASE({ messageValues: '9' }),
+  )
 })
 
 test('updatePipeline - repository and branch success', async () => {

@@ -136,143 +136,163 @@ beforeEach(() => {
       pipelines: [],
     },
   })
-  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environments', {
-    _embedded: {
-      environments: [
-        {
-          _links: {
-            self: {
-              href: '/api/program/4/environment/1',
-              templated: false,
-            },
-            'http://ns.adobe.com/adobecloud/rel/logs': {
-              href: '/api/program/4/environment/1/logs?service={service}&name={name}&days={days}',
-              templated: true,
-            },
-            'http://ns.adobe.com/adobecloud/rel/variables': {
-              href: '/api/program/4/environment/1/variables',
-            },
-            'http://ns.adobe.com/adobecloud/rel/developerConsole': {
-              href: 'https://github.com/adobe/aio-cli-plugin-cloudmanager',
-            },
-          },
-          id: '1',
-          programId: '4',
-          name: 'TestProgram_prod',
-          description: 'description for TestProgram_prod',
-          type: 'prod',
-          availableLogOptions: [
+
+  let useEmptyEmbeddedObjectForProgram4Environments = false
+
+  fetchMock.resetProgram4EmbeddedEnvironments = () => {
+    useEmptyEmbeddedObjectForProgram4Environments = false
+  }
+
+  fetchMock.setProgram4EmbeddedEnvironmentsToEmptyObject = () => {
+    useEmptyEmbeddedObjectForProgram4Environments = true
+  }
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environments', () => {
+    if (useEmptyEmbeddedObjectForProgram4Environments) {
+      return {
+        _embedded: {},
+      }
+    } else {
+      return {
+        _embedded: {
+          environments: [
             {
-              service: 'author',
-              name: 'aemerror',
+              _links: {
+                self: {
+                  href: '/api/program/4/environment/1',
+                  templated: false,
+                },
+                'http://ns.adobe.com/adobecloud/rel/logs': {
+                  href: '/api/program/4/environment/1/logs?service={service}&name={name}&days={days}',
+                  templated: true,
+                },
+                'http://ns.adobe.com/adobecloud/rel/variables': {
+                  href: '/api/program/4/environment/1/variables',
+                },
+                'http://ns.adobe.com/adobecloud/rel/developerConsole': {
+                  href: 'https://github.com/adobe/aio-cli-plugin-cloudmanager',
+                },
+              },
+              id: '1',
+              programId: '4',
+              name: 'TestProgram_prod',
+              description: 'description for TestProgram_prod',
+              type: 'prod',
+              availableLogOptions: [
+                {
+                  service: 'author',
+                  name: 'aemerror',
+                },
+                {
+                  service: 'author',
+                  name: 'aemrequest',
+                },
+                {
+                  service: 'author',
+                  name: 'aemaccess',
+                },
+                {
+                  service: 'publish',
+                  name: 'aemerror',
+                },
+                {
+                  service: 'publish',
+                  name: 'aemrequest',
+                },
+                {
+                  service: 'publish',
+                  name: 'aemaccess',
+                },
+                {
+                  service: 'dispatcher',
+                  name: 'httpdaccess',
+                },
+                {
+                  service: 'dispatcher',
+                  name: 'httpderror',
+                },
+                {
+                  service: 'dispatcher',
+                  name: 'aemdispatcher',
+                },
+              ],
             },
             {
-              service: 'author',
-              name: 'aemrequest',
+              _links: {
+                self: {
+                  href: '/api/program/4/environment/2',
+                  templated: false,
+                },
+              },
+              id: '2',
+              programId: '4',
+              name: 'TestProgram_stage',
+              description: 'description for TestProgram_stage',
+              type: 'stage',
+              availableLogs: [],
+              namespace: 'ns',
+              cluster: 'cs',
             },
             {
-              service: 'author',
-              name: 'aemaccess',
+              _links: {
+                self: {
+                  href: '/api/program/4/environment/3',
+                  templated: false,
+                },
+                'http://ns.adobe.com/adobecloud/rel/variables': {
+                  href: '/api/program/4/environment/3/variables',
+                },
+                'http://ns.adobe.com/adobecloud/rel/logs': {
+                  href: '/api/program/4/environment/3/logs?service={service}&name={name}&days={days}',
+                  templated: true,
+                },
+              },
+              id: '3',
+              programId: '4',
+              name: 'TestProgram_dev',
+              description: 'description for TestProgram_dev',
+              type: 'dev',
             },
             {
-              service: 'publish',
-              name: 'aemerror',
+              _links: {
+                self: {
+                  href: '/api/program/4/environment/10',
+                  templated: false,
+                },
+                'http://ns.adobe.com/adobecloud/rel/variables': {
+                  href: '/api/program/4/environment/10/variables',
+                },
+              },
+              id: '10',
+              programId: '4',
+              name: 'TestProgram_dev2',
+              description: 'description for TestProgram_dev2',
+              type: 'dev',
             },
             {
-              service: 'publish',
-              name: 'aemrequest',
-            },
-            {
-              service: 'publish',
-              name: 'aemaccess',
-            },
-            {
-              service: 'dispatcher',
-              name: 'httpdaccess',
-            },
-            {
-              service: 'dispatcher',
-              name: 'httpderror',
-            },
-            {
-              service: 'dispatcher',
-              name: 'aemdispatcher',
+              _links: {
+                self: {
+                  href: '/api/program/4/environment/11',
+                  templated: false,
+                },
+                'http://ns.adobe.com/adobecloud/rel/variables': {
+                  href: '/api/program/4/environment/11/variables',
+                },
+              },
+              id: '11',
+              programId: '4',
+              name: 'TestProgram_dev3',
+              description: 'description for TestProgram_dev3',
+              type: 'dev',
             },
           ],
         },
-        {
-          _links: {
-            self: {
-              href: '/api/program/4/environment/2',
-              templated: false,
-            },
-          },
-          id: '2',
-          programId: '4',
-          name: 'TestProgram_stage',
-          description: 'description for TestProgram_stage',
-          type: 'stage',
-          availableLogs: [],
-          namespace: 'ns',
-          cluster: 'cs',
-        },
-        {
-          _links: {
-            self: {
-              href: '/api/program/4/environment/3',
-              templated: false,
-            },
-            'http://ns.adobe.com/adobecloud/rel/variables': {
-              href: '/api/program/4/environment/3/variables',
-            },
-            'http://ns.adobe.com/adobecloud/rel/logs': {
-              href: '/api/program/4/environment/3/logs?service={service}&name={name}&days={days}',
-              templated: true,
-            },
-          },
-          id: '3',
-          programId: '4',
-          name: 'TestProgram_dev',
-          description: 'description for TestProgram_dev',
-          type: 'dev',
-        },
-        {
-          _links: {
-            self: {
-              href: '/api/program/4/environment/10',
-              templated: false,
-            },
-            'http://ns.adobe.com/adobecloud/rel/variables': {
-              href: '/api/program/4/environment/10/variables',
-            },
-          },
-          id: '10',
-          programId: '4',
-          name: 'TestProgram_dev2',
-          description: 'description for TestProgram_dev2',
-          type: 'dev',
-        },
-        {
-          _links: {
-            self: {
-              href: '/api/program/4/environment/11',
-              templated: false,
-            },
-            'http://ns.adobe.com/adobecloud/rel/variables': {
-              href: '/api/program/4/environment/11/variables',
-            },
-          },
-          id: '11',
-          programId: '4',
-          name: 'TestProgram_dev3',
-          description: 'description for TestProgram_dev3',
-          type: 'dev',
-        },
-      ],
-    },
-    _totalNumberOfItems: 3,
+        _totalNumberOfItems: 3,
 
-  })
+      }
+    }
+  },
+  )
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/3', 'DELETE', {
     status: 400,
     headers: {
@@ -339,10 +359,174 @@ beforeEach(() => {
     },
   })
 
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=publish&name=aemerror&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=publish&type=aemerror&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['author'],
+    name: ['aemerror'],
+    days: 1,
+    _embedded: {
+      downloads: [
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/1/logs/download?service=publish&name=aemerror&date=2019-09-8',
+              templated: false,
+            },
+            'http://ns.adobe.com/adobecloud/rel/logs/tail': {
+              href: 'https://filestore/logs/publish_aemerror_2019-09-8.log',
+            },
+          },
+          service: 'publish',
+          name: 'aemerror',
+          date: '2019-09-8',
+          programId: 4,
+          environmentId: 1,
+        },
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/1/logs/download?service=publish&name=aemerror&date=2019-09-7',
+              templated: false,
+            },
+          },
+          service: 'publish',
+          name: 'aemerror',
+          date: '2019-09-7',
+          programId: 4,
+          environmentId: 1,
+        },
+      ],
+    },
+  })
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=preview&name=aemerror&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=author&type=aemerror&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['preview'],
+    name: ['aemerror'],
+    days: 1,
+    _embedded: {
+      downloads: [
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': [{
+              href: '/api/program/4/environment/1/logs/download?service=preview&name=aemerror&date=2019-09-8&index=1',
+              templated: false,
+            }, {
+              href: '/api/program/4/environment/1/logs/download?service=preview&name=aemerror&date=2019-09-8&index=2',
+              templated: false,
+            }],
+            'http://ns.adobe.com/adobecloud/rel/logs/tail': {
+              href: 'https://filestore/logs/author_aemerror_2019-09-8.log',
+            },
+          },
+          service: 'author',
+          name: 'aemerror',
+          date: '2019-09-8',
+          programId: 4,
+          environmentId: 1,
+        },
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/1/logs/download?service=author&name=aemerror&date=2019-09-7',
+              templated: false,
+            },
+          },
+          service: 'author',
+          name: 'aemerror',
+          date: '2019-09-7',
+          programId: 4,
+          environmentId: 1,
+        },
+      ],
+    },
+  })
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=preview&name=aemaccess&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=preview&type=aemaccess&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['preview'],
+    name: ['aemaccess'],
+    days: 1,
+    _embedded: {
+      downloads: [
+        {
+          service: 'preview',
+          name: 'aemaccess',
+          date: '2019-09-8',
+          programId: 4,
+          environmentId: 1,
+        },
+      ],
+    },
+  })
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=author&name=aemaccess&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=author&type=aemaccess&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['author'],
+    name: ['aemaccess'],
+    days: 1,
+    _embedded: {
+    },
+  })
+
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=author&name=aemerror&date=2019-09-8', {
     redirect: 'https://filestore/logs/author_aemerror_2019-09-8.log.gz',
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=author&name=aemerror&date=2019-09-7', {
+    redirect: 'https://filestore/logs/author_aemerror_2019-09-7.log.gz',
+  })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=preview&name=aemerror&date=2019-09-8&index=1', {
+    redirect: 'https://filestore/logs/author_aemerror_2019-09-7.log.gz',
+  })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs/download?service=preview&name=aemerror&date=2019-09-8&index=2', {
     redirect: 'https://filestore/logs/author_aemerror_2019-09-7.log.gz',
   })
 
@@ -515,6 +699,198 @@ beforeEach(() => {
     redirect: 'https://filestore/logs/bad.log.gz',
   })
   fetchMock.mock('https://filestore/logs/bad.log.gz', 404)
+
+  fetchMock.mock({ url: 'https://filestore/logs/author_aemerror_2019-09-8.log', method: 'HEAD', name: 'tail-log-head' }, {
+    headers: {
+      'content-length': '500',
+    },
+  })
+  fetchMock.mock({
+    url: 'https://filestore/logs/author_aemerror_2019-09-8.log',
+    headers: { range: 'bytes=500-' },
+    name: 'tail-log-first',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('some log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
+  fetchMock.mock({
+    url: 'https://filestore/logs/author_aemerror_2019-09-8.log',
+    headers: { range: 'bytes=1500-' },
+    name: 'tail-log-second',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('some second log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
+
+  let tailLogAuthorAemerrorThirdCalled = false
+
+  fetchMock.mock({
+    url: 'https://filestore/logs/author_aemerror_2019-09-8.log',
+    headers: { range: 'bytes=2500-' },
+    name: 'tail-log-third',
+  }, () => {
+    if (!tailLogAuthorAemerrorThirdCalled) {
+      tailLogAuthorAemerrorThirdCalled = true
+      return {
+        status: 416,
+      }
+    } else {
+      const logResponse = new Readable()
+      logResponse.push('this will fail\n')
+      logResponse.push(null)
+      return {
+        status: 200,
+        headers: {
+          'content-length': '1000',
+        },
+        body: logResponse,
+      }
+    }
+  }, { sendAsJson: false })
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/logs?service=author&name=aemrequest&days=1', {
+    _links: {
+      self: {
+        href: '/api/program/4/environment/1/logs?service=author&type=aemrequest&days=1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+        templated: false,
+      },
+      'http://ns.adobe.com/adobecloud/rel/environment': {
+        href: '/api/program/4/environment/1',
+        templated: false,
+      },
+    },
+    service: ['author'],
+    name: ['aemrequest'],
+    days: 1,
+    _embedded: {
+      downloads: [
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/1/logs/download?service=author&name=aemrequest&date=2019-09-8',
+              templated: false,
+            },
+            'http://ns.adobe.com/adobecloud/rel/logs/tail': {
+              href: 'https://filestore/logs/author_aemrequest_2019-09-8.log',
+            },
+          },
+          service: 'author',
+          name: 'aemrequest',
+          date: '2019-09-8',
+          programId: 4,
+          environmentId: 1,
+        },
+        {
+          _links: {
+            'http://ns.adobe.com/adobecloud/rel/logs/download': {
+              href: '/api/program/4/environment/1/logs/download?service=author&name=aemrequest&date=2019-09-7',
+              templated: false,
+            },
+          },
+          service: 'author',
+          name: 'aemrequest',
+          date: '2019-09-7',
+          programId: 4,
+          environmentId: 1,
+        },
+      ],
+    },
+  })
+
+  let tailLogRequestHeadCallCount = 0
+
+  fetchMock.mock({ url: 'https://filestore/logs/author_aemrequest_2019-09-8.log', method: 'HEAD', name: 'tail-log-aemrequest-head' }, () => {
+    tailLogRequestHeadCallCount++
+    return {
+      headers: {
+        'content-length': tailLogRequestHeadCallCount === 2 ? '3500' : '500',
+      },
+    }
+  })
+  fetchMock.mock({
+    url: 'https://filestore/logs/author_aemrequest_2019-09-8.log',
+    headers: { range: 'bytes=500-' },
+    name: 'tail-log-aemrequest-first',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('some request log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '200',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
+  fetchMock.mock({
+    url: 'https://filestore/logs/author_aemrequest_2019-09-8.log',
+    headers: { range: 'bytes=700-' },
+    name: 'tail-log-aemrequest-second',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('some second request log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
+
+  let tailLogAemrequestThirdCallCount = 0
+
+  fetchMock.mock({
+    url: 'https://filestore/logs/author_aemrequest_2019-09-8.log',
+    headers: { range: 'bytes=1700-' },
+    name: 'tail-log-aemrequest-third',
+  }, () => {
+    tailLogAemrequestThirdCallCount++
+    if (tailLogAemrequestThirdCallCount < 3) {
+      return {
+        status: 416,
+      }
+    } else {
+      const logResponse = new Readable()
+      logResponse.push('this will fail\n')
+      logResponse.push(null)
+      return {
+        status: 200,
+        headers: {
+          'content-length': '1000',
+        },
+        body: logResponse,
+      }
+    }
+  }, { sendAsJson: false })
+
+  mockResponseWithMethod('https://filestore/logs/publish_aemerror_2019-09-8.log', 'HEAD', {
+    headers: {
+      'content-length': 500,
+    },
+  })
+  mockResponseWithMethod('https://filestore/logs/publish_aemerror_2019-09-8.log', 'GET', 404)
 
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/logs?service=author&name=aemerror&days=1', 404)
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/1/variables', {
@@ -721,82 +1097,132 @@ beforeEach(() => {
       },
     },
   }
-  fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipelines', {
-    _embedded: {
-      pipelines: [
-        pipeline5,
-        {
-          id: '6',
-          name: 'test2',
-          status: 'BUSY',
-          _links: {
-            self: {
-              href: '/api/program/5/pipeline/6',
-            },
-            'http://ns.adobe.com/adobecloud/rel/execution': {
-              href: '/api/program/5/pipeline/6/execution',
-            },
-            'http://ns.adobe.com/adobecloud/rel/execution/id': {
-              href: '/api/program/5/pipeline/6/execution/{executionId}',
-              templated: true,
-            },
-          },
-        },
-        {
-          id: '7',
-          name: 'test3',
-          status: 'BUSY',
-          _links: {
-            self: {
-              href: '/api/program/5/pipeline/7',
-            },
-            'http://ns.adobe.com/adobecloud/rel/execution': {
-              href: '/api/program/5/pipeline/7/execution',
-            },
-            'http://ns.adobe.com/adobecloud/rel/execution/id': {
-              href: '/api/program/5/pipeline/7/execution/{executionId}',
-              templated: true,
-            },
-            'http://ns.adobe.com/adobecloud/rel/variables': {
-              href: '/api/program/5/pipeline/7/variables',
-            },
-          },
-        },
-        {
-          id: '8',
-          name: 'test4',
-          status: 'IDLE',
-          phases: [
+
+  let useEmptyEmbeddedObjectForProgram5Pipelines = false
+
+  fetchMock.resetProgram5EmbeddedPipelines = () => {
+    useEmptyEmbeddedObjectForProgram5Pipelines = false
+  }
+
+  fetchMock.setProgram5EmbeddedPipelinesToEmptyObject = () => {
+    useEmptyEmbeddedObjectForProgram5Pipelines = true
+  }
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipelines', () => {
+    if (useEmptyEmbeddedObjectForProgram5Pipelines) {
+      return {
+        _embedded: {},
+      }
+    } else {
+      return {
+        _embedded: {
+          pipelines: [
+            pipeline5,
             {
-              name: 'VALIDATE',
-              type: 'VALIDATE',
+              id: '6',
+              name: 'test2',
+              status: 'BUSY',
+              _links: {
+                self: {
+                  href: '/api/program/5/pipeline/6',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution': {
+                  href: '/api/program/5/pipeline/6/execution',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution/id': {
+                  href: '/api/program/5/pipeline/6/execution/{executionId}',
+                  templated: true,
+                },
+              },
             },
             {
-              name: 'BUILD_1',
-              type: 'BUILD',
-              repositoryId: '1',
-              branch: 'yellow',
+              id: '7',
+              name: 'test3',
+              status: 'BUSY',
+              _links: {
+                self: {
+                  href: '/api/program/5/pipeline/7',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution': {
+                  href: '/api/program/5/pipeline/7/execution',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution/id': {
+                  href: '/api/program/5/pipeline/7/execution/{executionId}',
+                  templated: true,
+                },
+                'http://ns.adobe.com/adobecloud/rel/variables': {
+                  href: '/api/program/5/pipeline/7/variables',
+                },
+              },
+            },
+            {
+              id: '8',
+              name: 'test4',
+              status: 'IDLE',
+              phases: [
+                {
+                  name: 'VALIDATE',
+                  type: 'VALIDATE',
+                },
+                {
+                  name: 'BUILD_1',
+                  type: 'BUILD',
+                  repositoryId: '1',
+                  branch: 'yellow',
+                },
+              ],
+              _links: {
+                self: {
+                  href: '/api/program/5/pipeline/8',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution': {
+                  href: '/api/program/5/pipeline/8/execution',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution/id': {
+                  href: '/api/program/5/pipeline/8/execution/{executionId}',
+                  templated: true,
+                },
+                'http://ns.adobe.com/adobecloud/rel/variables': {
+                  href: '/api/program/5/pipeline/8/variables',
+                },
+              },
+            },
+            {
+              id: '9',
+              name: 'test5',
+              status: 'IDLE',
+              phases: [
+                {
+                  name: 'VALIDATE',
+                  type: 'VALIDATE',
+                },
+                {
+                  name: 'DEPLOY_1',
+                  type: 'DEPLOY',
+                },
+              ],
+              _links: {
+                self: {
+                  href: '/api/program/5/pipeline/8',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution': {
+                  href: '/api/program/5/pipeline/8/execution',
+                },
+                'http://ns.adobe.com/adobecloud/rel/execution/id': {
+                  href: '/api/program/5/pipeline/8/execution/{executionId}',
+                  templated: true,
+                },
+                'http://ns.adobe.com/adobecloud/rel/variables': {
+                  href: '/api/program/5/pipeline/8/variables',
+                },
+              },
             },
           ],
-          _links: {
-            self: {
-              href: '/api/program/5/pipeline/8',
-            },
-            'http://ns.adobe.com/adobecloud/rel/execution': {
-              href: '/api/program/5/pipeline/8/execution',
-            },
-            'http://ns.adobe.com/adobecloud/rel/execution/id': {
-              href: '/api/program/5/pipeline/8/execution/{executionId}',
-              templated: true,
-            },
-            'http://ns.adobe.com/adobecloud/rel/variables': {
-              href: '/api/program/5/pipeline/8/variables',
-            },
-          },
         },
-      ],
-    },
+      }
+    }
   })
+
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution', 'GET', 404)
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution', 'PUT', {
     status: 201,
@@ -823,6 +1249,19 @@ beforeEach(() => {
   })
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8', 'PATCH', 405)
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8', 'DELETE', {
+    status: 400,
+    headers: {
+      'content-type': 'application/problem+json',
+    },
+    body: {
+      type: 'http://ns.adobe.com/adobecloud/random-exception-with-a-message',
+      title: 'Test Exception',
+      errors: {
+        something: { message: 'some error message' },
+      },
+    },
+  })
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'GET', require('./data/execution1000.json'))
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'PUT', 412)
@@ -982,6 +1421,11 @@ beforeEach(() => {
     1009: require('./data/execution1009.json'),
     1010: require('./data/execution1010.json'),
     1011: require('./data/execution1011.json'),
+    1012: require('./data/execution1012.json'),
+    1013: require('./data/execution1013.json'),
+    1014: require('./data/execution1014.json'),
+    1015: require('./data/execution1015.json'),
+    1016: require('./data/execution1016.json'),
   }
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution', 'GET', () => pipeline7Executions[executionForPipeline7])
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1006/phase/4596/step/8493/metrics', 'GET', require('./data/codequality-metrics.json'))
@@ -1018,6 +1462,31 @@ beforeEach(() => {
       opts.method === 'PUT' && opts.body === JSON.stringify({ resume: false }),
   202, {
     name: 'cancel-1008',
+  })
+  fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1007/phase/8567/step/15492/advance' &&
+      opts.method === 'PUT' && opts.body === JSON.stringify({ resume: true }),
+  202, {
+    name: 'advance-1008',
+  })
+  fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1013/phase/8567/step/15492/cancel' &&
+      opts.method === 'PUT' && opts.body === JSON.stringify({ start: false }),
+  202, {
+    name: 'cancel-1013',
+  })
+  fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1013/phase/8567/step/15492/advance' &&
+      opts.method === 'PUT' && opts.body === JSON.stringify({ start: true }),
+  202, {
+    name: 'advance-1013',
+  })
+  fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1014/phase/8567/step/15490/cancel' &&
+      opts.method === 'PUT' && opts.body === JSON.stringify({ approved: false }),
+  500, {
+    name: 'cancel-1014',
+  })
+  fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1016/phase/8567/step/15490/advance' &&
+      opts.method === 'PUT' && opts.body === JSON.stringify({ approved: true }),
+  500, {
+    name: 'advance-1016',
   })
 
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/7', 404)
