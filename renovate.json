@@ -15,10 +15,6 @@
     {
       "matchDepTypes": ["devDependencies"],
       "automerge": true
-    },
-    {
-      "packageNames": ["eslint-plugin-jsdoc"],
-      "allowedVersions": "<33.3.0"
     }
   ]
 }
