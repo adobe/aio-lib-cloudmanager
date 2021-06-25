@@ -267,7 +267,6 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {ListPipelineOptions} options options
-   *
    * @returns {Promise<Pipeline[]>} an array of Pipelines
    */
   async listPipelines (programId, options) {
@@ -620,7 +619,6 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} environmentId the environment id
-   *
    * @returns {Promise<LogOptionRepresentation[]>} the log options for the environment
    */
   async listAvailableLogOptions (programId, environmentId) {
