@@ -1,5 +1,17 @@
 # Changelog
 
+# [1.0.0](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.5...1.0.0) (2021-06-25)
+
+
+### Features
+
+* require node 12 as minimum version. fixes [#163](https://github.com/adobe/aio-lib-cloudmanager/issues/163) ([#164](https://github.com/adobe/aio-lib-cloudmanager/issues/164)) ([7a7aa46](https://github.com/adobe/aio-lib-cloudmanager/commit/7a7aa46de54a67d06b79fff031551795bdbc8adc))
+
+
+### BREAKING CHANGES
+
+* Support for TLS 1.0 and 1.1 is being retired by Adobe in mid-July.
+
 ## [0.3.5](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.4...0.3.5) (2021-04-30)
 
 
