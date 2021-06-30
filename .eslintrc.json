@@ -8,6 +8,7 @@
       "exports": "always-multiline",
       "functions": "always-multiline"
     }],
+    "no-console": ["error"],
     "aio-lib-cloudmanager-error-codes": "error"
   }
 }
