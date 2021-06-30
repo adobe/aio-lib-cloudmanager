@@ -28,7 +28,7 @@ require('./types.jsdoc') // for VS Code autocomplete
 
 /* global EmbeddedProgram, Pipeline, PipelineExecution, ListPipelineOptions,
    PipelineStepMetrics, Environment, LogOptionRepresentation,
-   DownloadedLog, PipelineUpdate, Variable, IPAllowedList */ // for linter
+   DownloadedLog, PipelineUpdate, Variable, IPAllowedList, PipelineExecutionStepState */ // for linter
 
 /**
  * Returns a Promise that resolves with a new CloudManagerAPI object.
@@ -603,6 +603,84 @@ class CloudManagerAPI {
     const stepState = await this._findStepState(programId, pipelineId, executionId, action)
 
     return this._getLogsForStepState(stepState, logFile, outputStream)
+  }
+
+  async _refreshStepState (href) {
+    return this._get(href, codes.ERROR_REFRESH_STEP_STATE).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+  }
+
+  async _getExecutionStepLogUrl (href) {
+    return this._get(href, codes.ERROR_GET_LOG).then(async (res) => {
+      const json = await res.json()
+      if (json.redirect) {
+        return json.redirect
+      } else {
+        throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
+      }
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Tail step log to an output stream.
+   *
+   * @param {string} programId the program id
+   * @param {string} pipelineId the pipeline id
+   * @param {string} action the action
+   * @param {string} logFile the log file to select a non-default value
+   * @param {object} outputStream the output stream to write to
+   * @returns {Promise<PipelineExecutionStepState>} the completed step state
+   */
+  async tailExecutionStepLog (programId, pipelineId, action, logFile, outputStream) {
+    if (!outputStream) {
+      outputStream = logFile
+      logFile = undefined
+    }
+    const currentExecution = halfred.parse(await this.getCurrentExecution(programId, pipelineId))
+    let stepState = findStepState(currentExecution, action)
+
+    if (!stepState) {
+      throw new codes.ERROR_FIND_STEP_STATE({ messageValues: [action, currentExecution.id] })
+    }
+    if (stepState.status === 'RUNNING') {
+      const selfStateHref = stepState.link(rels.self).href
+      let link = stepState.link(rels.stepLogs).href
+      if (logFile) {
+        link = `${link}?file=${logFile}`
+      }
+      const tailingSasUrl = await this._getExecutionStepLogUrl(link)
+
+      let currentStartLimit = 0
+
+      while (stepState.status === 'RUNNING') {
+        const options = {
+          headers: {
+            Range: `bytes=${currentStartLimit}-`,
+          },
+        }
+        const res = await fetch(tailingSasUrl, options)
+        if (res.status === 206) {
+          const contentLength = res.headers.get('content-length')
+          await this._pipeBody(res.body, outputStream)
+          currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
+          console.log(currentStartLimit)
+        } else if (res.status === 416 || res.status === 404) {
+          // 416 means there's more data potentially available; 404 means the log isn't ready yet
+          // these are different things, but we can treat them the same way -- wait a few seconds
+          await sleep(5000)
+        }
+        stepState = await this._refreshStepState(selfStateHref)
+      }
+    } else {
+      throw new codes.ERROR_STEP_STATE_NOT_RUNNING({ messageValues: [action, currentExecution.id] })
+    }
+
+    return stepState
   }
 
   async _findEnvironment (programId, environmentId) {

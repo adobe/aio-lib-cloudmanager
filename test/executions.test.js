@@ -16,15 +16,29 @@ const sinon = require('sinon')
 /* global createSdkClient, fetchMock */ // for linter
 
 let writable
-let written = ''
+let written
+
+let flushWritable
+
+let originalSetTimeout
 
 beforeEach(() => {
+  written = ''
   const write = sinon.stub().callsFake((chunk, enc, callback) => callback())
   writable = new Writable({ write })
 
-  writable.on('finish', () => {
+  flushWritable = () => {
     written = write.args.map(args => args[0]).map(a => a.toString('utf8')).join('')
-  })
+  }
+
+  writable.on('finish', flushWritable)
+
+  originalSetTimeout = global.setTimeout
+  global.setTimeout = jest.fn().mockImplementation((cb) => cb())
+})
+
+afterEach(() => {
+  global.setTimeout = originalSetTimeout
 })
 
 test('getCurrentExecution - failure', async () => {
@@ -477,4 +491,112 @@ test('getExecutionStepLog - bad pipeline', async () => {
   await expect(result).rejects.toEqual(
     new codes.ERROR_FIND_PIPELINE({ messageValues: ['100', '5'] }),
   )
+})
+
+test('tailExecutionStepLog - failure no current execution', async () => {
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailExecutionStepLog('5', '5', 'build', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_EXECUTION({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution (404 Not Found)' }),
+  )
+  expect(written).toEqual('')
+})
+
+test('tailExecutionStepLog - step not running', async () => {
+  fetchMock.setPipeline7Execution('1003')
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailExecutionStepLog('5', '7', 'build', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_STEP_STATE_NOT_RUNNING({ messageValues: ['build', '1003'] }),
+  )
+  expect(written).toEqual('')
+})
+
+test('tailExecutionStepLog - bad step name', async () => {
+  fetchMock.setPipeline7Execution('1003')
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailExecutionStepLog('5', '7', 'BUILD', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_STEP_STATE({ messageValues: ['BUILD', '1003'] }),
+  )
+  expect(written).toEqual('')
+})
+
+test('tailExecutionStepLog - step log endpoint returns error', async () => {
+  fetchMock.setPipeline7Execution('1017')
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailExecutionStepLog('5', '7', 'build', 'error', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_LOG({ messageValues: ['https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1017/phase/4596/step/8492/logs?file=error', '(404 Not Found)'] }),
+  )
+  expect(written).toEqual('')
+})
+
+test('tailExecutionStepLog - step log endpoint returns no redirect', async () => {
+  fetchMock.setPipeline7Execution('1017')
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailExecutionStepLog('5', '7', 'build', 'noredirect', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_NO_LOG_REDIRECT({ messageValues: ['https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1017/phase/4596/step/8492/logs?file=noredirect', '{"garbage":"true"}'] }),
+  )
+  expect(written).toEqual('')
+})
+
+test('tailExecutionStepLog - success', async () => {
+  fetchMock.setPipeline7Execution('1017')
+  expect.assertions(7)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailExecutionStepLog('5', '7', 'build', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toBeTruthy()
+
+  await expect(fetchMock.called('tail-step-log-1017-first')).toBe(true)
+  await expect(fetchMock.called('tail-step-log-1017-second')).toBe(true)
+  await expect(fetchMock.called('tail-step-log-1017-third')).toBe(true)
+  await expect(fetchMock.calls('tail-step-log-1017-third').length).toEqual(2)
+
+  flushWritable()
+
+  expect(written).toEqual('some log message\nsome second log message\nsome third log message\n')
+})
+
+test('tailExecutionStepLog - faling refresh', async () => {
+  fetchMock.setPipeline7Execution('1018')
+  expect.assertions(4)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailExecutionStepLog('5', '7', 'build', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_REFRESH_STEP_STATE({ messageValues: ['https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1018/phase/4596/step/8492', '(500 Internal Server Error)'] }),
+  )
+
+  await expect(fetchMock.called('tail-step-log-1018-first')).toBe(true)
+
+  flushWritable()
+
+  expect(written).toEqual('some log message\n')
 })
