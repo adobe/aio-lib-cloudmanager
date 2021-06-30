@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.1.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.0.1...1.1.0) (2021-06-30)
+
+
+### Features
+
+* **execution:** add tailExecutionStepLog method. fixes [#170](https://github.com/adobe/aio-lib-cloudmanager/issues/170) ([#171](https://github.com/adobe/aio-lib-cloudmanager/issues/171)) ([36dbcb0](https://github.com/adobe/aio-lib-cloudmanager/commit/36dbcb05fea4bf9ca40cdcd35d6ebe3185e250fc))
+
 ## [1.0.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.0.0...1.0.1) (2021-06-30)
 
 

@@ -156,6 +156,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.advanceCurrentExecution(programId, pipelineId)](#CloudManagerAPI+advanceCurrentExecution) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.listEnvironments(programId)](#CloudManagerAPI+listEnvironments) ⇒ <code>Promise.&lt;Array.&lt;Environment&gt;&gt;</code>
     * [.getExecutionStepLog(programId, pipelineId, executionId, action, logFile, outputStream)](#CloudManagerAPI+getExecutionStepLog) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.tailExecutionStepLog(programId, pipelineId, action, logFile, outputStream)](#CloudManagerAPI+tailExecutionStepLog) ⇒ [<code>Promise.&lt;PipelineExecutionStepState&gt;</code>](#PipelineExecutionStepState)
     * [.listAvailableLogOptions(programId, environmentId)](#CloudManagerAPI+listAvailableLogOptions) ⇒ <code>Promise.&lt;Array.&lt;LogOptionRepresentation&gt;&gt;</code>
     * [.downloadLogs(programId, environmentId, service, name, days, outputDirectory)](#CloudManagerAPI+downloadLogs) ⇒ <code>Promise.&lt;Array.&lt;DownloadedLog&gt;&gt;</code>
     * [.deletePipeline(programId, pipelineId)](#CloudManagerAPI+deletePipeline) ⇒ <code>Promise.&lt;object&gt;</code>
@@ -368,6 +369,22 @@ Write step log to an output stream.
 | programId | <code>string</code> | the program id |
 | pipelineId | <code>string</code> | the pipeline id |
 | executionId | <code>string</code> | the execution id |
+| action | <code>string</code> | the action |
+| logFile | <code>string</code> | the log file to select a non-default value |
+| outputStream | <code>object</code> | the output stream to write to |
+
+<a name="CloudManagerAPI+tailExecutionStepLog"></a>
+
+### cloudManagerAPI.tailExecutionStepLog(programId, pipelineId, action, logFile, outputStream) ⇒ [<code>Promise.&lt;PipelineExecutionStepState&gt;</code>](#PipelineExecutionStepState)
+Tail step log to an output stream.
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;PipelineExecutionStepState&gt;</code>](#PipelineExecutionStepState) - the completed step state  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| pipelineId | <code>string</code> | the pipeline id |
 | action | <code>string</code> | the action |
 | logFile | <code>string</code> | the log file to select a non-default value |
 | outputStream | <code>object</code> | the output stream to write to |
