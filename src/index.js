@@ -668,7 +668,6 @@ class CloudManagerAPI {
           const contentLength = res.headers.get('content-length')
           await this._pipeBody(res.body, outputStream)
           currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
-          console.log(currentStartLimit)
         } else if (res.status === 416 || res.status === 404) {
           // 416 means there's more data potentially available; 404 means the log isn't ready yet
           // these are different things, but we can treat them the same way -- wait a few seconds
