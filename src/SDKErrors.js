@@ -102,3 +102,5 @@ E('ERROR_CREATE_IP_ALLOWLIST_BINDING', 'Could not create IP Allow List binding: 
 E('ERROR_FIND_IP_ALLOWLIST_BINDING', 'Cannot find IP Allow List Binding for id %s, environment %s, and service %s in program %s.')
 E('ERROR_DELETE_IP_ALLOWLIST_BINDING', 'Could not remove IP Allow List binding: %s')
 E('ERROR_UNSUPPORTED_ADVANCE_STEP', 'Advancing the step %s is not supported in the CLI at present.')
+E('ERROR_REFRESH_STEP_STATE', 'Cannot refresh step state: %s')
+E('ERROR_STEP_STATE_NOT_RUNNING', 'The %s step in execution %s is not currently running.')

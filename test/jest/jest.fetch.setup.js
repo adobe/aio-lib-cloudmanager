@@ -1414,6 +1414,7 @@ beforeEach(() => {
   let executionForPipeline7 = '1001'
   const pipeline7Executions = {
     1001: require('./data/execution1001.json'),
+    1003: require('./data/execution1003.json'),
     1005: require('./data/execution1005.json'),
     1006: require('./data/execution1006.json'),
     1007: require('./data/execution1007.json'),
@@ -1426,6 +1427,8 @@ beforeEach(() => {
     1014: require('./data/execution1014.json'),
     1015: require('./data/execution1015.json'),
     1016: require('./data/execution1016.json'),
+    1017: require('./data/execution1017.json'),
+    1018: require('./data/execution1018.json'),
   }
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution', 'GET', () => pipeline7Executions[executionForPipeline7])
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1006/phase/4596/step/8493/metrics', 'GET', require('./data/codequality-metrics.json'))
@@ -1488,6 +1491,103 @@ beforeEach(() => {
   500, {
     name: 'advance-1016',
   })
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1017/phase/4596/step/8492/logs?file=error', 'GET', 404)
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1017/phase/4596/step/8492/logs?file=noredirect', 'GET', {
+    garbage: 'true',
+  })
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1017/phase/4596/step/8492/logs', 'GET', {
+    redirect: 'https://filestore/for-tailing.txt',
+  })
+  fetchMock.mock({
+    url: 'https://filestore/for-tailing.txt',
+    headers: { range: 'bytes=0-' },
+    name: 'tail-step-log-1017-first',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('some log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
+  fetchMock.mock({
+    url: 'https://filestore/for-tailing.txt',
+    headers: { range: 'bytes=1000-' },
+    name: 'tail-step-log-1017-second',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('some second log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
+
+  let execution1017StepLogCounter = 0
+  fetchMock.mock({
+    url: 'https://filestore/for-tailing.txt',
+    headers: { range: 'bytes=2000-' },
+    name: 'tail-step-log-1017-third',
+  }, () => {
+    execution1017StepLogCounter++
+    if (execution1017StepLogCounter === 1) {
+      return {
+        status: 416,
+      }
+    } else {
+      const logResponse = new Readable()
+      logResponse.push('some third log message\n')
+      logResponse.push(null)
+      return {
+        status: 206,
+        headers: {
+          'content-length': '1000',
+        },
+        body: logResponse,
+      }
+    }
+  }, { sendAsJson: false })
+
+  let execution1017StepCounter = 0
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1017/phase/4596/step/8492', () => {
+    execution1017StepCounter++
+    if (execution1017StepCounter < 4) {
+      return pipeline7Executions[1017]._embedded.stepStates[1]
+    } else {
+      const cloned = _.cloneDeep(pipeline7Executions[1017]._embedded.stepStates[1])
+      cloned.status = 'FINISHED'
+      return cloned
+    }
+  })
+
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1018/phase/4596/step/8492/logs', 'GET', {
+    redirect: 'https://filestore/for-tailing1018.txt',
+  })
+  fetchMock.mock({
+    url: 'https://filestore/for-tailing1018.txt',
+    headers: { range: 'bytes=0-' },
+    name: 'tail-step-log-1018-first',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('some log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1018/phase/4596/step/8492', 500)
 
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/7', 404)
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/10/variables', 404)

@@ -16,13 +16,14 @@ const sinon = require('sinon')
 /* global createSdkClient, fetchMock */ // for linter
 
 let writable
-let written = ''
+let written
 
 let flushWritable
 
 let originalSetTimeout
 
 beforeEach(() => {
+  written = ''
   const write = sinon.stub().callsFake((chunk, enc, callback) => callback())
   writable = new Writable({ write })
 
