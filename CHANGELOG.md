@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.0.0...1.0.1) (2021-06-30)
+
+
+### Bug Fixes
+
+* **debt:** reduce complexity in createIpAllowList. fixes [#168](https://github.com/adobe/aio-lib-cloudmanager/issues/168) ([#169](https://github.com/adobe/aio-lib-cloudmanager/issues/169)) ([c63b982](https://github.com/adobe/aio-lib-cloudmanager/commit/c63b98243f187ae3c90e30ccf4bad9e3cd98ea46))
+
 # [1.0.0](https://github.com/adobe/aio-lib-cloudmanager/compare/0.3.5...1.0.0) (2021-06-25)
 
 
