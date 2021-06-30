@@ -1060,12 +1060,8 @@ class CloudManagerAPI {
       ipCidrSet: cidrBlocks,
     }
 
-    return this._post(link.href, ipAllowlist, codes.ERROR_CREATE_IP_ALLOWLIST).then(res => {
-      return new Promise((resolve, reject) => {
-        res.json().then(body => {
-          resolve(halfred.parse(body))
-        })
-      })
+    return this._post(link.href, ipAllowlist, codes.ERROR_CREATE_IP_ALLOWLIST).then(async (res) => {
+      return halfred.parse(await res.json())
     }, e => {
       throw e
     })
