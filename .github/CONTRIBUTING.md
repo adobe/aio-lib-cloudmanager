@@ -105,4 +105,6 @@ In general, the scope should be the related entity type (program, environment, p
 
 The `chore` type may be used for trivial changes in developer documentation (like this file), dependencies, or tests.
 
+The `feat` and `fix` types must also contain a reference to a GitHub issue ID, e.g. `fixes #123`
+
 [husky](https://typicode.github.io/husky/) is used to verify commit messages before committing. But please do not rely upon husky to do the right thing.
