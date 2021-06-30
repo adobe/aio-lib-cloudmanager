@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.1.0...1.1.1) (2021-06-30)
+
+
+### Bug Fixes
+
+* remove console.log statement from tailExecutionStepLog. fixes [#172](https://github.com/adobe/aio-lib-cloudmanager/issues/172) ([#173](https://github.com/adobe/aio-lib-cloudmanager/issues/173)) ([87f3692](https://github.com/adobe/aio-lib-cloudmanager/commit/87f3692fe66c7df6c3657e088e48d764976540fd))
+
 # [1.1.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.0.1...1.1.0) (2021-06-30)
 
 
