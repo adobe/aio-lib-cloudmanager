@@ -1225,6 +1225,23 @@ class CloudManagerAPI {
       throw e
     })
   }
+
+  /**
+   * Make a Post to Commerce API
+   *
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {object} body - the request body
+   * @returns {Promise<object>} a truthy value
+   */
+  postCLICommand (programId, environmentId, body) {
+    const resourcePath = `/program/${programId}/environment/${environmentId}/runtime/commerce/cli/`
+    return this._post(resourcePath, body, codes.ERROR_POST_COMMERCE).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+  }
 }
 
 module.exports = {
