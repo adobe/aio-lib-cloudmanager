@@ -1231,12 +1231,12 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
-   * @param {object} body - the request body
+   * @param {object} requestBody - the request body
    * @returns {Promise<object>} a truthy value
    */
-  postCLICommand (programId, environmentId, body) {
+  postCommerceCLICommand (programId, environmentId, requestBody) {
     const resourcePath = `/program/${programId}/environment/${environmentId}/runtime/commerce/cli/`
-    return this._post(resourcePath, body, codes.ERROR_POST_COMMERCE).then(res => {
+    return this._post(resourcePath, requestBody, codes.ERROR_POST_COMMERCE).then(res => {
       return res.json()
     }, e => {
       throw e

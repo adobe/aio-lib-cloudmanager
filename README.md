@@ -174,6 +174,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.deleteIpAllowlist(programId, ipAllowlistId)](#CloudManagerAPI+deleteIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+addIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.postCommerceCLICommand(programId, environmentId, requestBody)](#CloudManagerAPI+postCommerceCLICommand) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="CloudManagerAPI+orgId"></a>
 
@@ -620,6 +621,20 @@ Unbind an IP Allow List from an environment
 | ipAllowlistId | <code>string</code> | the allow list id |
 | environmentId | <code>string</code> | the environment id |
 | service | <code>string</code> | the service name |
+
+<a name="CloudManagerAPI+postCommerceCLICommand"></a>
+
+### cloudManagerAPI.postCommerceCLICommand(programId, environmentId, requestBody) => <code>Promise.&lt;object&gt;</code>
+Make a post call to the Commerce endpoint
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| environmentId | <code>string</code> | the environment id |
+| requestBody | <code>object</code> | the request body |
 
 <a name="getCurrentStep"></a>
 
