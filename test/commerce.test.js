@@ -13,7 +13,7 @@ const { codes } = require('../src/SDKErrors')
 
 /* global createSdkClient */ // for linter
 
-test('postCLICommand - success', async () => {
+test('postCommerceCLICommand - success', async () => {
   expect.assertions(2)
 
   const sdkClient = await createSdkClient()
@@ -28,7 +28,7 @@ test('postCLICommand - success', async () => {
   })
 })
 
-test('postCLICommand - error', async () => {
+test('postCommerceCLICommand - error', async () => {
   expect.assertions(2)
 
   const sdkClient = await createSdkClient()
