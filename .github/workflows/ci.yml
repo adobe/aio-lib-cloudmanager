@@ -27,4 +27,4 @@ jobs:
     - run: npm run generate-docs
     - run: npm test
     - name: Codecov
-      uses: codecov/codecov-action@v2.0.1
+      uses: codecov/codecov-action@v2.0.2
