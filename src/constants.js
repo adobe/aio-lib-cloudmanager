@@ -29,6 +29,7 @@ module.exports = {
     variables: 'http://ns.adobe.com/adobecloud/rel/variables',
     ipAllowlists: 'http://ns.adobe.com/adobecloud/rel/ipAllowlists',
     ipAllowlistBindings: 'http://ns.adobe.com/adobecloud/rel/ipAllowlistBindings',
+    commerceCommandExecution: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution',
   },
   config: {
     programId: 'cloudmanager_programid',

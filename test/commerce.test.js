@@ -10,32 +10,45 @@ governing permissions and limitations under the License.
 */
 
 const { codes } = require('../src/SDKErrors')
+const halfred = require('halfred')
 
 /* global createSdkClient */ // for linter
 
-test('postCommerceCLICommand - success', async () => {
+test('postCommerceCommandExecution - success', async () => {
   expect.assertions(2)
 
   const sdkClient = await createSdkClient()
-  const result = sdkClient.postCLICommand('1', '2', { data: 'some test data' })
+  const result = sdkClient.postCommerceCommandExecution('4', '10', { data: 'some test data' })
 
   await expect(result instanceof Promise).toBeTruthy()
-  await expect(result).resolves.toEqual({
+  await expect(result).resolves.toEqual(halfred.parse({
     status: 201,
     data: {
       test: 'test success data',
     },
-  })
+  }))
 })
 
-test('postCommerceCLICommand - error', async () => {
+test('postCommerceCommandExecution - error', async () => {
   expect.assertions(2)
 
   const sdkClient = await createSdkClient()
-  const result = sdkClient.postCLICommand('3', '4', { data: 'some test data' })
+  const result = sdkClient.postCommerceCommandExecution('4', '3', { data: 'some test data' })
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_POST_COMMERCE({ messageValues: 'https://cloudmanager.adobe.io/program/3/environment/4/runtime/commerce/cli/ (403 Forbidden)' }),
+    new codes.ERROR_POST_COMMERCE_CLI({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/ (403 Forbidden)' }),
+  )
+})
+
+test('postCommerceCommandExecution - error: no link', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.postCommerceCommandExecution('4', '11', { data: 'some test data' })
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_COMMERCE_CLI({ messageValues: '11' }),
   )
 })
