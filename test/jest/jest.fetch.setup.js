@@ -1443,57 +1443,57 @@ beforeEach(() => {
     executionForPipeline7 = id
   }
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1005/phase/4596/step/8492/cancel' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ cancel: true }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ cancel: true }),
   202, {
     name: 'cancel-1005',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1006/phase/4596/step/8493/cancel' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ override: false }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ override: false }),
   202, {
     name: 'cancel-1006',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1007/phase/8567/step/15490/cancel' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ approved: false }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ approved: false }),
   202, {
     name: 'cancel-1007',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1007/phase/8567/step/15490/advance' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ approved: true }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ approved: true }),
   202, {
     name: 'advance-1007',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1006/phase/4596/step/8493/advance' &&
-    opts.method === 'PUT' && JSON.parse(opts.body).metrics.length === 1 && JSON.parse(opts.body).metrics[0].override === true,
+      opts.method === 'PUT' && JSON.parse(opts.body).metrics.length === 1 && JSON.parse(opts.body).metrics[0].override === true,
   202, {
     name: 'advance-1006',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1007/phase/8567/step/15492/advance' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ resume: false }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ resume: false }),
   202, {
     name: 'cancel-1008',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1007/phase/8567/step/15492/advance' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ resume: true }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ resume: true }),
   202, {
     name: 'advance-1008',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1013/phase/8567/step/15492/cancel' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ start: false }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ start: false }),
   202, {
     name: 'cancel-1013',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1013/phase/8567/step/15492/advance' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ start: true }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ start: true }),
   202, {
     name: 'advance-1013',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1014/phase/8567/step/15490/cancel' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ approved: false }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ approved: false }),
   500, {
     name: 'cancel-1014',
   })
   fetchMock.mock((url, opts) => url === 'https://cloudmanager.adobe.io/api/program/5/pipeline/7/execution/1016/phase/8567/step/15490/advance' &&
-    opts.method === 'PUT' && opts.body === JSON.stringify({ approved: true }),
+      opts.method === 'PUT' && opts.body === JSON.stringify({ approved: true }),
   500, {
     name: 'advance-1016',
   })
