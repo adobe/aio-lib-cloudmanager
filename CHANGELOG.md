@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.3.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.2.0...1.3.0) (2021-07-27)
+
+
+### Features
+
+* **commerce:** add getCommerceCLICommand. fixes [#178](https://github.com/adobe/aio-lib-cloudmanager/issues/178) ([#196](https://github.com/adobe/aio-lib-cloudmanager/issues/196)) ([a0c9b61](https://github.com/adobe/aio-lib-cloudmanager/commit/a0c9b61c58ab8302974f15e7177b40974ade50c3))
+
 # [1.2.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.1.1...1.2.0) (2021-07-27)
 
 

@@ -626,10 +626,10 @@ Unbind an IP Allow List from an environment
 <a name="CloudManagerAPI+getCommerceCommandExecution"></a>
 
 ### cloudManagerAPI.getCommerceCommandExecution(programId, environmentId, executionId) ⇒ <code>Promise.&lt;object&gt;</code>
-Get the specific commerce execution command status based on the execution id
+Get status for an existing Commerce execution
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
 
 | Param | Type | Description |
 | --- | --- | --- |
