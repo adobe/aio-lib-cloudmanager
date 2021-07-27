@@ -174,6 +174,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.deleteIpAllowlist(programId, ipAllowlistId)](#CloudManagerAPI+deleteIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+addIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getCommerceCommandExecution(programId, environmentId, executionId)](#CloudManagerAPI+getCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.postCommerceCommandExecution(programId, environmentId, options)](#CloudManagerAPI+postCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="CloudManagerAPI+orgId"></a>
@@ -621,6 +622,20 @@ Unbind an IP Allow List from an environment
 | ipAllowlistId | <code>string</code> | the allow list id |
 | environmentId | <code>string</code> | the environment id |
 | service | <code>string</code> | the service name |
+
+<a name="CloudManagerAPI+getCommerceCommandExecution"></a>
+
+### cloudManagerAPI.getCommerceCommandExecution(programId, environmentId, executionId) ⇒ <code>Promise.&lt;object&gt;</code>
+Get the specific commerce execution command status based on the execution id
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| environmentId | <code>string</code> | the environment id |
+| executionId | <code>string</code> | the execution id |
 
 <a name="CloudManagerAPI+postCommerceCommandExecution"></a>
 
