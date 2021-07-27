@@ -1227,6 +1227,32 @@ class CloudManagerAPI {
   }
 
   /**
+   * Get status for an existing Commerce execution
+   *
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {string} executionId - the execution id
+   * @returns {Promise<object>} a truthy value of the commerce execution
+   */
+  async getCommerceCommandExecution (programId, environmentId, executionId) {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const environmentLink = environment.link(rels.commerceCommandExecutionId)
+
+    if (!environmentLink) {
+      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+    }
+
+    const executionTemplate = UriTemplate.parse(environmentLink.href)
+    const executionLink = executionTemplate.expand({ executionId: executionId })
+
+    return this._get(executionLink, codes.ERROR_GET_COMMERCE_CLI).then(async res => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
    * Make a Post to Commerce API
    *
    * @param {string} programId - the program id
