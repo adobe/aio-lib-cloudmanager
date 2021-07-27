@@ -246,6 +246,9 @@ beforeEach(() => {
                   href: '/api/program/4/environment/3/logs?service={service}&name={name}&days={days}',
                   templated: true,
                 },
+                'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
+                  href: '/api/program/4/environment/3/runtime/commerce/cli/',
+                },
               },
               id: '3',
               programId: '4',
@@ -261,6 +264,9 @@ beforeEach(() => {
                 },
                 'http://ns.adobe.com/adobecloud/rel/variables': {
                   href: '/api/program/4/environment/10/variables',
+                },
+                'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
+                  href: '/api/program/4/environment/10/runtime/commerce/cli/',
                 },
               },
               id: '10',
@@ -1638,4 +1644,12 @@ beforeEach(() => {
     },
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/9/ipAllowlists', 400)
+
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/cli/', 'POST', {
+    status: 201,
+    data: {
+      test: 'test success data',
+    },
+  })
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/', 403)
 })

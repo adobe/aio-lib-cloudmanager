@@ -1225,6 +1225,27 @@ class CloudManagerAPI {
       throw e
     })
   }
+
+  /**
+   * Make a Post to Commerce API
+   *
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {object} options - options
+   * @returns {Promise<object>} a truthy value
+   */
+  async postCommerceCommandExecution (programId, environmentId, options) {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const link = environment.link(rels.commerceCommandExecution)
+    if (!link) {
+      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+    }
+    return this._post(link.href, options, codes.ERROR_POST_COMMERCE_CLI).then(async (res) => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
 }
 
 module.exports = {
