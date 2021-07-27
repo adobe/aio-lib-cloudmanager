@@ -80,21 +80,21 @@ Commits (generally via merged pull requests) to the `main` branch of this reposi
 
 For bug fixes:
 ```
-fix(scope): <description>
+fix(scope): <description> fixes #123
 
 [optional content]
 ```
 
 For features:
 ```
-feat(scope): <description>
+feat(scope): <description> fixes #123
 
 [optional content]
 ```
 
 For breaking changes:
 ```
-feat(scope): <description>
+feat(scope): <description> fixes #123
 
 [optional content]
 
