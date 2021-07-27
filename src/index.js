@@ -1229,10 +1229,10 @@ class CloudManagerAPI {
   /**
    * Get status for an existing Commerce execution
    *
-   * @param {string} programId the program id
-   * @param {string} environmentId the environment id
-   * @param {string} executionId the execution id
-   * @returns {Promise<object>}  a truthy value of the commerce execution
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {string} executionId - the execution id
+   * @returns {Promise<object>} a truthy value of the commerce execution
    */
   async getCommerceCommandExecution (programId, environmentId, executionId) {
     const environment = await this._findEnvironment(programId, environmentId)
