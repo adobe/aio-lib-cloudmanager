@@ -1246,7 +1246,7 @@ class CloudManagerAPI {
     const executionLink = executionTemplate.expand({ executionId: executionId })
 
     return this._get(executionLink, codes.ERROR_GET_COMMERCE_CLI).then(res => {
-      return res.json()
+      return halfred.parse(res.json())
     }, e => {
       throw e
     })
