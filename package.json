@@ -44,7 +44,7 @@
     "del": "6.0.0",
     "dotenv": "10.0.0",
     "eol": "0.9.1",
-    "eslint": "7.31.0",
+    "eslint": "7.32.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.24.0",
     "eslint-plugin-jest": "24.4.0",
