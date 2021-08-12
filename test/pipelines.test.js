@@ -549,3 +549,61 @@ test('listExecutions - no link to second page', async () => {
   const getExecutionCalls = fetchMock.calls().filter(call => call[0].indexOf('https://cloudmanager.adobe.io/api/program/5/pipeline/5/executions') === 0 && call[1].method === 'GET')
   expect(getExecutionCalls.length).toBe(1)
 })
+
+test('invalidatePipelineCache - pipelines not found', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.invalidatePipelineCache('6', '1')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_LIST_PIPELINES({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/pipelines (404 Not Found)' }),
+  )
+})
+
+test('invalidatePipelineCache - no pipeline', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.invalidatePipelineCache('4', '4')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_PIPELINE({ messageValues: ['4', '4'] }),
+  )
+})
+
+test('invalidatePipelineCache - no cache link', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.invalidatePipelineCache('5', '6')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_FIND_PIPELINE_CACHE_LINK({ messageValues: ['6', '5'] }),
+  )
+})
+
+test('invalidatePipelineCache - DELETE fails', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.invalidatePipelineCache('5', '8')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_PIPELINE_CACHE_INVALIDATE({ messageValues: 'https://cloudmanager.adobe.io/api/program/5/pipeline/8/cache (500 Internal Server Error)' }),
+  )
+})
+
+test('invalidatePipelineCache - OK', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.invalidatePipelineCache('5', '7')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toBeTruthy()
+})

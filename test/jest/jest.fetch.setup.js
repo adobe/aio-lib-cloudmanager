@@ -1167,6 +1167,9 @@ beforeEach(() => {
                 'http://ns.adobe.com/adobecloud/rel/variables': {
                   href: '/api/program/5/pipeline/7/variables',
                 },
+                'http://ns.adobe.com/adobecloud/rel/cache': {
+                  href: '/api/program/5/pipeline/7/cache',
+                },
               },
             },
             {
@@ -1198,6 +1201,9 @@ beforeEach(() => {
                 },
                 'http://ns.adobe.com/adobecloud/rel/variables': {
                   href: '/api/program/5/pipeline/8/variables',
+                },
+                'http://ns.adobe.com/adobecloud/rel/cache': {
+                  href: '/api/program/5/pipeline/8/cache',
                 },
               },
             },
@@ -1325,6 +1331,7 @@ beforeEach(() => {
     _totalNumberOfItems: 2,
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipeline/7/variables', 404)
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/cache', 'DELETE', {})
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables', 'GET', {
     _links: {
       'http://ns.adobe.com/adobecloud/rel/pipeline': {
@@ -1365,6 +1372,7 @@ beforeEach(() => {
       },
     },
   })
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8/cache', 'DELETE', 500)
 
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/6', {
     id: '6',
