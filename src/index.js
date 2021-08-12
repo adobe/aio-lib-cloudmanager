@@ -322,6 +322,33 @@ class CloudManagerAPI {
     return this.baseUrl + execution.link(rels.self).href
   }
 
+  /**
+   * Invalidate the cache for a pipeline
+   *
+   * @param {string} programId the program id
+   * @param {string} pipelineId the pipeline id
+   * @returns {Promise<object>} a truthy object
+   */
+  async invalidatePipelineCache (programId, pipelineId) {
+    const pipelines = await this.listPipelines(programId)
+    const pipeline = pipelines.find(p => p.id === pipelineId)
+    if (!pipeline) {
+      throw new codes.ERROR_FIND_PIPELINE({ messageValues: [pipelineId, programId] })
+    }
+
+    const link = pipeline.link(rels.pipelineCache)
+
+    if (!link) {
+      throw new codes.ERROR_FIND_PIPELINE_CACHE_LINK({ messageValues: [pipelineId, programId] })
+    }
+
+    return this._delete(link.href, codes.ERROR_PIPELINE_CACHE_INVALIDATE).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
+
   async _findPipeline (programId, pipelineId) {
     const pipelines = await this.listPipelines(programId)
     const pipeline = pipelines.find(p => p.id === pipelineId)
