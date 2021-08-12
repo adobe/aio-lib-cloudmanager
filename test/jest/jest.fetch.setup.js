@@ -1656,7 +1656,6 @@ beforeEach(() => {
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/', 403)
 
- mock('http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs', 404)
   fetchMock.mock({
     url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
     headers: { range: 'bytes=0-' },
@@ -1672,7 +1671,7 @@ beforeEach(() => {
       },
       body: logResponse,
     }
-  })
+  }, { sendAsJson: false })
 
   fetchMock.mock({
     url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
@@ -1689,7 +1688,7 @@ beforeEach(() => {
       },
       body: logResponse,
     }
-  })
+  }, { sendAsJson: false })
 
   fetchMock.mock({
     url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
@@ -1706,5 +1705,5 @@ beforeEach(() => {
       },
       body: logResponse,
     }
-  })
+  }, { sendAsJson: false })
 })
