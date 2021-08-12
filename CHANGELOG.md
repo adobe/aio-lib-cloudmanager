@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.4.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.3.0...1.4.0) (2021-08-12)
+
+
+### Features
+
+* **pipeline:** add invalidatePipelineCache support. fixes [#204](https://github.com/adobe/aio-lib-cloudmanager/issues/204) ([#205](https://github.com/adobe/aio-lib-cloudmanager/issues/205)) ([1795fed](https://github.com/adobe/aio-lib-cloudmanager/commit/1795fedef0458a9f1e171ba5349eeec5e146e3d5))
+
 # [1.3.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.2.0...1.3.0) (2021-07-27)
 
 
