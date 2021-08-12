@@ -268,6 +268,9 @@ beforeEach(() => {
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
                   href: '/api/program/4/environment/10/runtime/commerce/cli/',
                 },
+                'http://ns.adobe.com/adobecloud/rel/logs': {
+                  href: '/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+                },
               },
               id: '10',
               programId: '4',
@@ -1652,4 +1655,56 @@ beforeEach(() => {
     },
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/', 403)
+
+ mock('http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs', 404)
+  fetchMock.mock({
+    url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+    headers: { range: 'bytes=0-' },
+    name: 'tail-log-1-first',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('first log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  })
+
+  fetchMock.mock({
+    url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+    headers: { range: 'bytes=1000-' },
+    name: 'tail-log-1-second',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('second log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  })
+
+  fetchMock.mock({
+    url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+    headers: { range: 'bytes=2000-' },
+    name: 'tail-log-1-third',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('third log message\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  })
 })

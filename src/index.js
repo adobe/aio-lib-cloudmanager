@@ -1246,6 +1246,52 @@ class CloudManagerAPI {
       throw e
     })
   }
+
+  _getCommerceCommandLogUrl (environment) {
+    const link = environment.link(rels.logs)
+    return link.href
+  }
+
+  _getCommerceCommandStatus (executionId) {
+    // return getCommerceCommandExecution(executionId).then(res => res.status)
+    return 'RUNNING'
+  }
+
+  async getCommerceTailLogs (programId, environmentId, cliId, outputStream) {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const link = this._getCommerceCommandLogUrl(environment)
+    if (!link) {
+      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+    }
+    let commandStatus = this._getCommerceCommandStatus(cliId)
+    let currentStartLimit = 0
+
+    while (commandStatus === 'RUNNING') {
+      let getCommandStatusCounter = 0
+
+      const options = {
+        headers: {
+          Range: `bytes=${currentStartLimit}-`,
+        },
+      }
+
+      while (getCommandStatusCounter < 3) {
+        const res = await fetch(`http://cloudmanager.adobe.io${link}`, options)
+        if (res.status === 206) {
+          const contentLength = res.headers.get('content-length')
+          await this._pipeBody(res.body, outputStream)
+          currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
+        } else if (res.status === 416 || res.status === 404) {
+          getCommandStatusCounter++
+          await sleep(5000)
+        } else {
+          throw new codes.ERROR_COMMERCE_CLI({ messageValues: res.body })
+        }
+      }
+
+      commandStatus = this._getCommerceCommandStatus(cliId)
+    }
+  }
 }
 
 module.exports = {
