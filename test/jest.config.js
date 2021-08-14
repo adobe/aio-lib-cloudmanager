@@ -29,6 +29,7 @@ module.exports = {
   testEnvironment: 'node',
   setupFilesAfterEnv: [
     '<rootDir>/test/jest/jest.setup.js',
+    'jest-extended',
     '<rootDir>/test/jest/jest.zlib.setup.js',
     // remove any of the lines below if you don't want to use any of the mocks
     '<rootDir>/test/jest/jest.fetch.setup.js',
