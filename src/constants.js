@@ -30,6 +30,8 @@ module.exports = {
     ipAllowlists: 'http://ns.adobe.com/adobecloud/rel/ipAllowlists',
     ipAllowlistBindings: 'http://ns.adobe.com/adobecloud/rel/ipAllowlistBindings',
     commerceCommandExecution: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution',
+    commerceCommandExecutionId: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id',
+    pipelineCache: 'http://ns.adobe.com/adobecloud/rel/cache',
   },
   config: {
     programId: 'cloudmanager_programid',

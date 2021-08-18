@@ -52,3 +52,73 @@ test('postCommerceCommandExecution - error: no link', async () => {
     new codes.ERROR_COMMERCE_CLI({ messageValues: '11' }),
   )
 })
+
+test('getCommerceCommandExecution - error: failure to find correct environment', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getCommerceCommandExecution('4', '3')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_COMMERCE_CLI({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-execution/ (403 Forbidden)' }),
+  )
+})
+
+test('getCommerceCommandExecution - error: failure to retrieve environments', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getCommerceCommandExecution('6', '7', '8')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_RETRIEVE_ENVIRONMENTS({ messageValues: 'https://cloudmanager.adobe.io/api/program/6/environments (404 Not Found)' }),
+  )
+})
+
+test('getCommerceCommandExecution - error: no link', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getCommerceCommandExecution('4', '11')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_COMMERCE_CLI({ messageValues: '11' }),
+  )
+})
+
+test('getCommerceCommandExecution - success', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getCommerceCommandExecution('4', '10', '1')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toMatchObject(halfred.parse({
+    id: 1,
+    status: 'RUNNNG', // PENDING, RUNNING, COMPLETED, FAILED
+    type: 'bin/magento', // bin/magento, bin/ece-tools
+    command: 'test command to be executed',
+    message: 'One line message on the progress of command',
+    options: ['Optional', 'inputs provided part of the command'],
+    startedAt: 'timestamp UTC',
+    completedAt: 'timestamp utc',
+    startedBy: 'test runner',
+    _links: {
+      self: {
+        href: '/api/program/4/environment/10/runtime/commerce/command-execution/1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+      },
+      'http://ns.adobe.com/adobecloud/rel/environments': {
+        href: '/api/program/4/environments',
+      },
+      'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
+        href: '/api/program/4/environment/10/runtime/commerce/command-executions',
+      },
+    },
+  }))
+})

@@ -148,6 +148,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.listPipelines(programId, options)](#CloudManagerAPI+listPipelines) ⇒ <code>Promise.&lt;Array.&lt;Pipeline&gt;&gt;</code>
     * [.createExecution(programId, pipelineId)](#CloudManagerAPI+createExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * ~~[.startExecution(programId, pipelineId)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>~~
+    * [.invalidatePipelineCache(programId, pipelineId)](#CloudManagerAPI+invalidatePipelineCache) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.listExecutions(programId, pipelineId, limit)](#CloudManagerAPI+listExecutions) ⇒ <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code>
     * [.getExecution(programId, pipelineId, executionId)](#CloudManagerAPI+getExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
@@ -174,6 +175,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.deleteIpAllowlist(programId, ipAllowlistId)](#CloudManagerAPI+deleteIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+addIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getCommerceCommandExecution(programId, environmentId, executionId)](#CloudManagerAPI+getCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.postCommerceCommandExecution(programId, environmentId, options)](#CloudManagerAPI+postCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="CloudManagerAPI+orgId"></a>
@@ -257,6 +259,19 @@ Start an execution for a pipeline, returning the url of the new execution
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
 **Returns**: <code>Promise.&lt;string&gt;</code> - the execution url  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| pipelineId | <code>string</code> | the pipeline id |
+
+<a name="CloudManagerAPI+invalidatePipelineCache"></a>
+
+### cloudManagerAPI.invalidatePipelineCache(programId, pipelineId) ⇒ <code>Promise.&lt;object&gt;</code>
+Invalidate the cache for a pipeline
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy object  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -621,6 +636,20 @@ Unbind an IP Allow List from an environment
 | ipAllowlistId | <code>string</code> | the allow list id |
 | environmentId | <code>string</code> | the environment id |
 | service | <code>string</code> | the service name |
+
+<a name="CloudManagerAPI+getCommerceCommandExecution"></a>
+
+### cloudManagerAPI.getCommerceCommandExecution(programId, environmentId, executionId) ⇒ <code>Promise.&lt;object&gt;</code>
+Get status for an existing Commerce execution
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| environmentId | <code>string</code> | the environment id |
+| executionId | <code>string</code> | the execution id |
 
 <a name="CloudManagerAPI+postCommerceCommandExecution"></a>
 

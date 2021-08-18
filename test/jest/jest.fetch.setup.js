@@ -249,6 +249,13 @@ beforeEach(() => {
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
                   href: '/api/program/4/environment/3/runtime/commerce/cli/',
                 },
+<<<<<<< HEAD
+=======
+                'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id': {
+                  href: '/api/program/4/environment/3/runtime/commerce/command-execution/{executionId}',
+                  templated: true,
+                },
+>>>>>>> main
               },
               id: '3',
               programId: '4',
@@ -268,8 +275,14 @@ beforeEach(() => {
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
                   href: '/api/program/4/environment/10/runtime/commerce/cli/',
                 },
+<<<<<<< HEAD
                 'http://ns.adobe.com/adobecloud/rel/logs': {
                   href: '/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+=======
+                'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id': {
+                  href: '/api/program/4/environment/10/runtime/commerce/command-execution/{executionId}',
+                  templated: true,
+>>>>>>> main
                 },
               },
               id: '10',
@@ -1162,6 +1175,9 @@ beforeEach(() => {
                 'http://ns.adobe.com/adobecloud/rel/variables': {
                   href: '/api/program/5/pipeline/7/variables',
                 },
+                'http://ns.adobe.com/adobecloud/rel/cache': {
+                  href: '/api/program/5/pipeline/7/cache',
+                },
               },
             },
             {
@@ -1193,6 +1209,9 @@ beforeEach(() => {
                 },
                 'http://ns.adobe.com/adobecloud/rel/variables': {
                   href: '/api/program/5/pipeline/8/variables',
+                },
+                'http://ns.adobe.com/adobecloud/rel/cache': {
+                  href: '/api/program/5/pipeline/8/cache',
                 },
               },
             },
@@ -1320,6 +1339,7 @@ beforeEach(() => {
     _totalNumberOfItems: 2,
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/pipeline/7/variables', 404)
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/7/cache', 'DELETE', {})
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8/variables', 'GET', {
     _links: {
       'http://ns.adobe.com/adobecloud/rel/pipeline': {
@@ -1360,6 +1380,7 @@ beforeEach(() => {
       },
     },
   })
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/8/cache', 'DELETE', 500)
 
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/6', {
     id: '6',
@@ -1647,6 +1668,36 @@ beforeEach(() => {
     },
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/9/ipAllowlists', 400)
+
+  // Commerce command execution mocks
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-execution/', 403)
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/6/environment/7/runtime/commerce/command-execution/8', 404)
+
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-execution/1', 'GET', {
+    id: 1,
+    status: 'RUNNNG', // PENDING, RUNNING, COMPLETED, FAILED
+    type: 'bin/magento', // bin/magento, bin/ece-tools
+    command: 'test command to be executed',
+    message: 'One line message on the progress of command',
+    options: ['Optional', 'inputs provided part of the command'],
+    startedAt: 'timestamp UTC',
+    completedAt: 'timestamp utc',
+    startedBy: 'test runner',
+    _links: {
+      self: {
+        href: '/api/program/4/environment/10/runtime/commerce/command-execution/1',
+      },
+      'http://ns.adobe.com/adobecloud/rel/program': {
+        href: '/api/program/4',
+      },
+      'http://ns.adobe.com/adobecloud/rel/environments': {
+        href: '/api/program/4/environments',
+      },
+      'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
+        href: '/api/program/4/environment/10/runtime/commerce/command-executions',
+      },
+    },
+  })
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/cli/', 'POST', {
     status: 201,

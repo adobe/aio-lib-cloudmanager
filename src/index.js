@@ -322,6 +322,33 @@ class CloudManagerAPI {
     return this.baseUrl + execution.link(rels.self).href
   }
 
+  /**
+   * Invalidate the cache for a pipeline
+   *
+   * @param {string} programId the program id
+   * @param {string} pipelineId the pipeline id
+   * @returns {Promise<object>} a truthy object
+   */
+  async invalidatePipelineCache (programId, pipelineId) {
+    const pipelines = await this.listPipelines(programId)
+    const pipeline = pipelines.find(p => p.id === pipelineId)
+    if (!pipeline) {
+      throw new codes.ERROR_FIND_PIPELINE({ messageValues: [pipelineId, programId] })
+    }
+
+    const link = pipeline.link(rels.pipelineCache)
+
+    if (!link) {
+      throw new codes.ERROR_FIND_PIPELINE_CACHE_LINK({ messageValues: [pipelineId, programId] })
+    }
+
+    return this._delete(link.href, codes.ERROR_PIPELINE_CACHE_INVALIDATE).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
+
   async _findPipeline (programId, pipelineId) {
     const pipelines = await this.listPipelines(programId)
     const pipeline = pipelines.find(p => p.id === pipelineId)
@@ -1247,17 +1274,42 @@ class CloudManagerAPI {
     })
   }
 
+  /**
+   * Get status for an existing Commerce execution
+   *
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {string} executionId - the execution id
+   * @returns {Promise<object>} a truthy value of the commerce execution
+   */
+  async getCommerceCommandExecution (programId, environmentId, executionId) {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const environmentLink = environment.link(rels.commerceCommandExecutionId)
+
+    if (!environmentLink) {
+      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+    }
+
+    const executionTemplate = UriTemplate.parse(environmentLink.href)
+    const executionLink = executionTemplate.expand({ executionId: executionId })
+
+    return this._get(executionLink, codes.ERROR_GET_COMMERCE_CLI).then(async res => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
+
   _getCommerceCommandLogUrl (environment) {
     const link = environment.link(rels.logs)
     return link.href
   }
 
   _getCommerceCommandStatus (executionId) {
-    // return getCommerceCommandExecution(executionId).then(res => res.status)
-    return 'RUNNING'
+    return getCommerceCommandExecution(executionId).then(res => res.status)
   }
 
-  _getTailLogRedirectUrl (href) {
+  async _getTailLogRedirectUrl (href) {
     return this._get(href, codes.ERROR_GET_LOG).then(async (res) => {
       const json = await res.json()
       if (json.redirect) {
@@ -1265,8 +1317,6 @@ class CloudManagerAPI {
       } else {
         throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
       }
-    }, e => {
-      throw e
     })
   }
 

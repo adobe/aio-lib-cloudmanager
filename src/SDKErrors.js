@@ -104,5 +104,8 @@ E('ERROR_DELETE_IP_ALLOWLIST_BINDING', 'Could not remove IP Allow List binding: 
 E('ERROR_UNSUPPORTED_ADVANCE_STEP', 'Advancing the step %s is not supported in the CLI at present.')
 E('ERROR_REFRESH_STEP_STATE', 'Cannot refresh step state: %s')
 E('ERROR_STEP_STATE_NOT_RUNNING', 'The %s step in execution %s is not currently running.')
+E('ERROR_GET_COMMERCE_CLI', 'Could not get Commerce Command Execution: %s')
 E('ERROR_POST_COMMERCE_CLI', 'Could not post to Commerce CLI endpoint: %s')
 E('ERROR_COMMERCE_CLI', 'Environment %s does not appear to support Commerce CLI')
+E('ERROR_FIND_PIPELINE_CACHE_LINK', 'Could not find cache link for pipeline %s for program %s.')
+E('ERROR_PIPELINE_CACHE_INVALIDATE', 'Could not invalidate pipeline cache: %s')

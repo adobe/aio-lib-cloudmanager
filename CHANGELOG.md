@@ -1,5 +1,26 @@
 # Changelog
 
+# [1.4.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.3.0...1.4.0) (2021-08-12)
+
+
+### Features
+
+* **pipeline:** add invalidatePipelineCache support. fixes [#204](https://github.com/adobe/aio-lib-cloudmanager/issues/204) ([#205](https://github.com/adobe/aio-lib-cloudmanager/issues/205)) ([1795fed](https://github.com/adobe/aio-lib-cloudmanager/commit/1795fedef0458a9f1e171ba5349eeec5e146e3d5))
+
+# [1.3.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.2.0...1.3.0) (2021-07-27)
+
+
+### Features
+
+* **commerce:** add getCommerceCLICommand. fixes [#178](https://github.com/adobe/aio-lib-cloudmanager/issues/178) ([#196](https://github.com/adobe/aio-lib-cloudmanager/issues/196)) ([a0c9b61](https://github.com/adobe/aio-lib-cloudmanager/commit/a0c9b61c58ab8302974f15e7177b40974ade50c3))
+
+# [1.2.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.1.1...1.2.0) (2021-07-27)
+
+
+### Features
+
+* **commerce:** added postCommerceCLICommand. fixes [#177](https://github.com/adobe/aio-lib-cloudmanager/issues/177) ([#184](https://github.com/adobe/aio-lib-cloudmanager/issues/184)) ([26e8c91](https://github.com/adobe/aio-lib-cloudmanager/commit/26e8c9196572cacd578980a1def02a6926f7bb3e))
+
 ## [1.1.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.1.0...1.1.1) (2021-06-30)
 
 
