@@ -1257,6 +1257,19 @@ class CloudManagerAPI {
     return 'RUNNING'
   }
 
+  _getTailLogRedirectUrl (href) {
+    return this._get(href, codes.ERROR_GET_LOG).then(async (res) => {
+      const json = await res.json()
+      if (json.redirect) {
+        return json.redirect
+      } else {
+        throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
+      }
+    }, e => {
+      throw e
+    })
+  }
+
   async getCommerceTailLogs (programId, environmentId, cliId, outputStream) {
     const environment = await this._findEnvironment(programId, environmentId)
     const link = this._getCommerceCommandLogUrl(environment)
@@ -1264,6 +1277,7 @@ class CloudManagerAPI {
       throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
     }
     let commandStatus = this._getCommerceCommandStatus(cliId)
+    const tailLogRedirectUrl = await this._getTailLogRedirectUrl(link)
     let currentStartLimit = 0
 
     while (commandStatus === 'RUNNING') {
@@ -1276,7 +1290,7 @@ class CloudManagerAPI {
       }
 
       while (getCommandStatusCounter < 3) {
-        const res = await fetch(`http://cloudmanager.adobe.io${link}`, options)
+        const res = await fetch(await new Promise(() => tailLogRedirectUrl), options)
         if (res.status === 206) {
           const contentLength = res.headers.get('content-length')
           await this._pipeBody(res.body, outputStream)

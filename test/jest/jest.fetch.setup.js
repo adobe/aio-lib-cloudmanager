@@ -1656,8 +1656,12 @@ beforeEach(() => {
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/', 403)
 
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs', 'GET', {
+    redirect: 'https://filestore/commerce-tail-logs.txt',
+  })
+
   fetchMock.mock({
-    url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+    url: 'https://filestore/commerce-tail-logs.txt',
     headers: { range: 'bytes=0-' },
     name: 'tail-log-1-first',
   }, () => {
@@ -1674,7 +1678,7 @@ beforeEach(() => {
   }, { sendAsJson: false })
 
   fetchMock.mock({
-    url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+    url: 'https://filestore/commerce-tail-logs.txt',
     headers: { range: 'bytes=1000-' },
     name: 'tail-log-1-second',
   }, () => {
@@ -1691,7 +1695,7 @@ beforeEach(() => {
   }, { sendAsJson: false })
 
   fetchMock.mock({
-    url: 'http://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/1/logs',
+    url: 'https://filestore/commerce-tail-logs.txt',
     headers: { range: 'bytes=2000-' },
     name: 'tail-log-1-third',
   }, () => {
