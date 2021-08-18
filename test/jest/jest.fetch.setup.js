@@ -250,7 +250,7 @@ beforeEach(() => {
                   href: '/api/program/4/environment/3/runtime/commerce/cli/',
                 },
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id': {
-                  href: '/api/program/4/environment/3/runtime/commerce/command-execution/{executionId}',
+                  href: '/api/program/4/environment/3/runtime/commerce/command-execution/{commandExecutionId}',
                   templated: true,
                 },
               },
@@ -273,7 +273,7 @@ beforeEach(() => {
                   href: '/api/program/4/environment/10/runtime/commerce/cli/',
                 },
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id': {
-                  href: '/api/program/4/environment/10/runtime/commerce/command-execution/{executionId}',
+                  href: '/api/program/4/environment/10/runtime/commerce/command-execution/{commandExecutionId}',
                   templated: true,
                 },
               },
