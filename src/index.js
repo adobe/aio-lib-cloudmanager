@@ -1258,10 +1258,10 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
-   * @param {string} executionId - the execution id
+   * @param {string} commandExecutionId - the command execution id
    * @returns {Promise<object>} a truthy value of the commerce execution
    */
-  async getCommerceCommandExecution (programId, environmentId, executionId) {
+  async getCommerceCommandExecution (programId, environmentId, commandExecutionId) {
     const environment = await this._findEnvironment(programId, environmentId)
     const environmentLink = environment.link(rels.commerceCommandExecutionId)
 
@@ -1270,7 +1270,7 @@ class CloudManagerAPI {
     }
 
     const executionTemplate = UriTemplate.parse(environmentLink.href)
-    const executionLink = executionTemplate.expand({ executionId: executionId })
+    const executionLink = executionTemplate.expand({ commandExecutionId: commandExecutionId })
 
     return this._get(executionLink, codes.ERROR_GET_COMMERCE_CLI).then(async res => {
       return halfred.parse(await res.json())
