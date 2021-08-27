@@ -1279,8 +1279,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
-   * @param {string} executionId - the execution id
-   * @param commandExecutionId
+   * @param {string} commandExecutionId - the execution id
    * @returns {Promise<object>} a truthy value of the commerce execution
    */
   async getCommerceCommandExecution (programId, environmentId, commandExecutionId) {
