@@ -84,6 +84,11 @@ test('listEnvironments - success', async () => {
     id: '11',
     name: 'TestProgram_dev3',
     type: 'dev',
+  },
+  {
+    id: '17',
+    name: 'TestProgram_dev4',
+    type: 'dev',
   }])
 })
 

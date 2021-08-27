@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 
 const { Writable } = require('stream')
 const sinon = require('sinon')
+const { codes } = require('../src/SDKErrors')
 
 /* global createSdkClient, fetchMock */ // for linter
 
@@ -42,18 +43,79 @@ afterEach(() => {
 })
 
 test('getCommerceTailLogs - success', async () => {
+  expect.assertions(7)
+
   const sdkClient = await createSdkClient()
-  const result = await sdkClient.getCommerceTailLogs('4', '10', '1', writable)
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '708', writable)
 
-  expect(result instanceof Promise).toBeTruthy()
-
-  flushWritable()
-
-  expect(fetchMock.calls('tail-log-1-first').length).toEqual(1)
-
-  expect(written).toEqual('first log message\nsecond log message\nthird log message\n')
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toEqual('COMPLETED')
 
   expect(fetchMock.calls('tail-log-1-first').length).toEqual(1)
   expect(fetchMock.calls('tail-log-1-second').length).toEqual(1)
   expect(fetchMock.calls('tail-log-1-third').length).toEqual(1)
+  expect(fetchMock.calls('tail-log-1-fourth').length).toEqual(3)
+
+  flushWritable()
+  expect(written).toEqual('first log message\nsecond log message\nthird log message\n')
+})
+
+test('getCommerceTailLogs - error: no log redirect', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '7090000', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_NO_LOG_REDIRECT({ messageValues: ['https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/7090000/logs', JSON.stringify({})] }),
+  )
+})
+
+test('getCommerceTailLogs - error: log redirect error', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '7100000', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_LOG({ messageValues: ['https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/7100000/logs (404 Not Found)'] }),
+  )
+})
+
+test('getCommerceTailLogs - error: no log url', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '17', '7100000', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_NO_LOG_URL({ messageValues: '17' }),
+  )
+})
+
+test('getCommerceTailLogs - error response from log endpoint', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '7110000', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_LOG({ messageValues: '7110000' }),
+  )
+})
+
+test('getCommerceTailLogs - command status is not "RUNNING"', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '712', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: '712' }),
+  )
 })

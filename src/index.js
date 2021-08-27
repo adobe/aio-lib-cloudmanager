@@ -1280,9 +1280,10 @@ class CloudManagerAPI {
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
    * @param {string} executionId - the execution id
+   * @param commandExecutionId
    * @returns {Promise<object>} a truthy value of the commerce execution
    */
-  async getCommerceCommandExecution (programId, environmentId, executionId) {
+  async getCommerceCommandExecution (programId, environmentId, commandExecutionId) {
     const environment = await this._findEnvironment(programId, environmentId)
     const environmentLink = environment.link(rels.commerceCommandExecutionId)
 
@@ -1291,7 +1292,7 @@ class CloudManagerAPI {
     }
 
     const executionTemplate = UriTemplate.parse(environmentLink.href)
-    const executionLink = executionTemplate.expand({ executionId: executionId })
+    const executionLink = executionTemplate.expand({ commandExecutionId: commandExecutionId })
 
     return this._get(executionLink, codes.ERROR_GET_COMMERCE_CLI).then(async res => {
       return halfred.parse(await res.json())
@@ -1300,13 +1301,21 @@ class CloudManagerAPI {
     })
   }
 
-  _getCommerceCommandLogUrl (environment) {
-    const link = environment.link(rels.logs)
-    return link.href
+  _getCommerceCommandLogUrl (environment, executionId) {
+    const logLink = environment.link(rels.commerceLogs)
+
+    if (!logLink) {
+      throw new codes.ERROR_NO_LOG_URL({ messageValues: environment.id })
+    }
+
+    const logLinkTemplate = UriTemplate.parse(logLink.href)
+    const logLinkWithExecutionId = logLinkTemplate.expand({ commandExecutionId: executionId })
+
+    return logLinkWithExecutionId
   }
 
-  _getCommerceCommandStatus (executionId) {
-    return getCommerceCommandExecution(executionId).then(res => res.status)
+  async _getCommerceCommandStatus (programId, environmentId, executionId) {
+    return await this.getCommerceCommandExecution(programId, environmentId, executionId).then(res => res.status)
   }
 
   async _getTailLogRedirectUrl (href) {
@@ -1317,44 +1326,48 @@ class CloudManagerAPI {
       } else {
         throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
       }
+    }, e => {
+      throw e
     })
   }
 
-  async getCommerceTailLogs (programId, environmentId, cliId, outputStream) {
-    const environment = await this._findEnvironment(programId, environmentId)
-    const link = this._getCommerceCommandLogUrl(environment)
-    if (!link) {
-      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
-    }
-    let commandStatus = this._getCommerceCommandStatus(cliId)
-    const tailLogRedirectUrl = await this._getTailLogRedirectUrl(link)
-    let currentStartLimit = 0
+  async tailCommerceCommandExecutionLog (programId, environmentId, executionId, outputStream) {
+    let commandStatus = await this._getCommerceCommandStatus(programId, environmentId, executionId)
 
-    while (commandStatus === 'RUNNING') {
-      let getCommandStatusCounter = 0
+    if (commandStatus === 'RUNNING') {
+      const environment = await this._findEnvironment(programId, environmentId)
+      const link = this._getCommerceCommandLogUrl(environment, executionId)
+      const tailLogRedirectUrl = await this._getTailLogRedirectUrl(link)
+      let currentStartLimit = 0
 
-      const options = {
-        headers: {
-          Range: `bytes=${currentStartLimit}-`,
-        },
-      }
+      while (commandStatus === 'RUNNING') {
+        let getCommandStatusCounter = 0
 
-      while (getCommandStatusCounter < 3) {
-        const res = await fetch(await new Promise(() => tailLogRedirectUrl), options)
-        if (res.status === 206) {
-          const contentLength = res.headers.get('content-length')
-          await this._pipeBody(res.body, outputStream)
-          currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
-        } else if (res.status === 416 || res.status === 404) {
-          getCommandStatusCounter++
-          await sleep(5000)
-        } else {
-          throw new codes.ERROR_COMMERCE_CLI({ messageValues: res.body })
+        while (getCommandStatusCounter < 3) {
+          const res = await fetch(tailLogRedirectUrl, {
+            headers: {
+              range: `bytes=${currentStartLimit}-`,
+            },
+          })
+          if (res.status === 206) {
+            const contentLength = res.headers.get('content-length')
+            await this._pipeBody(res.body, outputStream)
+            currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
+          } else if (res.status === 416 || res.status === 404) {
+            getCommandStatusCounter++
+            await sleep(5000)
+          } else {
+            throw new codes.ERROR_GET_LOG({ messageValues: executionId })
+          }
         }
-      }
 
-      commandStatus = this._getCommerceCommandStatus(cliId)
+        commandStatus = await this._getCommerceCommandStatus(programId, environmentId, executionId)
+      }
+    } else {
+      throw new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: executionId })
     }
+
+    return commandStatus
   }
 }
 
