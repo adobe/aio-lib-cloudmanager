@@ -858,7 +858,7 @@ class CloudManagerAPI {
   }
 
   async _getLiveStream (programId, environment, service, name, tailingSasUrl, currentStartLimit, writeStream) {
-    for (;;) {
+    for (; ;) {
       const options = {
         headers: {
           Range: 'bytes=' + currentStartLimit + '-',
@@ -1279,7 +1279,7 @@ class CloudManagerAPI {
    *
    * @param {string} programId - the program id
    * @param {string} environmentId - the environment id
-   * @param {string} commandExecutionId - the execution id
+   * @param {string} commandExecutionId - the command execution id
    * @returns {Promise<object>} a truthy value of the commerce execution
    */
   async getCommerceCommandExecution (programId, environmentId, commandExecutionId) {
