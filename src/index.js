@@ -858,7 +858,7 @@ class CloudManagerAPI {
   }
 
   async _getLiveStream (programId, environment, service, name, tailingSasUrl, currentStartLimit, writeStream) {
-    for (; ;) {
+    for (;;) {
       const options = {
         headers: {
           Range: 'bytes=' + currentStartLimit + '-',
@@ -1300,7 +1300,7 @@ class CloudManagerAPI {
     })
   }
 
-  _getCommerceCommandLogUrl (environment, executionId) {
+  _getCommerceCommandLogUrl (environment, commandExecutionId) {
     const logLink = environment.link(rels.commerceLogs)
 
     if (!logLink) {
@@ -1308,13 +1308,13 @@ class CloudManagerAPI {
     }
 
     const logLinkTemplate = UriTemplate.parse(logLink.href)
-    const logLinkWithExecutionId = logLinkTemplate.expand({ commandExecutionId: executionId })
+    const logLinkWithExecutionId = logLinkTemplate.expand({ commandExecutionId: commandExecutionId })
 
     return logLinkWithExecutionId
   }
 
-  async _getCommerceCommandStatus (programId, environmentId, executionId) {
-    return await this.getCommerceCommandExecution(programId, environmentId, executionId).then(res => res.status)
+  async _getCommerceCommandStatus (programId, environmentId, commandExecutionId) {
+    return await this.getCommerceCommandExecution(programId, environmentId, commandExecutionId).then(res => res.status)
   }
 
   async _getTailLogRedirectUrl (href) {
@@ -1330,12 +1330,12 @@ class CloudManagerAPI {
     })
   }
 
-  async tailCommerceCommandExecutionLog (programId, environmentId, executionId, outputStream) {
-    let commandStatus = await this._getCommerceCommandStatus(programId, environmentId, executionId)
+  async tailCommerceCommandExecutionLog (programId, environmentId, commandExecutionId, outputStream) {
+    let commandStatus = await this._getCommerceCommandStatus(programId, environmentId, commandExecutionId)
 
     if (commandStatus === 'RUNNING') {
       const environment = await this._findEnvironment(programId, environmentId)
-      const link = this._getCommerceCommandLogUrl(environment, executionId)
+      const link = this._getCommerceCommandLogUrl(environment, commandExecutionId)
       const tailLogRedirectUrl = await this._getTailLogRedirectUrl(link)
       let currentStartLimit = 0
 
@@ -1356,14 +1356,14 @@ class CloudManagerAPI {
             getCommandStatusCounter++
             await sleep(5000)
           } else {
-            throw new codes.ERROR_GET_LOG({ messageValues: executionId })
+            throw new codes.ERROR_GET_LOG({ messageValues: commandExecutionId })
           }
         }
 
-        commandStatus = await this._getCommerceCommandStatus(programId, environmentId, executionId)
+        commandStatus = await this._getCommerceCommandStatus(programId, environmentId, commandExecutionId)
       }
     } else {
-      throw new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: executionId })
+      throw new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: commandExecutionId })
     }
 
     return commandStatus
