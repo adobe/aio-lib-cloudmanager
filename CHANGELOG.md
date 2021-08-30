@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.6.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.5.0...1.6.0) (2021-08-30)
+
+
+### Features
+
+* **commerce:** enable tailing a commerce execution command. fixes [#206](https://github.com/adobe/aio-lib-cloudmanager/issues/206) ([4d75b3e](https://github.com/adobe/aio-lib-cloudmanager/commit/4d75b3e6769cd0fe4d4dfae0363f9e84d813eb88))
+
 # [1.5.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.4.0...1.5.0) (2021-08-19)
 
 

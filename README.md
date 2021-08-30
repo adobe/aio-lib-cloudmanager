@@ -175,8 +175,8 @@ with valid values for tenantId, apiKey and accessToken
     * [.deleteIpAllowlist(programId, ipAllowlistId)](#CloudManagerAPI+deleteIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+addIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getCommerceCommandExecution(programId, environmentId, commandExecutionId)](#CloudManagerAPI+getCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.postCommerceCommandExecution(programId, environmentId, options)](#CloudManagerAPI+postCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getCommerceCommandExecution(programId, environmentId, commandExecutionId)](#CloudManagerAPI+getCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="CloudManagerAPI+orgId"></a>
 
@@ -637,20 +637,6 @@ Unbind an IP Allow List from an environment
 | environmentId | <code>string</code> | the environment id |
 | service | <code>string</code> | the service name |
 
-<a name="CloudManagerAPI+getCommerceCommandExecution"></a>
-
-### cloudManagerAPI.getCommerceCommandExecution(programId, environmentId, commandExecutionId) ⇒ <code>Promise.&lt;object&gt;</code>
-Get status for an existing Commerce execution
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| programId | <code>string</code> | the program id |
-| environmentId | <code>string</code> | the environment id |
-| commandExecutionId | <code>string</code> | the command execution id |
-
 <a name="CloudManagerAPI+postCommerceCommandExecution"></a>
 
 ### cloudManagerAPI.postCommerceCommandExecution(programId, environmentId, options) ⇒ <code>Promise.&lt;object&gt;</code>
@@ -664,6 +650,20 @@ Make a Post to Commerce API
 | programId | <code>string</code> | the program id |
 | environmentId | <code>string</code> | the environment id |
 | options | <code>object</code> | options |
+
+<a name="CloudManagerAPI+getCommerceCommandExecution"></a>
+
+### cloudManagerAPI.getCommerceCommandExecution(programId, environmentId, commandExecutionId) ⇒ <code>Promise.&lt;object&gt;</code>
+Get status for an existing Commerce execution
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| environmentId | <code>string</code> | the environment id |
+| commandExecutionId | <code>string</code> | the command execution id |
 
 <a name="getCurrentStep"></a>
 
