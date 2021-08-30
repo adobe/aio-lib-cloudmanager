@@ -1254,6 +1254,27 @@ class CloudManagerAPI {
   }
 
   /**
+   * Make a Post to Commerce API
+   *
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {object} options - options
+   * @returns {Promise<object>} a truthy value
+   */
+  async postCommerceCommandExecution (programId, environmentId, options) {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const link = environment.link(rels.commerceCommandExecution)
+    if (!link) {
+      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+    }
+    return this._post(link.href, options, codes.ERROR_POST_COMMERCE_CLI).then(async (res) => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
    * Get status for an existing Commerce execution
    *
    * @param {string} programId - the program id
@@ -1279,25 +1300,73 @@ class CloudManagerAPI {
     })
   }
 
-  /**
-   * Make a Post to Commerce API
-   *
-   * @param {string} programId - the program id
-   * @param {string} environmentId - the environment id
-   * @param {object} options - options
-   * @returns {Promise<object>} a truthy value
-   */
-  async postCommerceCommandExecution (programId, environmentId, options) {
-    const environment = await this._findEnvironment(programId, environmentId)
-    const link = environment.link(rels.commerceCommandExecution)
-    if (!link) {
-      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+  _getCommerceCommandLogUrl (environment, commandExecutionId) {
+    const logLink = environment.link(rels.commerceLogs)
+
+    if (!logLink) {
+      throw new codes.ERROR_NO_LOG_URL({ messageValues: environment.id })
     }
-    return this._post(link.href, options, codes.ERROR_POST_COMMERCE_CLI).then(async (res) => {
-      return halfred.parse(await res.json())
+
+    const logLinkTemplate = UriTemplate.parse(logLink.href)
+    const logLinkWithExecutionId = logLinkTemplate.expand({ commandExecutionId: commandExecutionId })
+
+    return logLinkWithExecutionId
+  }
+
+  async _getCommerceCommandStatus (programId, environmentId, commandExecutionId) {
+    return await this.getCommerceCommandExecution(programId, environmentId, commandExecutionId).then(res => res.status)
+  }
+
+  async _getTailLogRedirectUrl (href) {
+    return this._get(href, codes.ERROR_GET_LOG).then(async (res) => {
+      const json = await res.json()
+      if (json.redirect) {
+        return json.redirect
+      } else {
+        throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
+      }
     }, e => {
       throw e
     })
+  }
+
+  async tailCommerceCommandExecutionLog (programId, environmentId, commandExecutionId, outputStream) {
+    let commandStatus = await this._getCommerceCommandStatus(programId, environmentId, commandExecutionId)
+
+    if (commandStatus === 'RUNNING') {
+      const environment = await this._findEnvironment(programId, environmentId)
+      const link = this._getCommerceCommandLogUrl(environment, commandExecutionId)
+      const tailLogRedirectUrl = await this._getTailLogRedirectUrl(link)
+      let currentStartLimit = 0
+
+      while (commandStatus === 'RUNNING') {
+        let getCommandStatusCounter = 0
+
+        while (getCommandStatusCounter < 3) {
+          const res = await fetch(tailLogRedirectUrl, {
+            headers: {
+              range: `bytes=${currentStartLimit}-`,
+            },
+          })
+          if (res.status === 206) {
+            const contentLength = res.headers.get('content-length')
+            await this._pipeBody(res.body, outputStream)
+            currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
+          } else if (res.status === 416 || res.status === 404) {
+            getCommandStatusCounter++
+            await sleep(5000)
+          } else {
+            throw new codes.ERROR_GET_LOG({ messageValues: commandExecutionId })
+          }
+        }
+
+        commandStatus = await this._getCommerceCommandStatus(programId, environmentId, commandExecutionId)
+      }
+    } else {
+      throw new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: commandExecutionId })
+    }
+
+    return commandStatus
   }
 }
 
