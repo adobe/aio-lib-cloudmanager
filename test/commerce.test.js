@@ -14,6 +14,105 @@ const halfred = require('halfred')
 
 /* global createSdkClient */ // for linter
 
+test('getCommerceCommandExecutions - success', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getCommerceCommandExecutions('4', '10', 'bin/magento', 'COMPLETED', 'cache:clean')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toMatchObject(halfred.parse({
+    _embedded: {
+      commandExecutions: [{
+        _links: {
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/50',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/logs': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/50/logs',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/environment': {
+            href: '/api/program/4/environment/10',
+            templated: false,
+          },
+        },
+        id: 50,
+        type: 'bin/magento',
+        command: 'cache:clean',
+        options: [],
+        startedBy: 'E64A64C360706AD20A494012@techacct.adobe.com',
+        startedAt: '2021-08-31T15:31:16.901+0000',
+        completedAt: '2021-08-31T15:32:18.000+0000',
+        name: 'magento-cli-2553',
+        status: 'COMPLETED',
+        environmentId: 12,
+      }, {
+        _links: {
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/51',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/logs': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/51/logs',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/environment': {
+            href: '/api/program/4/environment/10',
+            templated: false,
+          },
+        },
+        id: 51,
+        type: 'bin/magento',
+        command: 'cache:clean',
+        options: [],
+        startedBy: '75CF04FB5D3EB9E20A49422F@AdobeID',
+        startedAt: '2021-08-30T17:06:39.633+0000',
+        completedAt: '2021-08-30T17:07:29.000+0000',
+        name: 'magento-cli-2461',
+        status: 'COMPLETED',
+        environmentId: 12,
+      }],
+    },
+    _totalNumberOfItems: 2,
+    _page: {
+      limit: 20,
+      property: [
+        'type==bin/magento',
+        'status==COMPLETED',
+        'command==cache:clean',
+      ],
+      next: 20,
+      prev: 0,
+    },
+  }))
+})
+
+test('getCommerceCommandExecutions - error: no hal link for executions', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getCommerceCommandExecutions('4', '11', 'bin/magento', 'COMPLETED', 'cache:clean')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_COMMERCE_CLI({ messageValues: '11' }),
+  )
+})
+
+test('getCommerceCommandExecutions - error: failure to find correct environment for all commerce command exectuions', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.getCommerceCommandExecutions('4', '3', 'bin/magento', 'COMPLETED', 'cache:clean')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_COMMERCE_COMMAND_EXECUTIONS_CLI({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-executions/?property=type==bin/magento&property=status==COMPLETED&property=command==cache:clean (403 Forbidden)' }),
+  )
+})
+
 test('postCommerceCommandExecution - success', async () => {
   expect.assertions(2)
 

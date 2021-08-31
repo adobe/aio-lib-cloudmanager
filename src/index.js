@@ -1254,6 +1254,47 @@ class CloudManagerAPI {
   }
 
   /**
+   * Get list of Commerce Command Executions based off search params
+   *
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {string} type - the type of command execution to filter on
+   * @param {string} status - the status of the command to filter on
+   * @param {string} command - the command(s) to filter on
+   * @returns {Promise<object>} a truthy value of the commerce command executions
+   */
+  async getCommerceCommandExecutions (programId, environmentId, type = '', status = '', command = '') {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const environmentLink = environment.link(rels.commerceCommandExecutions)
+
+    if (!environmentLink) {
+      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+    }
+
+    let queryParams = ''
+
+    if (type) {
+      queryParams += `property=type==${type}&`
+    }
+
+    if (status) {
+      queryParams += `property=status==${status}&`
+    }
+
+    if (command) {
+      queryParams += `property=command==${command}`
+    }
+
+    const executionLink = environmentLink.href + (queryParams ? `?${queryParams}` : '')
+
+    return this._get(executionLink, codes.ERROR_GET_COMMERCE_COMMAND_EXECUTIONS_CLI).then(async res => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
    * Make a Post to Commerce API
    *
    * @param {string} programId - the program id
