@@ -30,6 +30,7 @@ module.exports = {
     ipAllowlists: 'http://ns.adobe.com/adobecloud/rel/ipAllowlists',
     ipAllowlistBindings: 'http://ns.adobe.com/adobecloud/rel/ipAllowlistBindings',
     commerceCommandExecution: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution',
+    commerceCommandExecutions: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions',
     commerceCommandExecutionId: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id',
     pipelineCache: 'http://ns.adobe.com/adobecloud/rel/cache',
     commerceLogs: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/logs',

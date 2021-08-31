@@ -32,6 +32,7 @@
     "cross-fetch": "^3.0.4",
     "halfred": "^2.0.0",
     "lodash": "^4.17.20",
+    "urijs": "^1.19.7",
     "uritemplate": "^0.3.4"
   },
   "devDependencies": {
