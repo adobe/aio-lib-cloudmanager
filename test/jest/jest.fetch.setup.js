@@ -253,6 +253,10 @@ beforeEach(() => {
                   href: '/api/program/4/environment/3/runtime/commerce/command-execution/{commandExecutionId}',
                   templated: true,
                 },
+                'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
+                  href: '/api/program/4/environment/3/runtime/commerce/command-executions/',
+                  templated: true,
+                },
               },
               id: '3',
               programId: '4',
@@ -277,6 +281,10 @@ beforeEach(() => {
                 },
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id': {
                   href: '/api/program/4/environment/10/runtime/commerce/command-execution/{commandExecutionId}',
+                  templated: true,
+                },
+                'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
+                  href: '/api/program/4/environment/10/runtime/commerce/command-executions/',
                   templated: true,
                 },
               },
@@ -1685,6 +1693,74 @@ beforeEach(() => {
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/9/ipAllowlists', 400)
 
   // Commerce command execution mocks
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-executions/?property=type==bin/magento&property=status==COMPLETED&property=command==cache:clean', 'GET', {
+    _embedded: {
+      commandExecutions: [{
+        _links: {
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/50',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/logs': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/50/logs',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/environment': {
+            href: '/api/program/4/environment/10',
+            templated: false,
+          },
+        },
+        id: 50,
+        type: 'bin/magento',
+        command: 'cache:clean',
+        options: [],
+        startedBy: 'E64A64C360706AD20A494012@techacct.adobe.com',
+        startedAt: '2021-08-31T15:31:16.901+0000',
+        completedAt: '2021-08-31T15:32:18.000+0000',
+        name: 'magento-cli-2553',
+        status: 'COMPLETED',
+        environmentId: 12,
+      }, {
+        _links: {
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/51',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/logs': {
+            href: '/api/program/4/environment/10/runtime/commerce/command-execution/51/logs',
+            templated: false,
+          },
+          'http://ns.adobe.com/adobecloud/rel/environment': {
+            href: '/api/program/4/environment/10',
+            templated: false,
+          },
+        },
+        id: 51,
+        type: 'bin/magento',
+        command: 'cache:clean',
+        options: [],
+        startedBy: '75CF04FB5D3EB9E20A49422F@AdobeID',
+        startedAt: '2021-08-30T17:06:39.633+0000',
+        completedAt: '2021-08-30T17:07:29.000+0000',
+        name: 'magento-cli-2461',
+        status: 'COMPLETED',
+        environmentId: 12,
+      }],
+    },
+    _totalNumberOfItems: 2,
+    _page: {
+      limit: 20,
+      property: [
+        'type==bin/magento',
+        'status==COMPLETED',
+        'command==cache:clean',
+      ],
+      next: 20,
+      prev: 0,
+    },
+  })
+
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-executions/?property=type==bin/magento&property=status==COMPLETED&property=command==cache:clean', 403)
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-execution/', 403)
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/6/environment/7/runtime/commerce/command-execution/8', 404)
 

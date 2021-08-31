@@ -104,6 +104,7 @@ E('ERROR_DELETE_IP_ALLOWLIST_BINDING', 'Could not remove IP Allow List binding: 
 E('ERROR_UNSUPPORTED_ADVANCE_STEP', 'Advancing the step %s is not supported in the CLI at present.')
 E('ERROR_REFRESH_STEP_STATE', 'Cannot refresh step state: %s')
 E('ERROR_STEP_STATE_NOT_RUNNING', 'The %s step in execution %s is not currently running.')
+E('ERROR_GET_ALL_COMMERCE_COMMANDS_CLI', 'Could not get Commerce Commands')
 E('ERROR_GET_COMMERCE_CLI', 'Could not get Commerce Command Execution: %s')
 E('ERROR_POST_COMMERCE_CLI', 'Could not post to Commerce CLI endpoint: %s')
 E('ERROR_COMMERCE_CLI', 'Environment %s does not appear to support Commerce CLI')

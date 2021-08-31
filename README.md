@@ -175,6 +175,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.deleteIpAllowlist(programId, ipAllowlistId)](#CloudManagerAPI+deleteIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+addIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getAllCommerceCommandExecutions(programId, environmentId, type, status, command)](#CloudManagerAPI+getAllCommands) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.postCommerceCommandExecution(programId, environmentId, options)](#CloudManagerAPI+postCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getCommerceCommandExecution(programId, environmentId, commandExecutionId)](#CloudManagerAPI+getCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
 
@@ -636,6 +637,22 @@ Unbind an IP Allow List from an environment
 | ipAllowlistId | <code>string</code> | the allow list id |
 | environmentId | <code>string</code> | the environment id |
 | service | <code>string</code> | the service name |
+
+<a name="CloudManagerAPI+getAllCommands"></a>
+
+### cloudManagerAPI.getAllCommerceCommandExecutions(programId, environmentId, type, status, command) ⇒ <code>Promise.&lt;object&gt;</code>
+Get status for long running CLI commands
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| environmentId | <code>string</code> | the environment id |
+| type | <code>string</code> | the type of command execution to filter on |
+| status | <code>string</code> | the status of the command to filter on |
+| command | <code>string</code> | the command(s) to filter on |
 
 <a name="CloudManagerAPI+postCommerceCommandExecution"></a>
 
