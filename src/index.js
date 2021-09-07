@@ -13,6 +13,7 @@ const loggerNamespace = '@adobe/aio-lib-cloudmanager'
 const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: process.env.LOG_LEVEL })
 const halfred = require('halfred')
 const UriTemplate = require('uritemplate')
+const URI = require('urijs')
 const fetch = require('cross-fetch')
 const fs = require('fs')
 const zlib = require('zlib')
@@ -1367,6 +1368,36 @@ class CloudManagerAPI {
     }
 
     return commandStatus
+  }
+
+  /**
+   * Get status for an existing Commerce execution
+   *
+   * @param {string} programId - the program id
+   * @param {string} environmentId - the environment id
+   * @param {string} type - filter for type of command
+   * @param {string} status - filter for status of command
+   * @param {string} command - filter for the type of command
+   * @returns {Promise<object>} a truthy value of the commerce execution
+   */
+  async getCommerceCommandExecutions (programId, environmentId, type = null, status = null, command = null) {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const environmentLink = environment.link(rels.commerceCommandExecutions)
+
+    if (!environmentLink) {
+      throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
+    }
+
+    const uri = new URI(environmentLink.href)
+    type && uri.addSearch({ property: [`type==${type}`] })
+    status && uri.addSearch({ property: [`status==${status}`] })
+    command && uri.addSearch({ property: [`command==${command}`] })
+
+    return this._get(uri, codes.ERROR_GET_COMMERCE_CLI).then(async res => {
+      return halfred.parse(await res.json()).embeddedArray('commandExecutions')
+    }, e => {
+      throw e
+    })
   }
 }
 
