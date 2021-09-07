@@ -177,6 +177,7 @@ with valid values for tenantId, apiKey and accessToken
     * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.postCommerceCommandExecution(programId, environmentId, options)](#CloudManagerAPI+postCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getCommerceCommandExecution(programId, environmentId, commandExecutionId)](#CloudManagerAPI+getCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getCommerceCommandExecutions(programId, environmentId, type, status, command)](#CloudManagerAPI+getCommerceCommandExecutions) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="CloudManagerAPI+orgId"></a>
 
@@ -664,6 +665,22 @@ Get status for an existing Commerce execution
 | programId | <code>string</code> | the program id |
 | environmentId | <code>string</code> | the environment id |
 | commandExecutionId | <code>string</code> | the command execution id |
+
+<a name="CloudManagerAPI+getCommerceCommandExecutions"></a>
+
+### cloudManagerAPI.getCommerceCommandExecutions(programId, environmentId, type, status, command) ⇒ <code>Promise.&lt;object&gt;</code>
+Get status for an existing Commerce execution
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| programId | <code>string</code> |  | the program id |
+| environmentId | <code>string</code> |  | the environment id |
+| type | <code>string</code> | <code>null</code> | filter for type of command |
+| status | <code>string</code> | <code>null</code> | filter for status of command |
+| command | <code>string</code> | <code>null</code> | filter for the type of command |
 
 <a name="getCurrentStep"></a>
 

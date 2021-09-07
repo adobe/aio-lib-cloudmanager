@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.7.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.6.0...1.7.0) (2021-09-07)
+
+
+### Features
+
+* **commerce:** add getCommerceCommandExecutions. fixes [#220](https://github.com/adobe/aio-lib-cloudmanager/issues/220) ([13ceb32](https://github.com/adobe/aio-lib-cloudmanager/commit/13ceb329e4aa9316aa2c502378c7a87007688194))
+
 # [1.6.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.5.0...1.6.0) (2021-08-30)
 
 
