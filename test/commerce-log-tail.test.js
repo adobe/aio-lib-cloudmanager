@@ -57,7 +57,7 @@ test('getCommerceTailLogs - success', async () => {
   expect(fetchMock.calls('tail-log-1-fourth').length).toEqual(3)
 
   flushWritable()
-  expect(written).toEqual('first log message\nsecond log message\nthird log message\n')
+  expect(written).toEqual('Cleaned cache types:\nconfig\ndetails\n')
 })
 
 test('getCommerceTailLogs - error: no log redirect', async () => {

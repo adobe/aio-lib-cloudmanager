@@ -19,6 +19,7 @@ const fs = require('fs')
 const zlib = require('zlib')
 const util = require('util')
 const streamPipeline = util.promisify(require('stream').pipeline)
+const { Transform } = require('stream')
 const _ = require('lodash')
 const { codes } = require('./SDKErrors')
 const { rels, basePath, problemTypes } = require('./constants')
@@ -858,6 +859,13 @@ class CloudManagerAPI {
     })
   }
 
+  _pipeBodyWithTransform (body, writeStream, transform) {
+    return new Promise((resolve) => {
+      body.pipe(transform()).pipe(writeStream, { end: false })
+      body.on('end', () => resolve({}))
+    })
+  }
+
   async _getLiveStream (programId, environment, service, name, tailingSasUrl, currentStartLimit, writeStream) {
     for (;;) {
       const options = {
@@ -1331,6 +1339,22 @@ class CloudManagerAPI {
     })
   }
 
+  _commerceLogTransform () {
+    const liner = new Transform({ objectMode: true })
+    liner._transform = function (data, _, done) {
+      const lines = data.toString().split('\n')
+      for (const line of lines) {
+        if (line !== '') {
+          const parsedLine = JSON.parse(line.replace('\n', '\\n'))
+          this.push(parsedLine.log)
+        }
+      }
+      done()
+    }
+
+    return liner
+  }
+
   async tailCommerceCommandExecutionLog (programId, environmentId, commandExecutionId, outputStream) {
     let commandStatus = await this._getCommerceCommandStatus(programId, environmentId, commandExecutionId)
 
@@ -1351,7 +1375,7 @@ class CloudManagerAPI {
           })
           if (res.status === 206) {
             const contentLength = res.headers.get('content-length')
-            await this._pipeBody(res.body, outputStream)
+            await this._pipeBodyWithTransform(res.body, outputStream, this._commerceLogTransform)
             currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
           } else if (res.status === 416 || res.status === 404) {
             getCommandStatusCounter++
