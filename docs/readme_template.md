@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
 
 # Adobe I/O Cloud Manager Library
 
-JavaScript SDK wrapping the [Adobe Cloud Manager API](https://www.adobe.io/apis/experiencecloud/cloud-manager/docs.html).
+JavaScript SDK wrapping the [Adobe Cloud Manager API](https://www.adobe.io/experience-cloud/cloud-manager/).
 
 ### Installing
 

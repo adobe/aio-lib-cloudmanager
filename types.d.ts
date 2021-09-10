@@ -80,6 +80,13 @@ declare class CloudManagerAPI {
      */
     startExecution(programId: string, pipelineId: string): Promise<string>;
     /**
+     * Invalidate the cache for a pipeline
+     * @param programId - the program id
+     * @param pipelineId - the pipeline id
+     * @returns a truthy object
+     */
+    invalidatePipelineCache(programId: string, pipelineId: string): Promise<object>;
+    /**
      * Get the current execution for a pipeline
      * @param programId - the program id
      * @param pipelineId - the pipeline id
@@ -142,6 +149,16 @@ declare class CloudManagerAPI {
      * @returns a truthy value
      */
     getExecutionStepLog(programId: string, pipelineId: string, executionId: string, action: string, logFile: string, outputStream: any): Promise<object>;
+    /**
+     * Tail step log to an output stream.
+     * @param programId - the program id
+     * @param pipelineId - the pipeline id
+     * @param action - the action
+     * @param logFile - the log file to select a non-default value
+     * @param outputStream - the output stream to write to
+     * @returns the completed step state
+     */
+    tailExecutionStepLog(programId: string, pipelineId: string, action: string, logFile: string, outputStream: any): Promise<PipelineExecutionStepState>;
     /**
      * List the log options available for an environment
      * @param programId - the program id
@@ -272,6 +289,32 @@ declare class CloudManagerAPI {
      * @returns a truthy value
      */
     removeIpAllowlistBinding(programId: string, ipAllowlistId: string, environmentId: string, service: string): Promise<object>;
+    /**
+     * Make a Post to Commerce API
+     * @param programId - the program id
+     * @param environmentId - the environment id
+     * @param options - options
+     * @returns a truthy value
+     */
+    postCommerceCommandExecution(programId: string, environmentId: string, options: any): Promise<object>;
+    /**
+     * Get status for an existing Commerce execution
+     * @param programId - the program id
+     * @param environmentId - the environment id
+     * @param commandExecutionId - the command execution id
+     * @returns a truthy value of the commerce execution
+     */
+    getCommerceCommandExecution(programId: string, environmentId: string, commandExecutionId: string): Promise<object>;
+    /**
+     * Get status for an existing Commerce execution
+     * @param programId - the program id
+     * @param environmentId - the environment id
+     * @param type - filter for type of command
+     * @param status - filter for status of command
+     * @param command - filter for the type of command
+     * @returns a truthy value of the commerce execution
+     */
+    getCommerceCommandExecutions(programId: string, environmentId: string, type: string, status: string, command: string): Promise<object>;
 }
 
 /**
@@ -437,13 +480,17 @@ declare type Environment = {
 /**
  * A named value than can be set on an Environment or Pipeline
  * @property name - Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number.
- * @property value - Value of the variable. Read-Write for non-secrets, write-only for secrets.
+ * @property value - Value of the variable. Read-Write for non-secrets, write-only for secrets. The length of `secretString` values must be less than 500 characters. An empty value causes a variable to be deleted.
  * @property type - Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated.
+ * @property service - Service of the variable. When not provided, the variable applies to all services. Currently the values 'author', 'publish', and 'preview' are supported. Note - this value is case-sensitive.
+ * @property status - Status of the variable
  */
 declare type Variable = {
     name: string;
     value: string;
     type: string;
+    service: string;
+    status: string;
 };
 
 /**
