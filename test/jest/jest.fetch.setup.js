@@ -1886,7 +1886,7 @@ beforeEach(() => {
     name: 'tail-log-1-first',
   }, () => {
     const logResponse = new Readable()
-    logResponse.push('first log message\n')
+    logResponse.push('{"@timestamp":"2021-09-08T15:18:15.086130Z","log":"Cleaned cache types:\\n","stream":"stdout","time":"2021-09-08T15:18:15.086130862Z"}\n')
     logResponse.push(null)
     return {
       status: 206,
@@ -1903,7 +1903,7 @@ beforeEach(() => {
     name: 'tail-log-1-second',
   }, () => {
     const logResponse = new Readable()
-    logResponse.push('second log message\n')
+    logResponse.push('{"@timestamp":"2021-09-08T15:18:15.086149Z","log":"config\\n","stream":"stdout","time":"2021-09-08T15:18:15.08614914Z"}\n')
     logResponse.push(null)
     return {
       status: 206,
@@ -1920,7 +1920,7 @@ beforeEach(() => {
     name: 'tail-log-1-third',
   }, () => {
     const logResponse = new Readable()
-    logResponse.push('third log message\n')
+    logResponse.push('{"@timestamp":"2021-09-08T15:18:15.086149Z","log":"details\\n","stream":"stdout","time":"2021-09-08T15:18:15.08614914Z"}\n')
     logResponse.push(null)
     return {
       status: 206,
