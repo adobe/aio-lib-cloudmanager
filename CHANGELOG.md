@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.8.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.7.0...1.8.0) (2021-09-13)
+
+
+### Features
+
+* **commerce:** improve log format for commerce command executions [#227](https://github.com/adobe/aio-lib-cloudmanager/issues/227) ([d91fd1a](https://github.com/adobe/aio-lib-cloudmanager/commit/d91fd1ae70cee8129491bda09cae221c21404b44))
+
 # [1.7.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.6.0...1.7.0) (2021-09-07)
 
 
