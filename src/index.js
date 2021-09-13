@@ -1349,7 +1349,7 @@ class CloudManagerAPI {
             const parsedLine = JSON.parse(line.replace('\n', '\\n'))
             this.push(parsedLine.log)
           } catch (e) {
-            // Swallowing the error 
+            // Swallowing the error
           }
         }
       }
