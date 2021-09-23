@@ -20,6 +20,7 @@
     "jsdoc": "jsdoc2md -t ./docs/readme_template.md src/**/*.js > README.md",
     "generate-docs": "npm run generate-jsdoc-types && npm run typings && npm run jsdoc",
     "semantic-release": "semantic-release",
+    "semantic-release-dry-run": "semantic-release --dry-run",
     "prepack": "npm run generate-jsdoc-types && npm run typings",
     "version": "npm run generate-docs && git add README.md",
     "postinstall": "husky install",
