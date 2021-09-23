@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.8.0...1.8.1) (2021-09-23)
+
+
+### Bug Fixes
+
+* **commerce-tail-log:** continue to poll commerce execution log until ready. fixes [#239](https://github.com/adobe/aio-lib-cloudmanager/issues/239) ([5a78ef2](https://github.com/adobe/aio-lib-cloudmanager/commit/5a78ef2fbb4844505d903a34a3872fe6ad227c73))
+
 # [1.8.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.7.0...1.8.0) (2021-09-13)
 
 
