@@ -1328,11 +1328,16 @@ class CloudManagerAPI {
 
   async _getTailLogRedirectUrl (href) {
     return this._get(href, codes.ERROR_GET_LOG).then(async (res) => {
-      const json = await res.json()
-      if (json.redirect) {
-        return json.redirect
-      } else {
-        throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
+      if (res.status === 200) {
+        const json = await res.json()
+        if (json.redirect) {
+          return json.redirect
+        } else {
+          throw new codes.ERROR_NO_LOG_REDIRECT({ messageValues: [res.url, JSON.stringify(json)] })
+        }
+      } else if (res.status === 204) {
+        await sleep(3000)
+        return this._getTailLogRedirectUrl(href)
       }
     }, e => {
       throw e

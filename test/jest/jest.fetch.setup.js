@@ -1859,12 +1859,20 @@ beforeEach(() => {
   })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/', 403)
 
-  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/708/logs', 'GET', {
-    redirect: 'https://filestore/commerce-tail-logs.txt',
-  })
-
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/7110000/logs', 'GET', {
     redirect: 'https://filestore/commerce-tail-logs-error.txt',
+  })
+
+  let logNotReadyCounter = 0
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/708/logs', 'GET', () => {
+    if (logNotReadyCounter < 2) {
+      logNotReadyCounter++
+      return 204
+    } else {
+      return {
+        redirect: 'https://filestore/commerce-tail-logs.txt',
+      }
+    }
   })
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/7090000/logs', 'GET', {})
