@@ -14,7 +14,7 @@ const logger = require('@adobe/aio-lib-core-logging')(loggerNamespace, { level: 
 const halfred = require('halfred')
 const UriTemplate = require('uritemplate')
 const URI = require('urijs')
-const fetch = require('cross-fetch')
+const { createFetch } = require('@adobe/aio-lib-core-networking')
 const fs = require('fs')
 const zlib = require('zlib')
 const util = require('util')
@@ -27,6 +27,8 @@ const { getCurrentStep, getWaitingStep, findStepState, isWithinFiveMinutesOfUTCM
 
 require('./sdktypes.jsdoc') // for VS Code autocomplete
 require('./types.jsdoc') // for VS Code autocomplete
+
+const fetch = createFetch()
 
 /* global EmbeddedProgram, Pipeline, PipelineExecution, ListPipelineOptions,
    PipelineStepMetrics, Environment, LogOptionRepresentation,

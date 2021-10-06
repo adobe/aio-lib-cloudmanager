@@ -21,7 +21,9 @@ Object.assign(fetchMock.config, nodeFetch, {
 })
 const _ = require('lodash')
 
-jest.setMock('cross-fetch', fetchMock)
+jest.setMock('@adobe/aio-lib-core-networking', {
+  createFetch: () => fetchMock,
+})
 global.fetchMock = fetchMock
 
 afterEach(() => fetchMock.restore())
