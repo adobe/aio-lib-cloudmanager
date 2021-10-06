@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.9.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.8.1...1.9.0) (2021-10-06)
+
+
+### Features
+
+* switch from cross-fetch to @adobe/aio-lib-core-networking to support proxy usage. fixes [#250](https://github.com/adobe/aio-lib-cloudmanager/issues/250) ([#251](https://github.com/adobe/aio-lib-cloudmanager/issues/251)) ([2376ddc](https://github.com/adobe/aio-lib-cloudmanager/commit/2376ddc96c9b9c5dcf29939cf2bc1436dacbf4d4))
+
 ## [1.8.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.8.0...1.8.1) (2021-09-23)
 
 

@@ -790,9 +790,9 @@ A representation of an execution of a CI/CD Pipeline.
 | user | <code>string</code> | AdobeID who started the pipeline. Empty for auto triggered builds |
 | status | <code>string</code> | Status of the execution |
 | trigger | <code>string</code> | How the execution was triggered. |
-| createdAt | <code>string</code> | Start time |
-| updatedAt | <code>string</code> | Date of last status change |
-| finishedAt | <code>string</code> | Date the execution reached a final state |
+| createdAt | <code>string</code> | Timestamp at which the execution was created |
+| updatedAt | <code>string</code> | Timestamp at which the status of the execution last changed |
+| finishedAt | <code>string</code> | Timestamp at which the execution completed |
 
 <a name="PipelineExecutionStepState"></a>
 
@@ -813,8 +813,8 @@ Describes the status of a particular pipeline execution step for display purpose
 | environment | <code>string</code> | Target environment |
 | environmentId | <code>string</code> | Target environment id |
 | environmentType | <code>string</code> | Target environment type |
-| startedAt | <code>string</code> | Start time |
-| finishedAt | <code>string</code> | Date the execution reached a final state |
+| startedAt | <code>string</code> | Timestamp at which the step state started running |
+| finishedAt | <code>string</code> | Timestamp at which the step completed |
 | details | <code>object</code> | Information about step result |
 | status | <code>string</code> | Action status |
 
