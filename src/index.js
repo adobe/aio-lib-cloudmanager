@@ -292,16 +292,22 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
+   * @param {string} mode the pipeline execution mode
    * @returns {Promise<PipelineExecution>} the new execution
    */
-  async createExecution (programId, pipelineId) {
+  async createExecution (programId, pipelineId, mode) {
     const pipelines = await this.listPipelines(programId)
     const pipeline = pipelines.find(p => p.id === pipelineId)
     if (!pipeline) {
       throw new codes.ERROR_FIND_PIPELINE_START({ messageValues: [pipelineId, programId] })
     }
 
-    return this._put(pipeline.link(rels.execution).href, null, codes.ERROR_PIPELINE_START).then(res => {
+    const url = new URI(pipeline.link(rels.execution).href)
+    if (mode) {
+      url.addSearch('pipelineExecutionMode', mode)
+    }
+
+    return this._put(url, null, codes.ERROR_PIPELINE_START).then(res => {
       return new Promise((resolve, reject) => {
         res.json().then(body => {
           resolve(halfred.parse(body))
@@ -318,11 +324,12 @@ class CloudManagerAPI {
    *
    * @param {string} programId the program id
    * @param {string} pipelineId the pipeline id
+   * @param {string} mode the pipeline execution mode
    * @returns {Promise<string>} the execution url
    * @deprecated use createExecution instead
    */
-  async startExecution (programId, pipelineId) {
-    const execution = await this.createExecution(programId, pipelineId)
+  async startExecution (programId, pipelineId, mode) {
+    const execution = await this.createExecution(programId, pipelineId, mode)
     return this.baseUrl + execution.link(rels.self).href
   }
 
