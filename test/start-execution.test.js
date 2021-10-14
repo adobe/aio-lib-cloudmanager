@@ -57,3 +57,13 @@ test('startExecution - success', async () => {
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).resolves.toEqual('https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/5000')
 })
+
+test('startExecution - alternate mode', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.startExecution('5', '5', 'EMERGENCY')
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toEqual('https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution/6000')
+})

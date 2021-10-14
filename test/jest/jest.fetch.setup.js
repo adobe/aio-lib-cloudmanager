@@ -1284,6 +1284,13 @@ beforeEach(() => {
     },
     body: require('./data/newExecution.json'),
   })
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5/execution?pipelineExecutionMode=EMERGENCY', 'PUT', {
+    status: 201,
+    headers: {
+      location: 'https://cloudmanager.adobe.io/api/program/4/pipeline/8555/execution/12742',
+    },
+    body: require('./data/newEmergencyExecution.json'),
+  })
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/5/environments', {
     _embedded: {
       environments: [],
