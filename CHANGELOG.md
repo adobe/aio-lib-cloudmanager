@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.10.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.9.0...1.10.0) (2021-10-14)
+
+
+### Features
+
+* **createExecution:** support pipeline execution mode. fixes [#266](https://github.com/adobe/aio-lib-cloudmanager/issues/266) ([#267](https://github.com/adobe/aio-lib-cloudmanager/issues/267)) ([c3e5459](https://github.com/adobe/aio-lib-cloudmanager/commit/c3e5459aade5d38c2fd00549719c6ec5c288a3eb))
+
 # [1.9.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.8.1...1.9.0) (2021-10-06)
 
 

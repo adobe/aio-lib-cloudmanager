@@ -146,8 +146,8 @@ with valid values for tenantId, apiKey and accessToken
     * [.init(orgId, apiKey, accessToken, baseUrl)](#CloudManagerAPI+init) ⇒ [<code>Promise.&lt;CloudManagerAPI&gt;</code>](#CloudManagerAPI)
     * [.listPrograms()](#CloudManagerAPI+listPrograms) ⇒ <code>Promise.&lt;Array.&lt;EmbeddedProgram&gt;&gt;</code>
     * [.listPipelines(programId, options)](#CloudManagerAPI+listPipelines) ⇒ <code>Promise.&lt;Array.&lt;Pipeline&gt;&gt;</code>
-    * [.createExecution(programId, pipelineId)](#CloudManagerAPI+createExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
-    * ~~[.startExecution(programId, pipelineId)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>~~
+    * [.createExecution(programId, pipelineId, mode)](#CloudManagerAPI+createExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
+    * ~~[.startExecution(programId, pipelineId, mode)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>~~
     * [.invalidatePipelineCache(programId, pipelineId)](#CloudManagerAPI+invalidatePipelineCache) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.listExecutions(programId, pipelineId, limit)](#CloudManagerAPI+listExecutions) ⇒ <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code>
@@ -240,7 +240,7 @@ Obtain a list of pipelines for the target program.
 
 <a name="CloudManagerAPI+createExecution"></a>
 
-### cloudManagerAPI.createExecution(programId, pipelineId) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
+### cloudManagerAPI.createExecution(programId, pipelineId, mode) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
 Create a new execution for a pipeline, returning the execution.
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
@@ -250,10 +250,11 @@ Create a new execution for a pipeline, returning the execution.
 | --- | --- | --- |
 | programId | <code>string</code> | the program id |
 | pipelineId | <code>string</code> | the pipeline id |
+| mode | <code>string</code> | the pipeline execution mode |
 
 <a name="CloudManagerAPI+startExecution"></a>
 
-### ~~cloudManagerAPI.startExecution(programId, pipelineId) ⇒ <code>Promise.&lt;string&gt;</code>~~
+### ~~cloudManagerAPI.startExecution(programId, pipelineId, mode) ⇒ <code>Promise.&lt;string&gt;</code>~~
 ***Deprecated***
 
 Start an execution for a pipeline, returning the url of the new execution
@@ -265,6 +266,7 @@ Start an execution for a pipeline, returning the url of the new execution
 | --- | --- | --- |
 | programId | <code>string</code> | the program id |
 | pipelineId | <code>string</code> | the pipeline id |
+| mode | <code>string</code> | the pipeline execution mode |
 
 <a name="CloudManagerAPI+invalidatePipelineCache"></a>
 
@@ -735,6 +737,9 @@ A lightweight representation of a Program
 | name | <code>string</code> | Name of the program |
 | enabled | <code>boolean</code> | Whether this Program has been enabled for Cloud Manager usage |
 | tenantId | <code>string</code> | Tenant Id |
+| status | <code>string</code> | Status of the program |
+| createdAt | <code>string</code> | Created time |
+| updatedAt | <code>string</code> | Date of last change |
 
 <a name="Pipeline"></a>
 
@@ -756,6 +761,7 @@ A representation of a CI/CD Pipeline
 | lastStartedAt | <code>string</code> | Last pipeline execution start |
 | lastFinishedAt | <code>string</code> | Last pipeline execution end |
 | phases | [<code>Array.&lt;PipelinePhase&gt;</code>](#PipelinePhase) | Pipeline phases in execution order |
+| type | <code>string</code> | Pipeline type |
 
 <a name="PipelinePhase"></a>
 
@@ -790,9 +796,11 @@ A representation of an execution of a CI/CD Pipeline.
 | user | <code>string</code> | AdobeID who started the pipeline. Empty for auto triggered builds |
 | status | <code>string</code> | Status of the execution |
 | trigger | <code>string</code> | How the execution was triggered. |
+| pipelineExecutionMode | <code>string</code> | The mode in which the execution occurred. EMERGENCY mode will skip certain steps and is only available to select AMS customers |
 | createdAt | <code>string</code> | Timestamp at which the execution was created |
 | updatedAt | <code>string</code> | Timestamp at which the status of the execution last changed |
 | finishedAt | <code>string</code> | Timestamp at which the execution completed |
+| pipelineType | <code>string</code> | Pipeline type |
 
 <a name="PipelineExecutionStepState"></a>
 
@@ -862,6 +870,7 @@ A representation of an Environment known to Cloud Manager.
 | name | <code>string</code> | Name of the environment |
 | description | <code>string</code> | Description of the environment |
 | type | <code>string</code> | Type of the environment |
+| status | <code>string</code> | Status of the environment |
 | availableLogOptions | [<code>Array.&lt;LogOptionRepresentation&gt;</code>](#LogOptionRepresentation) | List of logs available in the environment |
 
 <a name="Variable"></a>
@@ -874,7 +883,7 @@ A named value than can be set on an Environment or Pipeline
 
 | Name | Type | Description |
 | --- | --- | --- |
-| name | <code>string</code> | Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number. |
+| name | <code>string</code> | Name of the variable. Can only consist of a-z, A-Z, _ and 0-9 and cannot begin with a number. |
 | value | <code>string</code> | Value of the variable. Read-Write for non-secrets, write-only for secrets. The length of `secretString` values must be less than 500 characters. An empty value causes a variable to be deleted. |
 | type | <code>string</code> | Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated. |
 | service | <code>string</code> | Service of the variable. When not provided, the variable applies to all services. Currently the values 'author', 'publish', and 'preview' are supported. Note - this value is case-sensitive. |
