@@ -108,14 +108,28 @@ test('getCommerceTailLogs - error response from log endpoint', async () => {
   )
 })
 
-test('getCommerceTailLogs - command status is not "RUNNING"', async () => {
-  expect.assertions(2)
+test('getCommerceTailLogs - command status is "COMPLETED"', async () => {
+  expect.assertions(4)
 
   const sdkClient = await createSdkClient()
   const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '712', writable)
 
   await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toEqual('COMPLETED')
+  expect(fetchMock.calls('full-log-1-first').length).toEqual(1)
+
+  flushWritable()
+  expect(written).toEqual('This is the full log:\n')
+})
+
+test('getCommerceTailLogs - command status is "FAILED"', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '712000', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: '712' }),
+    new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: '712000' }),
   )
 })

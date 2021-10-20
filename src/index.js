@@ -1366,14 +1366,31 @@ class CloudManagerAPI {
     return liner
   }
 
+  async downloadCommerceCommandExecutionLog (programId, environmentId, commandExecutionId, outputStream) {
+    const environment = await this._findEnvironment(programId, environmentId)
+    const link = this._getCommerceCommandLogUrl(environment, commandExecutionId)
+    const tailLogRedirectUrl = await this._getTailLogRedirectUrl(link)
+
+    const fullLog = await fetch(tailLogRedirectUrl, {
+      headers: {
+        range: 'bytes=0-',
+      },
+    })
+    if (fullLog.status === 206) {
+      await this._pipeBodyWithTransform(fullLog.body, outputStream, this._commerceLogTransform)
+    } else {
+      throw new codes.ERROR_GET_LOG({ messageValues: commandExecutionId })
+    }
+  }
+
   async tailCommerceCommandExecutionLog (programId, environmentId, commandExecutionId, outputStream) {
     let commandStatus = await this._getCommerceCommandStatus(programId, environmentId, commandExecutionId)
+    let currentStartLimit = 0
 
     if (commandStatus === 'RUNNING') {
       const environment = await this._findEnvironment(programId, environmentId)
       const link = this._getCommerceCommandLogUrl(environment, commandExecutionId)
       const tailLogRedirectUrl = await this._getTailLogRedirectUrl(link)
-      let currentStartLimit = 0
 
       while (commandStatus === 'RUNNING') {
         let getCommandStatusCounter = 0
@@ -1398,6 +1415,8 @@ class CloudManagerAPI {
 
         commandStatus = await this._getCommerceCommandStatus(programId, environmentId, commandExecutionId)
       }
+    } else if (commandStatus === 'COMPLETED' && currentStartLimit === 0) {
+      await this.downloadCommerceCommandExecutionLog(programId, environmentId, commandExecutionId, outputStream)
     } else {
       throw new codes.ERROR_COMMAND_NOT_RUNNING({ messageValues: commandExecutionId })
     }
