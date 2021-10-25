@@ -164,7 +164,7 @@ class CloudManagerAPI {
         if (res.ok) resolve(res)
         else {
           res.text().then(text => {
-            const sdkDetails = { orgId: this.orgId, apiKey: this.apiKey, accessToken: this.accessToken, url, response: res }
+            const sdkDetails = { orgId: this.orgId, apiKey: this.apiKey, accessToken: this.accessToken, url, response: res, requestId }
             let messageValues = `${res.url} (${res.status} ${res.statusText})`
             const resContentType = res.headers.get('content-type')
             if (resContentType) {
