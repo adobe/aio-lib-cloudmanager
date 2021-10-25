@@ -10,5 +10,16 @@
     }],
     "no-console": ["error"],
     "aio-lib-cloudmanager-error-codes": "error"
-  }
+  },
+  "overrides": [
+      {
+        "files" : ["tools/*.js"],
+        "rules" : {
+          "node/no-unpublished-require": "off",
+          "no-console": "off",
+          "jsdoc/require-jsdoc": "off",
+          "no-process-exit": "off"
+        }
+      }
+  ]
 }
