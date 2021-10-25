@@ -25,6 +25,9 @@ governing permissions and limitations under the License.
  * @property {string} name - Name of the program
  * @property {boolean} enabled - Whether this Program has been enabled for Cloud Manager usage
  * @property {string} tenantId - Tenant Id
+ * @property {string} status - Status of the program
+ * @property {string} createdAt - Created time
+ * @property {string} updatedAt - Date of last change
  */
 
 
@@ -42,6 +45,7 @@ governing permissions and limitations under the License.
  * @property {string} lastStartedAt - Last pipeline execution start
  * @property {string} lastFinishedAt - Last pipeline execution end
  * @property {PipelinePhase[]} phases - Pipeline phases in execution order
+ * @property {string} type - Pipeline type
  */
 
 
@@ -70,9 +74,11 @@ Mandatory if type=BUILD
  * @property {string} user - AdobeID who started the pipeline. Empty for auto triggered builds
  * @property {string} status - Status of the execution
  * @property {string} trigger - How the execution was triggered.
- * @property {string} createdAt - Start time
- * @property {string} updatedAt - Date of last status change
- * @property {string} finishedAt - Date the execution reached a final state
+ * @property {string} pipelineExecutionMode - The mode in which the execution occurred. EMERGENCY mode will skip certain steps and is only available to select AMS customers
+ * @property {string} createdAt - Timestamp at which the execution was created
+ * @property {string} updatedAt - Timestamp at which the status of the execution last changed
+ * @property {string} finishedAt - Timestamp at which the execution completed
+ * @property {string} pipelineType - Pipeline type
  */
 
 
@@ -89,8 +95,8 @@ Mandatory if type=BUILD
  * @property {string} environment - Target environment
  * @property {string} environmentId - Target environment id
  * @property {string} environmentType - Target environment type
- * @property {string} startedAt - Start time
- * @property {string} finishedAt - Date the execution reached a final state
+ * @property {string} startedAt - Timestamp at which the step state started running
+ * @property {string} finishedAt - Timestamp at which the step completed
  * @property {object} details - Information about step result
  * @property {string} status - Action status
  */
@@ -126,6 +132,7 @@ Mandatory if type=BUILD
  * @property {string} name - Name of the environment
  * @property {string} description - Description of the environment
  * @property {string} type - Type of the environment
+ * @property {string} status - Status of the environment
  * @property {LogOptionRepresentation[]} availableLogOptions - List of logs available in the environment
  */
 
@@ -134,7 +141,7 @@ Mandatory if type=BUILD
  * A named value than can be set on an Environment or Pipeline
  *
  * @typedef {object} Variable
- * @property {string} name - Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number.
+ * @property {string} name - Name of the variable. Can only consist of a-z, A-Z, _ and 0-9 and cannot begin with a number.
  * @property {string} value - Value of the variable. Read-Write for non-secrets, write-only for secrets. The length of `secretString` values must be less than 500 characters. An empty value causes a variable to be deleted.
  * @property {string} type - Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated.
  * @property {string} service - Service of the variable. When not provided, the variable applies to all services. Currently the values 'author', 'publish', and 'preview' are supported. Note - this value is case-sensitive.

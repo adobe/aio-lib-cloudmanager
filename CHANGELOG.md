@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.10.0...1.10.1) (2021-10-25)
+
+
+### Bug Fixes
+
+* **docs:** sort member functions in alphabetical order. fixes [#279](https://github.com/adobe/aio-lib-cloudmanager/issues/279) ([#280](https://github.com/adobe/aio-lib-cloudmanager/issues/280)) ([2b58da8](https://github.com/adobe/aio-lib-cloudmanager/commit/2b58da86830eae9cf27c534bdc8f24714040ebee))
+
 # [1.10.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.9.0...1.10.0) (2021-10-14)
 
 

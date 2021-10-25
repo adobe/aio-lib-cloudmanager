@@ -69,16 +69,18 @@ declare class CloudManagerAPI {
      * Create a new execution for a pipeline, returning the execution.
      * @param programId - the program id
      * @param pipelineId - the pipeline id
+     * @param mode - the pipeline execution mode
      * @returns the new execution
      */
-    createExecution(programId: string, pipelineId: string): Promise<PipelineExecution>;
+    createExecution(programId: string, pipelineId: string, mode: string): Promise<PipelineExecution>;
     /**
      * Start an execution for a pipeline, returning the url of the new execution
      * @param programId - the program id
      * @param pipelineId - the pipeline id
+     * @param mode - the pipeline execution mode
      * @returns the execution url
      */
-    startExecution(programId: string, pipelineId: string): Promise<string>;
+    startExecution(programId: string, pipelineId: string, mode: string): Promise<string>;
     /**
      * Invalidate the cache for a pipeline
      * @param programId - the program id
@@ -323,12 +325,18 @@ declare class CloudManagerAPI {
  * @property name - Name of the program
  * @property enabled - Whether this Program has been enabled for Cloud Manager usage
  * @property tenantId - Tenant Id
+ * @property status - Status of the program
+ * @property createdAt - Created time
+ * @property updatedAt - Date of last change
  */
 declare type EmbeddedProgram = {
     id: string;
     name: string;
     enabled: boolean;
     tenantId: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
 };
 
 /**
@@ -343,6 +351,7 @@ declare type EmbeddedProgram = {
  * @property lastStartedAt - Last pipeline execution start
  * @property lastFinishedAt - Last pipeline execution end
  * @property phases - Pipeline phases in execution order
+ * @property type - Pipeline type
  */
 declare type Pipeline = {
     id: string;
@@ -355,6 +364,7 @@ declare type Pipeline = {
     lastStartedAt: string;
     lastFinishedAt: string;
     phases: PipelinePhase[];
+    type: string;
 };
 
 /**
@@ -384,9 +394,11 @@ declare type PipelinePhase = {
  * @property user - AdobeID who started the pipeline. Empty for auto triggered builds
  * @property status - Status of the execution
  * @property trigger - How the execution was triggered.
- * @property createdAt - Start time
- * @property updatedAt - Date of last status change
- * @property finishedAt - Date the execution reached a final state
+ * @property pipelineExecutionMode - The mode in which the execution occurred. EMERGENCY mode will skip certain steps and is only available to select AMS customers
+ * @property createdAt - Timestamp at which the execution was created
+ * @property updatedAt - Timestamp at which the status of the execution last changed
+ * @property finishedAt - Timestamp at which the execution completed
+ * @property pipelineType - Pipeline type
  */
 declare type PipelineExecution = {
     id: string;
@@ -396,9 +408,11 @@ declare type PipelineExecution = {
     user: string;
     status: string;
     trigger: string;
+    pipelineExecutionMode: string;
     createdAt: string;
     updatedAt: string;
     finishedAt: string;
+    pipelineType: string;
 };
 
 /**
@@ -409,8 +423,8 @@ declare type PipelineExecution = {
  * @property environment - Target environment
  * @property environmentId - Target environment id
  * @property environmentType - Target environment type
- * @property startedAt - Start time
- * @property finishedAt - Date the execution reached a final state
+ * @property startedAt - Timestamp at which the step state started running
+ * @property finishedAt - Timestamp at which the step completed
  * @property details - Information about step result
  * @property status - Action status
  */
@@ -466,6 +480,7 @@ declare type Metric = {
  * @property name - Name of the environment
  * @property description - Description of the environment
  * @property type - Type of the environment
+ * @property status - Status of the environment
  * @property availableLogOptions - List of logs available in the environment
  */
 declare type Environment = {
@@ -474,12 +489,13 @@ declare type Environment = {
     name: string;
     description: string;
     type: string;
+    status: string;
     availableLogOptions: LogOptionRepresentation[];
 };
 
 /**
  * A named value than can be set on an Environment or Pipeline
- * @property name - Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number.
+ * @property name - Name of the variable. Can only consist of a-z, A-Z, _ and 0-9 and cannot begin with a number.
  * @property value - Value of the variable. Read-Write for non-secrets, write-only for secrets. The length of `secretString` values must be less than 500 characters. An empty value causes a variable to be deleted.
  * @property type - Type of the variable. Default `string` if missing. `secretString` variables are encrypted at rest. The type of a variable be changed after creation; the variable must be deleted and recreated.
  * @property service - Service of the variable. When not provided, the variable applies to all services. Currently the values 'author', 'publish', and 'preview' are supported. Note - this value is case-sensitive.
