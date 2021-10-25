@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.11.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.10.1...1.11.0) (2021-10-25)
+
+
+### Features
+
+* **error:** add the requestId to the error object. fixes [#281](https://github.com/adobe/aio-lib-cloudmanager/issues/281) ([#282](https://github.com/adobe/aio-lib-cloudmanager/issues/282)) ([69fb9c5](https://github.com/adobe/aio-lib-cloudmanager/commit/69fb9c5eaf20cf5746bca30f37c6d3644dd29c52))
+
 ## [1.10.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.10.0...1.10.1) (2021-10-25)
 
 
