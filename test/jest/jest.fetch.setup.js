@@ -1763,7 +1763,63 @@ beforeEach(() => {
     }
   })
 
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-execution/712000', 'GET', () => {
+    return {
+      id: 1,
+      status: 'FAILED', // PENDING, RUNNING, COMPLETED, FAILED
+      type: 'bin/magento', // bin/magento, bin/ece-tools
+      command: 'test command to be executed',
+      message: 'One line message on the progress of command',
+      options: ['Optional', 'inputs provided part of the command'],
+      startedAt: 'timestamp UTC',
+      completedAt: 'timestamp utc',
+      startedBy: 'test runner',
+      _links: {
+        self: {
+          href: '/api/program/4/environment/10/runtime/commerce/command-execution/1',
+        },
+        'http://ns.adobe.com/adobecloud/rel/program': {
+          href: '/api/program/4',
+        },
+        'http://ns.adobe.com/adobecloud/rel/environments': {
+          href: '/api/program/4/environments',
+        },
+        'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
+          href: '/api/program/4/environment/10/runtime/commerce/command-executions',
+        },
+      },
+    }
+  })
+
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-execution/712', 'GET', () => {
+    return {
+      id: 1,
+      status: 'COMPLETED', // PENDING, RUNNING, COMPLETED, FAILED
+      type: 'bin/magento', // bin/magento, bin/ece-tools
+      command: 'test command to be executed',
+      message: 'One line message on the progress of command',
+      options: ['Optional', 'inputs provided part of the command'],
+      startedAt: 'timestamp UTC',
+      completedAt: 'timestamp utc',
+      startedBy: 'test runner',
+      _links: {
+        self: {
+          href: '/api/program/4/environment/10/runtime/commerce/command-execution/1',
+        },
+        'http://ns.adobe.com/adobecloud/rel/program': {
+          href: '/api/program/4',
+        },
+        'http://ns.adobe.com/adobecloud/rel/environments': {
+          href: '/api/program/4/environments',
+        },
+        'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
+          href: '/api/program/4/environment/10/runtime/commerce/command-executions',
+        },
+      },
+    }
+  })
+
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-execution/712f', 'GET', () => {
     return {
       id: 1,
       status: 'COMPLETED', // PENDING, RUNNING, COMPLETED, FAILED
@@ -1872,6 +1928,12 @@ beforeEach(() => {
     redirect: 'https://filestore/commerce-tail-logs-error.txt',
   })
 
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/712/logs', 'GET', {
+    redirect: 'https://filestore/commerce-full-log.txt',
+  })
+
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/712f/logs', 'GET', 500)
+
   let logNotReadyCounter = 0
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/708/logs', 'GET', () => {
     if (logNotReadyCounter < 2) {
@@ -1886,6 +1948,23 @@ beforeEach(() => {
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/7090000/logs', 'GET', {})
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/7100000/logs', 'GET', 404)
+
+  fetchMock.mock({
+    url: 'https://filestore/commerce-full-log.txt',
+    headers: { range: 'bytes=0-' },
+    name: 'full-log-1-first',
+  }, () => {
+    const logResponse = new Readable()
+    logResponse.push('{"@timestamp":"2021-09-08T15:18:15.086130Z","log":"This is the full log:\\n","stream":"stdout","time":"2021-09-08T15:18:15.086130862Z"}\n')
+    logResponse.push(null)
+    return {
+      status: 206,
+      headers: {
+        'content-length': '1000',
+      },
+      body: logResponse,
+    }
+  }, { sendAsJson: false })
 
   fetchMock.mock({
     url: 'https://filestore/commerce-tail-logs-error.txt',
