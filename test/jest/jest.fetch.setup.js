@@ -1812,6 +1812,34 @@ beforeEach(() => {
     }
   })
 
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-execution/712f', 'GET', () => {
+    return {
+      id: 1,
+      status: 'COMPLETED', // PENDING, RUNNING, COMPLETED, FAILED
+      type: 'bin/magento', // bin/magento, bin/ece-tools
+      command: 'test command to be executed',
+      message: 'One line message on the progress of command',
+      options: ['Optional', 'inputs provided part of the command'],
+      startedAt: 'timestamp UTC',
+      completedAt: 'timestamp utc',
+      startedBy: 'test runner',
+      _links: {
+        self: {
+          href: '/api/program/4/environment/10/runtime/commerce/command-execution/1',
+        },
+        'http://ns.adobe.com/adobecloud/rel/program': {
+          href: '/api/program/4',
+        },
+        'http://ns.adobe.com/adobecloud/rel/environments': {
+          href: '/api/program/4/environments',
+        },
+        'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
+          href: '/api/program/4/environment/10/runtime/commerce/command-executions',
+        },
+      },
+    }
+  })
+
   mockResponseWithMethod(/https:\/\/cloudmanager\.adobe\.io\/api\/program\/4\/environment\/.{2}\/runtime\/commerce\/command-execution\/.{7}/, 'GET', () => {
     return {
       id: 2,
@@ -1896,6 +1924,8 @@ beforeEach(() => {
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/712/logs', 'GET', {
     redirect: 'https://filestore/commerce-full-log.txt',
   })
+
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/712f/logs', 'GET', 500)
 
   let logNotReadyCounter = 0
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/708/logs', 'GET', () => {

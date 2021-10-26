@@ -108,7 +108,7 @@ test('getCommerceTailLogs - error response from log endpoint', async () => {
   )
 })
 
-test('getCommerceTailLogs - command status is "COMPLETED"', async () => {
+test('getCommerceTailLogs - command status is "COMPLETED" -- success', async () => {
   expect.assertions(4)
 
   const sdkClient = await createSdkClient()
@@ -120,6 +120,18 @@ test('getCommerceTailLogs - command status is "COMPLETED"', async () => {
 
   flushWritable()
   expect(written).toEqual('This is the full log:\n')
+})
+
+test('getCommerceTailLogs - command status is "COMPLETED" -- failed', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.tailCommerceCommandExecutionLog('4', '10', '712f', writable)
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_GET_LOG({ messageValues: ['https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/712f/logs (500 Internal Server Error)'] }),
+  )
 })
 
 test('getCommerceTailLogs - command status is "FAILED"', async () => {
