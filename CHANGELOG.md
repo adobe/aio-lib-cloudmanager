@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.12.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.11.0...1.12.0) (2021-10-26)
+
+
+### Features
+
+* **commerce:** enable downloading of commerce command logs for completed commands. fixes [#274](https://github.com/adobe/aio-lib-cloudmanager/issues/274) ([cb7ca13](https://github.com/adobe/aio-lib-cloudmanager/commit/cb7ca13ac3041318039a749ab99c254556f2a4c3))
+
 # [1.11.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.10.1...1.11.0) (2021-10-25)
 
 
