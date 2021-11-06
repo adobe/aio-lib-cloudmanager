@@ -62,7 +62,7 @@
     "jest-extended": "1.1.0",
     "jest-junit": "13.0.0",
     "js-yaml": "4.1.0",
-    "jscpd": "3.3.26",
+    "jscpd": "3.4.1",
     "jsdoc": "3.6.7",
     "jsdoc-to-markdown": "7.1.0",
     "pinst": "2.1.6",
