@@ -778,6 +778,8 @@ Describes a phase of a pipeline
 | repositoryId | <code>string</code> | Identifier of the source repository. The code from this repository will be build at the start of this phase.  Mandatory if type=BUILD |
 | branch | <code>string</code> | Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1).   Assumed to be `master` if missing. |
 | environmentId | <code>string</code> | Identifier of the target environment. Mandatory if type=DEPLOY |
+| environmentType | <code>string</code> | Type of environment (for example stage or prod, readOnly = true) |
+| steps | <code>Array.&lt;PipelineStep&gt;</code> | Steps to be included in the phase in execution order. Might be added or not, depending on permissions or configuration |
 
 <a name="PipelineExecution"></a>
 
@@ -823,7 +825,7 @@ Describes the status of a particular pipeline execution step for display purpose
 | environmentType | <code>string</code> | Target environment type |
 | startedAt | <code>string</code> | Timestamp at which the step state started running |
 | finishedAt | <code>string</code> | Timestamp at which the step completed |
-| details | <code>object</code> | Information about step result |
+| details | <code>object</code> | Additional details of the step |
 | status | <code>string</code> | Action status |
 
 <a name="PipelineStepMetrics"></a>
@@ -871,6 +873,7 @@ A representation of an Environment known to Cloud Manager.
 | description | <code>string</code> | Description of the environment |
 | type | <code>string</code> | Type of the environment |
 | status | <code>string</code> | Status of the environment |
+| region | <code>string</code> | Region of the environment |
 | availableLogOptions | [<code>Array.&lt;LogOptionRepresentation&gt;</code>](#LogOptionRepresentation) | List of logs available in the environment |
 
 <a name="Variable"></a>

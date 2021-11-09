@@ -60,6 +60,8 @@ Mandatory if type=BUILD
  * @property {string} branch - Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1). 
  Assumed to be `master` if missing.
  * @property {string} environmentId - Identifier of the target environment. Mandatory if type=DEPLOY
+ * @property {string} environmentType - Type of environment (for example stage or prod, readOnly = true)
+ * @property {PipelineStep[]} steps - Steps to be included in the phase in execution order. Might be added or not, depending on permissions or configuration
  */
 
 
@@ -97,7 +99,7 @@ Mandatory if type=BUILD
  * @property {string} environmentType - Target environment type
  * @property {string} startedAt - Timestamp at which the step state started running
  * @property {string} finishedAt - Timestamp at which the step completed
- * @property {object} details - Information about step result
+ * @property {object} details - Additional details of the step
  * @property {string} status - Action status
  */
 
@@ -133,6 +135,7 @@ Mandatory if type=BUILD
  * @property {string} description - Description of the environment
  * @property {string} type - Type of the environment
  * @property {string} status - Status of the environment
+ * @property {string} region - Region of the environment
  * @property {LogOptionRepresentation[]} availableLogOptions - List of logs available in the environment
  */
 

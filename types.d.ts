@@ -376,6 +376,8 @@ declare type Pipeline = {
  * @property branch - Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1).
  *  Assumed to be `master` if missing.
  * @property environmentId - Identifier of the target environment. Mandatory if type=DEPLOY
+ * @property environmentType - Type of environment (for example stage or prod, readOnly = true)
+ * @property steps - Steps to be included in the phase in execution order. Might be added or not, depending on permissions or configuration
  */
 declare type PipelinePhase = {
     name: string;
@@ -383,6 +385,8 @@ declare type PipelinePhase = {
     repositoryId: string;
     branch: string;
     environmentId: string;
+    environmentType: string;
+    steps: PipelineStep[];
 };
 
 /**
@@ -425,7 +429,7 @@ declare type PipelineExecution = {
  * @property environmentType - Target environment type
  * @property startedAt - Timestamp at which the step state started running
  * @property finishedAt - Timestamp at which the step completed
- * @property details - Information about step result
+ * @property details - Additional details of the step
  * @property status - Action status
  */
 declare type PipelineExecutionStepState = {
@@ -481,6 +485,7 @@ declare type Metric = {
  * @property description - Description of the environment
  * @property type - Type of the environment
  * @property status - Status of the environment
+ * @property region - Region of the environment
  * @property availableLogOptions - List of logs available in the environment
  */
 declare type Environment = {
@@ -490,6 +495,7 @@ declare type Environment = {
     description: string;
     type: string;
     status: string;
+    region: string;
     availableLogOptions: LogOptionRepresentation[];
 };
 

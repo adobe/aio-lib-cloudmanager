@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.12.0...1.12.1) (2021-11-09)
+
+
+### Bug Fixes
+
+* **deps:** replace lodash with individual modules. fixes [#299](https://github.com/adobe/aio-lib-cloudmanager/issues/299) ([#300](https://github.com/adobe/aio-lib-cloudmanager/issues/300)) ([3ab14c4](https://github.com/adobe/aio-lib-cloudmanager/commit/3ab14c473812a06efc498d84cfaca97d50a2c2f4))
+
 # [1.12.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.11.0...1.12.0) (2021-10-26)
 
 
