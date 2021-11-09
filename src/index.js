@@ -20,7 +20,9 @@ const zlib = require('zlib')
 const util = require('util')
 const streamPipeline = util.promisify(require('stream').pipeline)
 const { Transform } = require('stream')
-const _ = require('lodash')
+const isObject = require('lodash.isobject')
+const clone = require('lodash.clone')
+const cloneDeep = require('lodash.clonedeep')
 const { codes } = require('./SDKErrors')
 const { rels, basePath, problemTypes } = require('./constants')
 const { getCurrentStep, getWaitingStep, findStepState, isWithinFiveMinutesOfUTCMidnight, sleep } = require('./helpers')
@@ -124,9 +126,9 @@ class CloudManagerAPI {
 
   _getErrors (problem) {
     if (problem.errors) {
-      if (_.isArray(problem.errors) && problem.errors.length > 0) {
+      if (Array.isArray(problem.errors) && problem.errors.length > 0) {
         return problem.errors.map(error => error.message || error).join(', ')
-      } else if (_.isObject(problem.errors)) {
+      } else if (isObject(problem.errors)) {
         return Object.values(problem.errors).map(error => {
           if (error.field && error.message && error.invalidValue) {
             return `${error.field} (${error.invalidValue}) ${error.message}`
@@ -964,7 +966,7 @@ class CloudManagerAPI {
       if (!buildPhase) {
         throw new codes.ERROR_NO_BUILD_PHASE({ messageValues: pipelineId })
       }
-      const newBuildPhase = _.clone(buildPhase)
+      const newBuildPhase = clone(buildPhase)
       if (changes.branch) {
         newBuildPhase.branch = changes.branch
       }
@@ -1199,7 +1201,7 @@ class CloudManagerAPI {
    */
   async updateIpAllowlist (programId, ipAllowlistId, cidrBlocks) {
     const ipAllowlist = await this._findIpAllowlist(programId, ipAllowlistId)
-    const updated = _.cloneDeep(ipAllowlist.original())
+    const updated = cloneDeep(ipAllowlist.original())
     updated.ipCidrSet = cidrBlocks
     delete updated._links
     delete updated.bindings

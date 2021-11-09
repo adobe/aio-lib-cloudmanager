@@ -19,7 +19,7 @@ const fetchMock = require('fetch-mock').sandbox()
 Object.assign(fetchMock.config, nodeFetch, {
   fetch: nodeFetch,
 })
-const _ = require('lodash')
+const cloneDeep = require('lodash.clonedeep')
 
 jest.setMock('@adobe/aio-lib-core-networking', {
   createFetch: () => fetchMock,
@@ -1299,7 +1299,7 @@ beforeEach(() => {
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5', 'DELETE', 204)
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/5', 'PATCH', (url, opts) => {
     const parsed = JSON.parse(opts.body)
-    const newPipeline = _.cloneDeep(pipeline5)
+    const newPipeline = cloneDeep(pipeline5)
     const buildPhase = newPipeline.phases.find(phase => phase.type === 'BUILD')
     buildPhase.branch = parsed.phases[0].branch
     if (parsed.phases[0].repositoryId) {
@@ -1624,7 +1624,7 @@ beforeEach(() => {
     if (execution1017StepCounter < 4) {
       return pipeline7Executions[1017]._embedded.stepStates[1]
     } else {
-      const cloned = _.cloneDeep(pipeline7Executions[1017]._embedded.stepStates[1])
+      const cloned = cloneDeep(pipeline7Executions[1017]._embedded.stepStates[1])
       cloned.status = 'FINISHED'
       return cloned
     }
