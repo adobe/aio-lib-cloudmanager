@@ -16,7 +16,7 @@ Custom jsdoc2md process to ensure sorting of member functions. See https://githu
 const fs = require('fs')
 const jsdoc2md = require('jsdoc-to-markdown')
 const tool = require('command-line-tool')
-const _ = require('lodash')
+const sortBy = require('lodash.sortby')
 
 const options = {
   files: ['src/**/*.js'],
@@ -29,7 +29,7 @@ jsdoc2md.getTemplateData(options).then(json => {
   const topLevel = json.filter(el => el.scope === 'global')
   const memberVariables = json.filter(el => el.scope === 'instance' && el.kind === 'member')
   let memberFunctions = json.filter(el => el.scope === 'instance' && el.kind === 'function')
-  memberFunctions = _.sortBy(memberFunctions, el => el.id)
+  memberFunctions = sortBy(memberFunctions, el => el.id)
 
   options.data = [
     ...topLevel,
