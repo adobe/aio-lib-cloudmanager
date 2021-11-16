@@ -37,7 +37,7 @@ test('postCommerceCommandExecution - error', async () => {
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_POST_COMMERCE_CLI({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/ (403 Forbidden)' }),
+    new codes.ERROR_POST_COMMERCE_CLI({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-executions (403 Forbidden)' }),
   )
 })
 
@@ -131,7 +131,7 @@ test('getCommerceCommandExecutions - error: failure to find correct environment'
 
   await expect(result instanceof Promise).toBeTruthy()
   await expect(result).rejects.toEqual(
-    new codes.ERROR_GET_COMMERCE_CLI({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-executions (403 Forbidden)' }),
+    new codes.ERROR_GET_COMMERCE_CLI({ messageValues: 'https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-executions (403 Forbidden)' }),
   )
 })
 
