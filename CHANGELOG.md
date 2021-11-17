@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.13.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.12.1...1.13.0) (2021-11-17)
+
+
+### Features
+
+* **commerce:** update HAL link relationship for creating a commerce command execution. fixes [#302](https://github.com/adobe/aio-lib-cloudmanager/issues/302) ([83e4f84](https://github.com/adobe/aio-lib-cloudmanager/commit/83e4f84d3c8f241ae0e851173356e434a9705f47))
+
 ## [1.12.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.12.0...1.12.1) (2021-11-09)
 
 

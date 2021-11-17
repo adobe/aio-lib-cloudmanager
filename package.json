@@ -1,6 +1,6 @@
 {
   "name": "@adobe/aio-lib-cloudmanager",
-  "version": "1.12.1",
+  "version": "1.13.0",
   "description": "Adobe I/O Cloud Manager Library",
   "repository": {
     "type": "git",
