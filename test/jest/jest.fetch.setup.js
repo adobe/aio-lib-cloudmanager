@@ -252,7 +252,7 @@ beforeEach(() => {
                   href: '/api/program/4/environment/3/runtime/commerce/cli/',
                 },
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecutions': {
-                  href: '/api/program/4/environment/10/runtime/commerce/command-executions',
+                  href: '/api/program/4/environment/3/runtime/commerce/command-executions',
                   templated: true,
                 },
                 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id': {
@@ -1704,7 +1704,14 @@ beforeEach(() => {
   // Commerce command execution mocks
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-execution/', 403)
   fetchMock.mock('https://cloudmanager.adobe.io/api/program/6/environment/7/runtime/commerce/command-execution/8', 404)
-  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-executions', 403)
+  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/command-executions', 403)
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-executions', 'GET', 403)
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-executions', 'POST', {
+    status: 201,
+    data: {
+      test: 'test success data',
+    },
+  })
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/command-execution/1', 'GET', {
     id: 1,
@@ -1915,14 +1922,6 @@ beforeEach(() => {
         prev: 0,
       },
     }))
-
-  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/environment/10/runtime/commerce/cli/', 'POST', {
-    status: 201,
-    data: {
-      test: 'test success data',
-    },
-  })
-  fetchMock.mock('https://cloudmanager.adobe.io/api/program/4/environment/3/runtime/commerce/cli/', 403)
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/4/pipeline/10/runtime/commerce/command-execution/7110000/logs', 'GET', {
     redirect: 'https://filestore/commerce-tail-logs-error.txt',

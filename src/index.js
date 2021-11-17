@@ -1283,7 +1283,7 @@ class CloudManagerAPI {
    */
   async postCommerceCommandExecution (programId, environmentId, options) {
     const environment = await this._findEnvironment(programId, environmentId)
-    const link = environment.link(rels.commerceCommandExecution)
+    const link = environment.link(rels.commerceCommandExecutions)
     if (!link) {
       throw new codes.ERROR_COMMERCE_CLI({ messageValues: environmentId })
     }
