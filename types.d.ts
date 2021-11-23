@@ -578,9 +578,15 @@ declare type DownloadedLog = {
 /**
  * @property branch - the new branch
  * @property repositoryId - the new repository id
+ * @property devEnvironmentId - the new dev environment id
+ * @property stageEnvironmentId - the new stage environment id
+ * @property prodEnvironmentId - the new prod environment id
  */
 declare type PipelineUpdate = {
     branch: string;
     repositoryId: string;
+    devEnvironmentId: string;
+    stageEnvironmentId: string;
+    prodEnvironmentId: string;
 };
 

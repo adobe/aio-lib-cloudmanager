@@ -969,6 +969,9 @@ Options to the listPipeline function
 | --- | --- | --- |
 | branch | <code>string</code> | the new branch |
 | repositoryId | <code>string</code> | the new repository id |
+| devEnvironmentId | <code>string</code> | the new dev environment id |
+| stageEnvironmentId | <code>string</code> | the new stage environment id |
+| prodEnvironmentId | <code>string</code> | the new prod environment id |
 
 ### Debug Logs
 

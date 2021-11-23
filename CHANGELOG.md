@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.14.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.13.0...1.14.0) (2021-11-23)
+
+
+### Features
+
+* **updatePipeline:** add support for changing environment id. fixes [#305](https://github.com/adobe/aio-lib-cloudmanager/issues/305) ([#306](https://github.com/adobe/aio-lib-cloudmanager/issues/306)) ([5871972](https://github.com/adobe/aio-lib-cloudmanager/commit/58719724d91a3ee8b98d3103df6c9b88669bea4a))
+
 # [1.13.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.12.1...1.13.0) (2021-11-17)
 
 
