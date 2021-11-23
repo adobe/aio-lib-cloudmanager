@@ -244,6 +244,41 @@ test('updatePipeline - repository and branch success', async () => {
   })
 })
 
+test('updatePipeline - no deploy phase', async () => {
+  expect.assertions(2)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.updatePipeline('5', '9', {
+    devEnvironmentId: '5',
+  })
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).rejects.toEqual(
+    new codes.ERROR_NO_DEPLOY_PHASE({ messageValues: ['9', 'dev'] }),
+  )
+})
+
+test('updatePipeline - stage environment success', async () => {
+  expect.assertions(3)
+
+  const sdkClient = await createSdkClient()
+  const result = sdkClient.updatePipeline('5', '9', {
+    stageEnvironmentId: '7',
+  })
+
+  await expect(result instanceof Promise).toBeTruthy()
+  await expect(result).resolves.toBeTruthy()
+  const patchCall = fetchMock.calls().find(call => call[0] === 'https://cloudmanager.adobe.io/api/program/5/pipeline/9' && call[1].method === 'PATCH')
+  await expect(JSON.parse(patchCall[1].body)).toMatchObject({
+    phases: expect.arrayContaining([{
+      type: 'DEPLOY',
+      environmentId: '7',
+      name: 'DEPLOY_1',
+      environmentType: 'stage',
+    }]),
+  })
+})
+
 test('getPipelineVariables - pipelines not found', async () => {
   expect.assertions(2)
 

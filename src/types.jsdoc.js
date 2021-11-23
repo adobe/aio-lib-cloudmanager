@@ -26,4 +26,7 @@ governing permissions and limitations under the License.
  * @typedef {object} PipelineUpdate
  * @property {string} branch - the new branch
  * @property {string} repositoryId - the new repository id
+ * @property {string} devEnvironmentId - the new dev environment id
+ * @property {string} stageEnvironmentId - the new stage environment id
+ * @property {string} prodEnvironmentId - the new prod environment id
  */

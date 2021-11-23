@@ -1252,21 +1252,22 @@ beforeEach(() => {
                 {
                   name: 'DEPLOY_1',
                   type: 'DEPLOY',
+                  environmentType: 'stage',
                 },
               ],
               _links: {
                 self: {
-                  href: '/api/program/5/pipeline/8',
+                  href: '/api/program/5/pipeline/9',
                 },
                 'http://ns.adobe.com/adobecloud/rel/execution': {
-                  href: '/api/program/5/pipeline/8/execution',
+                  href: '/api/program/5/pipeline/9/execution',
                 },
                 'http://ns.adobe.com/adobecloud/rel/execution/id': {
-                  href: '/api/program/5/pipeline/8/execution/{executionId}',
+                  href: '/api/program/5/pipeline/9/execution/{executionId}',
                   templated: true,
                 },
                 'http://ns.adobe.com/adobecloud/rel/variables': {
-                  href: '/api/program/5/pipeline/8/variables',
+                  href: '/api/program/5/pipeline/9/variables',
                 },
               },
             },
@@ -1322,6 +1323,8 @@ beforeEach(() => {
       },
     },
   })
+
+  mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/9', 'PATCH', {})
 
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'GET', require('./data/execution1000.json'))
   mockResponseWithMethod('https://cloudmanager.adobe.io/api/program/5/pipeline/6/execution', 'PUT', 412)

@@ -955,25 +955,45 @@ class CloudManagerAPI {
    * @returns {Promise<Pipeline>} the new pipeline definition
    */
   async updatePipeline (programId, pipelineId, changes) {
+    const environmentKeyTypeMapping = [
+      { key: 'devEnvironmentId', type: 'dev' },
+      { key: 'stageEnvironmentId', type: 'stage' },
+      { key: 'prodEnvironmentId', type: 'prod' },
+    ]
+
     const pipeline = await this._findPipeline(programId, pipelineId)
 
     const patch = {
       phases: [],
     }
 
-    if (changes && (changes.branch || changes.repositoryId)) {
-      const buildPhase = pipeline.phases && pipeline.phases.find(phase => phase.type === 'BUILD')
-      if (!buildPhase) {
-        throw new codes.ERROR_NO_BUILD_PHASE({ messageValues: pipelineId })
+    if (changes) {
+      if (changes.branch || changes.repositoryId) {
+        const buildPhase = pipeline.phases && pipeline.phases.find(phase => phase.type === 'BUILD')
+        if (!buildPhase) {
+          throw new codes.ERROR_NO_BUILD_PHASE({ messageValues: pipelineId })
+        }
+        const newBuildPhase = clone(buildPhase)
+        if (changes.branch) {
+          newBuildPhase.branch = changes.branch
+        }
+        if (changes.repositoryId) {
+          newBuildPhase.repositoryId = changes.repositoryId
+        }
+        patch.phases.push(newBuildPhase)
       }
-      const newBuildPhase = clone(buildPhase)
-      if (changes.branch) {
-        newBuildPhase.branch = changes.branch
-      }
-      if (changes.repositoryId) {
-        newBuildPhase.repositoryId = changes.repositoryId
-      }
-      patch.phases.push(newBuildPhase)
+
+      environmentKeyTypeMapping.forEach(mapping => {
+        if (changes[mapping.key]) {
+          const deployPhase = pipeline.phases && pipeline.phases.find(phase => phase.type === 'DEPLOY' && phase.environmentType === mapping.type)
+          if (!deployPhase) {
+            throw new codes.ERROR_NO_DEPLOY_PHASE({ messageValues: [pipelineId, mapping.type] })
+          }
+          const newDeployPhase = clone(deployPhase)
+          newDeployPhase.environmentId = changes[mapping.key]
+          patch.phases.push(newDeployPhase)
+        }
+      })
     }
 
     return this._patch(pipeline.link(rels.self).href, patch, codes.ERROR_UPDATE_PIPELINE).then(res => {
