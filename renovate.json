@@ -15,6 +15,22 @@
     {
       "packageNames": ["semantic-release"],
       "allowedVersions": "<18.0"
+    },
+    {
+      "packageNames": ["@semantic-release/changelog"],
+      "allowedVersions": "<6.0"
+    },
+    {
+      "packageNames": ["@semantic-release/git"],
+      "allowedVersions": "<10.0"
+    },
+    {
+      "packageNames": ["eslint-plugin-node"],
+      "allowedVersions": "<11"
+    },
+    {
+      "packageNames": ["eslint-plugin-jest"],
+      "allowedVersions": "<25"
     }
   ]
 }
