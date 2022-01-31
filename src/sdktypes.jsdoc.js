@@ -99,6 +99,7 @@ Mandatory if type=BUILD
  * @property {string} environmentType - Target environment type
  * @property {string} startedAt - Timestamp at which the step state started running
  * @property {string} finishedAt - Timestamp at which the step completed
+ * @property {string} commitId - Target commit id
  * @property {object} details - Additional details of the step
  * @property {string} status - Action status
  */

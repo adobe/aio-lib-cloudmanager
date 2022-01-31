@@ -429,6 +429,7 @@ declare type PipelineExecution = {
  * @property environmentType - Target environment type
  * @property startedAt - Timestamp at which the step state started running
  * @property finishedAt - Timestamp at which the step completed
+ * @property commitId - Target commit id
  * @property details - Additional details of the step
  * @property status - Action status
  */
@@ -444,6 +445,7 @@ declare type PipelineExecutionStepState = {
     environmentType: string;
     startedAt: string;
     finishedAt: string;
+    commitId: string;
     details: any;
     status: string;
 };

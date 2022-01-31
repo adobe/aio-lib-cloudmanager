@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.14.0...1.14.1) (2022-01-31)
+
+
+### Bug Fixes
+
+* **environment-tail:** improve debug output for environment log tailing. fixes [#341](https://github.com/adobe/aio-lib-cloudmanager/issues/341) ([#342](https://github.com/adobe/aio-lib-cloudmanager/issues/342)) ([9288290](https://github.com/adobe/aio-lib-cloudmanager/commit/9288290f7a7b438e7e4ab96ff27444979a910484))
+
 # [1.14.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.13.0...1.14.0) (2021-11-23)
 
 

@@ -825,6 +825,7 @@ Describes the status of a particular pipeline execution step for display purpose
 | environmentType | <code>string</code> | Target environment type |
 | startedAt | <code>string</code> | Timestamp at which the step state started running |
 | finishedAt | <code>string</code> | Timestamp at which the step completed |
+| commitId | <code>string</code> | Target commit id |
 | details | <code>object</code> | Additional details of the step |
 | status | <code>string</code> | Action status |
 
