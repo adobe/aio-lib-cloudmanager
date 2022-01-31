@@ -860,6 +860,7 @@ class CloudManagerAPI {
     const environment = await this._findEnvironment(programId, environmentId)
     const tailingSasUrl = await this._getTailingSasUrl(programId, environment, service, name)
     const contentLength = await this._getLogFileSizeInitialSize(tailingSasUrl)
+    logger.debug(`Tailing log from ${tailingSasUrl} starting with minimum content length ${contentLength}.`)
     await this._getLiveStream(programId, environment, service, name, tailingSasUrl, contentLength, outputStream)
   }
 
@@ -889,7 +890,9 @@ class CloudManagerAPI {
         const contentLength = res.headers.get('content-length')
         await this._pipeBody(res.body, writeStream)
         currentStartLimit = parseInt(currentStartLimit) + parseInt(contentLength)
+        logger.debug(`updating minimum content length value to ${currentStartLimit}`)
       } else if (res.status === 416) {
+        logger.debug('no new content available')
         await sleep(2000)
         /**
          * Handles the rollover around UTC midnight using delta of 5 minutes before and after midnight
@@ -898,6 +901,7 @@ class CloudManagerAPI {
         if (isWithinFiveMinutesOfUTCMidnight(new Date(Date.now()))) {
           tailingSasUrl = await this._getTailingSasUrl(programId, environment, service, name)
           const startLimit = await this._getLogFileSizeInitialSize(tailingSasUrl)
+          logger.debug(`restarting tail from ${tailingSasUrl} and minimum content length ${startLimit}.`)
           if (parseInt(startLimit) < parseInt(currentStartLimit)) {
             currentStartLimit = startLimit
           } else {
