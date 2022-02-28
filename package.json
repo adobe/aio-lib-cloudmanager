@@ -68,7 +68,7 @@
     "jsdoc": "3.6.10",
     "jsdoc-to-markdown": "7.1.1",
     "lodash.sortby": "4.7.0",
-    "pinst": "2.1.6",
+    "pinst": "3.0.0",
     "semantic-release": "17.4.7",
     "sinon": "13.0.1",
     "stdout-stderr": "0.1.13",
