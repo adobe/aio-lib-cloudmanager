@@ -153,8 +153,6 @@ with valid values for tenantId, apiKey and accessToken
     * [.deletePipeline(programId, pipelineId)](#CloudManagerAPI+deletePipeline) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deleteProgram(programId)](#CloudManagerAPI+deleteProgram) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.downloadLogs(programId, environmentId, service, name, days, outputDirectory)](#CloudManagerAPI+downloadLogs) ⇒ <code>Promise.&lt;Array.&lt;DownloadedLog&gt;&gt;</code>
-    * [.getCommerceCommandExecution(programId, environmentId, commandExecutionId)](#CloudManagerAPI+getCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getCommerceCommandExecutions(programId, environmentId, type, status, command)](#CloudManagerAPI+getCommerceCommandExecutions) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.getDeveloperConsoleUrl(programId, environmentId)](#CloudManagerAPI+getDeveloperConsoleUrl) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getEnvironmentVariables(programId, environmentId)](#CloudManagerAPI+getEnvironmentVariables) ⇒ <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code>
@@ -170,7 +168,6 @@ with valid values for tenantId, apiKey and accessToken
     * [.listIpAllowlists(programId)](#CloudManagerAPI+listIpAllowlists) ⇒ [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList)
     * [.listPipelines(programId, options)](#CloudManagerAPI+listPipelines) ⇒ <code>Promise.&lt;Array.&lt;Pipeline&gt;&gt;</code>
     * [.listPrograms()](#CloudManagerAPI+listPrograms) ⇒ <code>Promise.&lt;Array.&lt;EmbeddedProgram&gt;&gt;</code>
-    * [.postCommerceCommandExecution(programId, environmentId, options)](#CloudManagerAPI+postCommerceCommandExecution) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+removeIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.setEnvironmentVariables(programId, environmentId, variables)](#CloudManagerAPI+setEnvironmentVariables) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.setPipelineVariables(programId, pipelineId, variables)](#CloudManagerAPI+setPipelineVariables) ⇒ <code>Promise.&lt;object&gt;</code>
@@ -339,36 +336,6 @@ Download log files from the environment to a specified directory.
 | name | <code>string</code> | the log name |
 | days | <code>number</code> | the number of days |
 | outputDirectory | <code>string</code> | the output directory |
-
-<a name="CloudManagerAPI+getCommerceCommandExecution"></a>
-
-### cloudManagerAPI.getCommerceCommandExecution(programId, environmentId, commandExecutionId) ⇒ <code>Promise.&lt;object&gt;</code>
-Get status for an existing Commerce execution
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| programId | <code>string</code> | the program id |
-| environmentId | <code>string</code> | the environment id |
-| commandExecutionId | <code>string</code> | the command execution id |
-
-<a name="CloudManagerAPI+getCommerceCommandExecutions"></a>
-
-### cloudManagerAPI.getCommerceCommandExecutions(programId, environmentId, type, status, command) ⇒ <code>Promise.&lt;object&gt;</code>
-Get status for an existing Commerce execution
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value of the commerce execution  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| programId | <code>string</code> |  | the program id |
-| environmentId | <code>string</code> |  | the environment id |
-| type | <code>string</code> | <code>null</code> | filter for type of command |
-| status | <code>string</code> | <code>null</code> | filter for status of command |
-| command | <code>string</code> | <code>null</code> | filter for the type of command |
 
 <a name="CloudManagerAPI+getCurrentExecution"></a>
 
@@ -567,20 +534,6 @@ Obtain a list of programs for the target organization.
 
 **Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
 **Returns**: <code>Promise.&lt;Array.&lt;EmbeddedProgram&gt;&gt;</code> - an array of Programs  
-<a name="CloudManagerAPI+postCommerceCommandExecution"></a>
-
-### cloudManagerAPI.postCommerceCommandExecution(programId, environmentId, options) ⇒ <code>Promise.&lt;object&gt;</code>
-Make a Post to Commerce API
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| programId | <code>string</code> | the program id |
-| environmentId | <code>string</code> | the environment id |
-| options | <code>object</code> | options |
-
 <a name="CloudManagerAPI+removeIpAllowlistBinding"></a>
 
 ### cloudManagerAPI.removeIpAllowlistBinding(programId, ipAllowlistId, environmentId, service) ⇒ <code>Promise.&lt;object&gt;</code>

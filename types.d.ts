@@ -291,32 +291,6 @@ declare class CloudManagerAPI {
      * @returns a truthy value
      */
     removeIpAllowlistBinding(programId: string, ipAllowlistId: string, environmentId: string, service: string): Promise<object>;
-    /**
-     * Make a Post to Commerce API
-     * @param programId - the program id
-     * @param environmentId - the environment id
-     * @param options - options
-     * @returns a truthy value
-     */
-    postCommerceCommandExecution(programId: string, environmentId: string, options: any): Promise<object>;
-    /**
-     * Get status for an existing Commerce execution
-     * @param programId - the program id
-     * @param environmentId - the environment id
-     * @param commandExecutionId - the command execution id
-     * @returns a truthy value of the commerce execution
-     */
-    getCommerceCommandExecution(programId: string, environmentId: string, commandExecutionId: string): Promise<object>;
-    /**
-     * Get status for an existing Commerce execution
-     * @param programId - the program id
-     * @param environmentId - the environment id
-     * @param type - filter for type of command
-     * @param status - filter for status of command
-     * @param command - filter for the type of command
-     * @returns a truthy value of the commerce execution
-     */
-    getCommerceCommandExecutions(programId: string, environmentId: string, type: string, status: string, command: string): Promise<object>;
 }
 
 /**

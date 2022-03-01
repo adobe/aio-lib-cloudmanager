@@ -1,5 +1,17 @@
 # Changelog
 
+# [2.0.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.14.1...2.0.0) (2022-03-01)
+
+
+### Features
+
+* **commerce:** remove commerce support. fixes [#358](https://github.com/adobe/aio-lib-cloudmanager/issues/358) ([#359](https://github.com/adobe/aio-lib-cloudmanager/issues/359)) ([1559cc3](https://github.com/adobe/aio-lib-cloudmanager/commit/1559cc3306f07514ede629b15650e3a7803e52b5))
+
+
+### BREAKING CHANGES
+
+* **commerce:** methods have been removed
+
 ## [1.14.1](https://github.com/adobe/aio-lib-cloudmanager/compare/1.14.0...1.14.1) (2022-01-31)
 
 
