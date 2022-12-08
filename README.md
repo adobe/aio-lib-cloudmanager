@@ -50,7 +50,7 @@ async function sdkTest() {
   // call methods
   try {
     // get... something
-    const result = await client.getSomething({})
+    const result = await client.listPrograms()
     console.log(result)
 
   } catch (e) {
