@@ -25,7 +25,7 @@ declare function init(orgId: string, apiKey: string, accessToken: string, baseUr
 /**
  * This class provides methods to call your Cloud Manager APIs.
  * Before calling any method initialize the instance by calling the `init` method on it
- * with valid values for tenantId, apiKey and accessToken
+ * with valid values for orgId, apiKey and accessToken
  */
 declare class CloudManagerAPI {
     /**
@@ -298,7 +298,7 @@ declare class CloudManagerAPI {
  * @property id - Identifier of the program. Unique within the space.
  * @property name - Name of the program
  * @property enabled - Whether this Program has been enabled for Cloud Manager usage
- * @property tenantId - Tenant Id
+ * @property orgId - Org Id
  * @property status - Status of the program
  * @property createdAt - Created time
  * @property updatedAt - Date of last change
@@ -307,7 +307,7 @@ declare type EmbeddedProgram = {
     id: string;
     name: string;
     enabled: boolean;
-    tenantId: string;
+    orgId: string;
     status: string;
     createdAt: string;
     updatedAt: string;

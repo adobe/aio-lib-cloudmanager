@@ -3,7 +3,7 @@
 ## Requirements
 
 To run the e2e test you'll need these env variables set:
-  1. `{{LIB_NAME}}_TENANT_ID`
+  1. `{{LIB_NAME}}_ORG_ID`
   2. `{{LIB_NAME}}_API_KEY`
   3. `{{LIB_NAME}}_ACCESS_TOKEN`
 
@@ -15,5 +15,5 @@ To run the e2e test you'll need these env variables set:
 
 The tests cover:
 
-1. Malformed tenant id, api key or access token
+1. Malformed org id, api key or access token
 2. `read` APIs

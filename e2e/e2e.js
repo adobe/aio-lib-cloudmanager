@@ -16,7 +16,7 @@ const path = require('path')
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 let sdkClient = {}
-const orgId = process.env['{{LIB_NAME}}_TENANT_ID']
+const orgId = process.env['{{LIB_NAME}}_ORG_ID']
 const apiKey = process.env['{{LIB_NAME}}_API_KEY']
 const accessToken = process.env['{{LIB_NAME}}_ACCESS_TOKEN']
 
@@ -46,8 +46,8 @@ test('bad api key', async () => {
   return expect(promise).rejects.toThrow('403')
 })
 
-test('bad tenant id', async () => {
-  const _sdkClient = await sdk.init('bad_tenant_id', apiKey, accessToken)
+test('bad org id', async () => {
+  const _sdkClient = await sdk.init('bad_org_id', apiKey, accessToken)
   const promise = _sdkClient.listPrograms()
 
   // just match the error message
