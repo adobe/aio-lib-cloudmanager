@@ -63,7 +63,7 @@ function init (orgId, apiKey, accessToken, baseUrl) {
 /**
  * This class provides methods to call your Cloud Manager APIs.
  * Before calling any method initialize the instance by calling the `init` method on it
- * with valid values for tenantId, apiKey and accessToken
+ * with valid values for orgId, apiKey and accessToken
  */
 class CloudManagerAPI {
   /**

@@ -50,7 +50,7 @@ async function sdkTest() {
   // call methods
   try {
     // get... something
-    const result = await client.getSomething({})
+    const result = await client.listPrograms()
     console.log(result)
 
   } catch (e) {
@@ -65,7 +65,7 @@ async function sdkTest() {
 <dt><a href="#CloudManagerAPI">CloudManagerAPI</a></dt>
 <dd><p>This class provides methods to call your Cloud Manager APIs.
 Before calling any method initialize the instance by calling the <code>init</code> method on it
-with valid values for tenantId, apiKey and accessToken</p>
+with valid values for orgId, apiKey and accessToken</p>
 </dd>
 </dl>
 
@@ -134,7 +134,7 @@ with valid values for tenantId, apiKey and accessToken</p>
 ## CloudManagerAPI
 This class provides methods to call your Cloud Manager APIs.
 Before calling any method initialize the instance by calling the `init` method on it
-with valid values for tenantId, apiKey and accessToken
+with valid values for orgId, apiKey and accessToken
 
 **Kind**: global class  
 
@@ -684,15 +684,15 @@ A lightweight representation of a Program
 **Kind**: global typedef  
 **Properties**
 
-| Name | Type | Description |
-| --- | --- | --- |
-| id | <code>string</code> | Identifier of the program. Unique within the space. |
-| name | <code>string</code> | Name of the program |
-| enabled | <code>boolean</code> | Whether this Program has been enabled for Cloud Manager usage |
-| tenantId | <code>string</code> | Tenant Id |
-| status | <code>string</code> | Status of the program |
-| createdAt | <code>string</code> | Created time |
-| updatedAt | <code>string</code> | Date of last change |
+| Name      | Type                 | Description                                                   |
+|-----------|----------------------|---------------------------------------------------------------|
+| id        | <code>string</code>  | Identifier of the program. Unique within the space.           |
+| name      | <code>string</code>  | Name of the program                                           |
+| enabled   | <code>boolean</code> | Whether this Program has been enabled for Cloud Manager usage |
+| orgId     | <code>string</code>  | Org Id                                                        |
+| status    | <code>string</code>  | Status of the program                                         |
+| createdAt | <code>string</code>  | Created time                                                  |
+| updatedAt | <code>string</code>  | Date of last change                                           |
 
 <a name="Pipeline"></a>
 

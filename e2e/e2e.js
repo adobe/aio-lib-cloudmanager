@@ -16,46 +16,46 @@ const path = require('path')
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 let sdkClient = {}
-const tenantId = process.env['{{LIB_NAME}}_TENANT_ID']
+const orgId = process.env['{{LIB_NAME}}_ORG_ID']
 const apiKey = process.env['{{LIB_NAME}}_API_KEY']
 const accessToken = process.env['{{LIB_NAME}}_ACCESS_TOKEN']
 
 beforeAll(async () => {
-  sdkClient = await sdk.init(tenantId, apiKey, accessToken)
+  sdkClient = await sdk.init(orgId, apiKey, accessToken)
 })
 
 test('sdk init test', async () => {
-  expect(sdkClient.tenantId).toBe(tenantId)
+  expect(sdkClient.orgId).toBe(orgId)
   expect(sdkClient.apiKey).toBe(apiKey)
   expect(sdkClient.accessToken).toBe(accessToken)
 })
 
 test('bad access token', async () => {
-  const _sdkClient = await sdk.init(tenantId, apiKey, 'bad_access_token')
-  const promise = _sdkClient.getSomething()
+  const _sdkClient = await sdk.init(orgId, apiKey, 'bad_access_token')
+  const promise = _sdkClient.listPrograms()
 
   // just match the error message
   return expect(promise).rejects.toThrow('401')
 })
 
 test('bad api key', async () => {
-  const _sdkClient = await sdk.init(tenantId, 'bad_api_key', accessToken)
-  const promise = _sdkClient.getSomething()
+  const _sdkClient = await sdk.init(orgId, 'bad_api_key', accessToken)
+  const promise = _sdkClient.listPrograms()
 
   // just match the error message
   return expect(promise).rejects.toThrow('403')
 })
 
-test('bad tenant id', async () => {
-  const _sdkClient = await sdk.init('bad_tenant_id', apiKey, accessToken)
-  const promise = _sdkClient.getSomething()
+test('bad org id', async () => {
+  const _sdkClient = await sdk.init('bad_org_id', apiKey, accessToken)
+  const promise = _sdkClient.listPrograms()
 
   // just match the error message
-  return expect(promise).rejects.toThrow('500')
+  return expect(promise).rejects.toThrow('403')
 })
 
-test('getSomething API', async () => {
+test('list programs API', async () => {
   // check success response
-  const res = await sdkClient.getSomething({ limit: 5, page: 0 })
-  expect(res.ok).toBeTruthy()
+  const res = await sdkClient.listPrograms()
+  expect(res[0].enabled).toBeTruthy()
 })

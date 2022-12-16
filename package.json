@@ -28,9 +28,9 @@
     "postpublish": "pinst --enable"
   },
   "dependencies": {
-    "@adobe/aio-lib-core-errors": "^3.0.0",
-    "@adobe/aio-lib-core-logging": "^1.1.2",
-    "@adobe/aio-lib-core-networking": "^2.0.0",
+    "@adobe/aio-lib-core-errors": "^3.1.1",
+    "@adobe/aio-lib-core-logging": "^2.0.0",
+    "@adobe/aio-lib-core-networking": "^3.0.0",
     "halfred": "^2.0.0",
     "lodash.clone": "^4.5.0",
     "lodash.clonedeep": "^4.5.0",
