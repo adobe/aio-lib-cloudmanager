@@ -298,7 +298,7 @@ declare class CloudManagerAPI {
  * @property id - Identifier of the program. Unique within the space.
  * @property name - Name of the program
  * @property enabled - Whether this Program has been enabled for Cloud Manager usage
- * @property orgId - Org Id
+ * @property tenantId - Tenant Id
  * @property status - Status of the program
  * @property createdAt - Created time
  * @property updatedAt - Date of last change
@@ -307,7 +307,7 @@ declare type EmbeddedProgram = {
     id: string;
     name: string;
     enabled: boolean;
-    orgId: string;
+    tenantId: string;
     status: string;
     createdAt: string;
     updatedAt: string;

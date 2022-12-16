@@ -684,15 +684,15 @@ A lightweight representation of a Program
 **Kind**: global typedef  
 **Properties**
 
-| Name      | Type                 | Description                                                   |
-|-----------|----------------------|---------------------------------------------------------------|
-| id        | <code>string</code>  | Identifier of the program. Unique within the space.           |
-| name      | <code>string</code>  | Name of the program                                           |
-| enabled   | <code>boolean</code> | Whether this Program has been enabled for Cloud Manager usage |
-| orgId     | <code>string</code>  | Org Id                                                        |
-| status    | <code>string</code>  | Status of the program                                         |
-| createdAt | <code>string</code>  | Created time                                                  |
-| updatedAt | <code>string</code>  | Date of last change                                           |
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Identifier of the program. Unique within the space. |
+| name | <code>string</code> | Name of the program |
+| enabled | <code>boolean</code> | Whether this Program has been enabled for Cloud Manager usage |
+| tenantId | <code>string</code> | Tenant Id |
+| status | <code>string</code> | Status of the program |
+| createdAt | <code>string</code> | Created time |
+| updatedAt | <code>string</code> | Date of last change |
 
 <a name="Pipeline"></a>
 

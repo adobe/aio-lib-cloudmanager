@@ -1,5 +1,24 @@
 # Changelog
 
+# [3.0.0](https://github.com/adobe/aio-lib-cloudmanager/compare/2.0.0...3.0.0) (2022-12-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependencies to incorporate http proxy bugfix. fixes [#374](https://github.com/adobe/aio-lib-cloudmanager/issues/374) ([32c1d39](https://github.com/adobe/aio-lib-cloudmanager/commit/32c1d3958dc3b26aa9b34616ea5423d588bfaa8b))
+* **deps:** update dependencies to incorporate http proxy bugfix. fixes [#374](https://github.com/adobe/aio-lib-cloudmanager/issues/374) ([5651847](https://github.com/adobe/aio-lib-cloudmanager/commit/5651847db096a985d04a21184fdf7e5eebc9427d))
+
+
+### chore
+
+* reverted version change and will let the bot do this ([2ba0305](https://github.com/adobe/aio-lib-cloudmanager/commit/2ba03057351b08efe64bd06c3139a1db0194365b))
+
+
+### BREAKING CHANGES
+
+* **deps:** dependent library reference has been updated to a new major version
+* dependent library reference has been updated to a new major version
+
 # [2.0.0](https://github.com/adobe/aio-lib-cloudmanager/compare/1.14.1...2.0.0) (2022-03-01)
 
 

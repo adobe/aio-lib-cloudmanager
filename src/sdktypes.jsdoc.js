@@ -24,7 +24,7 @@ governing permissions and limitations under the License.
  * @property {string} id - Identifier of the program. Unique within the space.
  * @property {string} name - Name of the program
  * @property {boolean} enabled - Whether this Program has been enabled for Cloud Manager usage
- * @property {string} orgId - Org Id
+ * @property {string} tenantId - Tenant Id
  * @property {string} status - Status of the program
  * @property {string} createdAt - Created time
  * @property {string} updatedAt - Date of last change
@@ -55,9 +55,9 @@ governing permissions and limitations under the License.
  * @typedef {object} PipelinePhase
  * @property {string} name - Name of the phase
  * @property {string} type - Type of the phase
- * @property {string} repositoryId - Identifier of the source repository. The code from this repository will be build at the start of this phase.
+ * @property {string} repositoryId - Identifier of the source repository. The code from this repository will be build at the start of this phase. 
 Mandatory if type=BUILD
- * @property {string} branch - Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1).
+ * @property {string} branch - Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1). 
  Assumed to be `master` if missing.
  * @property {string} environmentId - Identifier of the target environment. Mandatory if type=DEPLOY
  * @property {string} environmentType - Type of environment (for example stage or prod, readOnly = true)
