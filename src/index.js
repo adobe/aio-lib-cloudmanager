@@ -1288,6 +1288,163 @@ class CloudManagerAPI {
       throw e
     })
   }
+
+  async _listContentSets (url) {
+    return this._get(url, codes.ERROR_LIST_CONTENTSETS).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+  }
+
+  async _listContentFlows (url) {
+    return this._get(url, codes.ERROR_LIST_CONTENTFLOWS).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Create a Content set
+   *
+   * @param {string} programId - the program id
+   * @param {string} contentSet - the body of the content set.
+   * @returns {Promise<ContentSet>} the created content set
+   */
+  async createContentSet (programId, contentSet) {
+    const url = `/api/program/${programId}/contentSets`
+    return this._post(url, contentSet, codes.ERROR_CREATE_CONTENTSET).then(async (res) => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Delete Content Set
+   *
+   * @param {string} programId - the program id
+   * @param {string} contentSetId - the content set id
+   * @returns {Promise<object>} a truthy value
+   */
+  async deleteContentSet (programId, contentSetId) {
+    const url = `/api/program/${programId}/contentSet/${contentSetId}`
+    return this._delete(url, codes.ERROR_DELETE_CONTENTSET).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Get Content Set
+   *
+   * @param {string} programId - the program id
+   * @param {string} contentSetId - the content set id
+   * @returns {Promise<ContentSet>} the content set
+   */
+  async getContentSet (programId, contentSetId) {
+    const url = `/api/program/${programId}/contentSet/${contentSetId}`
+    return this._get(url, codes.ERROR_GET_CONTENTSET).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * List Content Sets for program
+   *
+   * @param {string} programId - the program id
+   * @returns {Promise<ContentSet[]>} list of the content sets for the program
+   */
+  async listContentSets (programId) {
+    const url = `/api/program/${programId}/contentSets`
+    const result = await this._listContentSets(url)
+    return (result && halfred.parse(result).embeddedArray('contentSets')) || []
+  }
+
+  /**
+   * Update the content set definition.
+   *
+   * The operation is a PUT, so the entire body has to be provided.
+   *
+   * @param {string} programId The program id
+   * @param {string} contentSetId The content set id
+   * @param {string} updatedContentSet the body (JSON format)
+   * @returns {Promise<ContentSet>} the updated content set
+   */
+  async updateContentSet (programId, contentSetId, updatedContentSet) {
+    const url = `/api/program/${programId}/contentSet/${contentSetId}`
+    return this._put(url, updatedContentSet, codes.ERROR_UPDATE_CONTENTSET).then(async res => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Create content Set Flow for environment
+   *
+   * @param {string} programId The program id
+   * @param {string} environmentId  The environment id
+   * @param  {ContentFlow} contentFlow The body of the contentFlow
+   * @returns {Promise<ContentFlow>} the created content flow representation
+   */
+  async createContentFlow (programId, environmentId, contentFlow) {
+    const url = `/api/program/${programId}/environment/${environmentId}/contentFlow`
+    return this._post(url, contentFlow, codes.ERROR_CREATE_CONTENTFLOW).then(async res => {
+      return halfred.parse(await res.json())
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * Get Content Flow
+   *
+   * @param {string} programId The program id
+   * @param  {string} contentFlowId the content flow id
+   * @returns {Promise<ContentFlow>} the Content Flow
+   */
+  async getContentFlow (programId, contentFlowId) {
+    const url = `/api/program/${programId}/contentFlow/${contentFlowId}`
+    return this._get(url, codes.ERROR_GET_CONTENTFLOW).then(res => {
+      return res.json()
+    }, e => {
+      throw e
+    })
+  }
+
+  /**
+   * List content flows for program
+   *
+   * @param {string} programId The program id
+   * @returns {Promise<ContentFlow[]>} an array of content flows
+   */
+  async listContentFlows (programId) {
+    const url = `/api/program/${programId}/contentFlows`
+    const result = await this._listContentFlows(url)
+    return (result && halfred.parse(result).embeddedArray('contentFlows')) || []
+  }
+
+  /**
+   * Cancel a content flow
+   * Cancels an in progress flow
+   *
+   * @param {string} programId the program id
+   * @param {string} contentFlowId the flow id
+   * @returns {Promise<object>} a truthy value
+   */
+  async cancelContentFlow (programId, contentFlowId) {
+    const url = `/api/program/${programId}/contentFlow/${contentFlowId}`
+    return this._delete(url, codes.ERROR_CANCEL_CONTENTFLOW).then(() => {
+      return {}
+    }, e => {
+      throw e
+    })
+  }
 }
 
 module.exports = {

@@ -1,0 +1,74 @@
+{
+  "_links": {
+    "next": {
+      "href": "/api/program/67406/contentFlows?start=20&limit=20"
+    },
+    "prev": {
+      "href": "/api/program/67406/contentFlows?start=0&limit=20"
+    },
+    "self": {
+      "href": "/api/program/67406/contentFlows",
+      "templated": false
+    }
+  },
+  "_embedded": {
+    "contentFlows": [
+      {
+        "contentSetId": "6402",
+        "contentSetName": "One path two ptah",
+        "srcEnvironmentId": "164900",
+        "srcEnvironmentName": "aio-test-prod",
+        "destEnvironmentId": "164901",
+        "destEnvironmentName": "aio-test-stage",
+        "tier": "author",
+        "status": "FAILED",
+        "contentFlowId": "9303",
+        "programId": "67406",
+        "destProgramId": "67406",
+        "internalStatus": "DELETED",
+        "createdAt": "2023-03-28T00:50:20.045+0000",
+        "updatedAt": "2023-03-28T00:53:11.964+0000",
+        "resultDetails": {
+          "exportResult": {
+            "errorCode": "BND-103",
+            "message": "Export Job Failed",
+            "details": [
+              "/content/dam/bad.png"
+            ]
+          }
+        }
+      },
+      {
+        "contentSetId": "6402",
+        "contentSetName": "One path two ptah",
+        "srcEnvironmentId": "164900",
+        "srcEnvironmentName": "aio-test-prod",
+        "destEnvironmentId": "164901",
+        "destEnvironmentName": "aio-test-stage",
+        "tier": "author",
+        "status": "FAILED",
+        "contentFlowId": "9302",
+        "programId": "67406",
+        "destProgramId": "67406",
+        "internalStatus": "DELETED",
+        "createdAt": "2023-03-28T00:16:59.234+0000",
+        "updatedAt": "2023-03-28T00:20:11.771+0000",
+        "resultDetails": {
+          "exportResult": {
+            "errorCode": "BND-103",
+            "message": "Export Job Failed",
+            "details": [
+              "/content/dam/bad.png"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "_totalNumberOfItems": 2,
+  "_page": {
+    "limit": 20,
+    "next": 20,
+    "prev": 0
+  }
+}

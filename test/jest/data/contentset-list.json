@@ -1,0 +1,59 @@
+{
+  "_links": {
+    "self": {
+      "href": "/api/contentSets",
+      "templated": false
+    }
+  },
+  "_embedded": {
+    "contentSets": [
+      {
+        "_links": {
+          "http://ns.adobe.com/adobecloud/rel/program": {
+            "href": "/api/program/67406",
+            "templated": false
+          },
+          "self": {
+            "href": "/api/program/67406/contentSet/6402",
+            "templated": false
+          }
+        },
+        "id": "6402",
+        "name": "One path two ptah",
+        "description": "A description",
+        "paths": [
+          {
+            "path": "/content/dam/bad.png"
+          }
+        ],
+        "programId": "67406",
+        "createdAt": "2023-03-22T19:28:14.529+0000",
+        "updatedAt": "2023-03-22T19:28:14.529+0000"
+      },
+      {
+        "_links": {
+          "http://ns.adobe.com/adobecloud/rel/program": {
+            "href": "/api/program/67406",
+            "templated": false
+          },
+          "self": {
+            "href": "/api/program/67406/contentSet/6352",
+            "templated": false
+          }
+        },
+        "id": "6352",
+        "name": "One path",
+        "description": "Another description",
+        "paths": [
+          {
+            "path": "/content/dam/seed19017.png"
+          }
+        ],
+        "programId": "67406",
+        "createdAt": "2023-03-22T19:26:09.524+0000",
+        "updatedAt": "2023-03-22T19:26:09.524+0000"
+      }
+    ]
+  },
+  "_totalNumberOfItems": 2
+}

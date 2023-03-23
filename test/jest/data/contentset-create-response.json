@@ -1,0 +1,26 @@
+{
+  "_links": {
+    "http://ns.adobe.com/adobecloud/rel/program": {
+      "href": "/api/program/67406",
+      "templated": false
+    },
+    "self": {
+      "href": "/api/program/67406/contentSet/7057",
+      "templated": false
+    }
+  },
+  "id": "7057",
+  "name": "AIO Lib test",
+  "description": "Test AIO library",
+  "paths": [
+    {
+      "path": "/content/dam/image_1.png"
+    },
+    {
+      "path": "/content/dam/image.jpg"
+    }
+  ],
+  "programId": "67406",
+  "createdAt": "2023-03-31T13:36:25.656+0000",
+  "updatedAt": "2023-03-31T13:36:25.656+0000"
+}
