@@ -1,0 +1,17 @@
+{
+  "id": "7103",
+  "name": "AIO Lib test",
+  "description": "Test AIO library Updated path",
+  "paths": [
+    {
+      "path": "/content/dam/image_1.png"
+    },
+    {
+      "path": "/content/dam/image.jpg"
+    },
+    {
+      "path": "/content/dam/newimage.jpg"
+    }
+  ],
+  "programId": "67406"
+}

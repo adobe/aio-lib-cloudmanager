@@ -34,6 +34,9 @@ module.exports = {
     commerceCommandExecutionId: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/id',
     pipelineCache: 'http://ns.adobe.com/adobecloud/rel/cache',
     commerceLogs: 'http://ns.adobe.com/adobecloud/rel/commerceCommandExecution/logs',
+    contentSet: 'http://ns.adobe.com/adobecloud/rel/contentSet',
+    contentSets: 'http://ns.adobe.com/adobecloud/rel/contentSets',
+    contentFlows: 'http://ns.adobe.com/adobecloud/rel/contentFlows',
   },
   config: {
     programId: 'cloudmanager_programid',

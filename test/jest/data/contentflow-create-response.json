@@ -1,0 +1,39 @@
+{
+  "_links": {
+    "cancel": {
+      "href": "/api/program/67406/contentFlow/10012",
+      "templated": false
+    },
+    "http://ns.adobe.com/adobecloud/rel/contentSet": {
+      "href": "/api/program/67406/contentSet/7057",
+      "templated": false
+    },
+    "http://ns.adobe.com/adobecloud/rel/destEnvironment": {
+      "href": "/api/program/67406/environment/164901",
+      "templated": false
+    },
+    "http://ns.adobe.com/adobecloud/rel/environment": {
+      "href": "/api/program/67406/environment/164900",
+      "templated": false
+    },
+    "http://ns.adobe.com/adobecloud/rel/program": {
+      "href": "/api/program/67406",
+      "templated": false
+    },
+    "self": {
+      "href": "/api/program/67406/contentFlow/10012",
+      "templated": false
+    }
+  },
+  "contentSetId": "7057",
+  "contentSetName": "AIO Lib test",
+  "srcEnvironmentId": "164900",
+  "srcEnvironmentName": "aio-test-prod",
+  "destEnvironmentId": "164901",
+  "destEnvironmentName": "aio-test-stage",
+  "tier": "author",
+  "status": "IN_PROGRESS",
+  "contentFlowId": "10012",
+  "programId": "67406",
+  "destProgramId": "67406"
+}

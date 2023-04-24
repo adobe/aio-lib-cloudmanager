@@ -14,7 +14,7 @@ const fs = require('fs')
 const Handlebars = require('handlebars')
 
 const desiredDefinitions = ['EmbeddedProgram', 'Pipeline', 'PipelinePhase', 'PipelineExecution', 'PipelineStepMetrics', 'Metric', 'Environment',
-  'LogOptionRepresentation', 'Variable', 'PipelineExecutionStepState', 'IPAllowedListBinding', 'IPAllowedList']
+  'LogOptionRepresentation', 'Variable', 'PipelineExecutionStepState', 'IPAllowedListBinding', 'IPAllowedList', 'ContentSet', 'ContentFlow']
 
 const cleanName = value => value.replace(/\W/g, '')
 const wrapCurly = value => `{${value}}`
