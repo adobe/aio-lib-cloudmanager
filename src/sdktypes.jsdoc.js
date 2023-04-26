@@ -154,6 +154,36 @@ Mandatory if type=BUILD
 
 
 /**
+ * A representation of a ContentSet custom
+ *
+ * @typedef {object} ContentSet
+ * @property {string} id - Identifier of the Content Set
+ * @property {string} name - The name of the content set
+ * @property {ContentSetPath[]} paths - Included asset paths
+ * @property {string} programId - Identifier of the program. Unique within the space.
+ * @property {string} createdAt - Create date
+ * @property {string} updatedAt - Update date
+ */
+
+
+/**
+ * The Content Flow Execution
+ *
+ * @typedef {object} ContentFlow
+ * @property {string} contentSetId - The content set id
+ * @property {string} contentSetName - The content set name
+ * @property {string} srcEnvironmentId - Source environment id
+ * @property {string} srcEnvironmentName - Source environment name
+ * @property {string} destEnvironmentId - Destination environment id
+ * @property {string} destEnvironmentName - Destination environment name
+ * @property {string} tier - The tier, for example author
+ * @property {string} status - Status of the flows
+ * @property {string} destProgramId - Destination program id
+ * @property {undefined} resultDetails - Details of this content flow result
+ */
+
+
+/**
  * @typedef {object} LogOptionRepresentation
  * @property {string} service - Name of the service in environment. Example: author
  * @property {string} name - Name of the log for service in environment. Example: aemerror
@@ -184,57 +214,4 @@ Mandatory if type=BUILD
  * @property {IPAllowedListBinding[]} bindings - IP Allowlist bindings
  */
 
-/**
- * Describes a __Content Set Path__
- *
- * @typedef {object} ContentSetPath
- * @property {string} path - The path to be included
- * @property {string} excluded - Excluded
- */
 
-/**
- * Describes a __Content Set__
- *
- * @typedef {object} ContentSet
- * @property {string} id - Identifier of the Content Set
- * @property {string} name - Name of the Content Set
- * @property {string} description - The description of the Content Set
- * @property {ContentSetPath[]} paths Included asset paths
- * @property {string} programId - Identifier of the program
- */
-
-/**
- * Describes a __Content Flow__
- *
- * @typedef {object} ContentFlow
- * @property {string} contentFlowId - Identifier of the Content Flow
- * @property {string} contentSetId - Identifier of the Content Set
- * @property {string} contentSetName - Name of the Content Flow
- * @property {string} programId - Source program id
- * @property {string} destProgramId Destination program id
- * @property {string} srcEnvironmentId - Source environment id
- * @property {string} srcEnvironmentName - Source environment name
- * @property {string} destEnvironmentId - Destination environment id
- * @property {string} destEnvironmentName - Destination environment name
- * @property {string} tier - The tier, for example author
- * @property {string} status - Status of the flow
- * @property {ContentFlowResults} resultDetails - The flow details
- */
-
-/**
- * Describes a __Content Flow Results__
- *
- * @typedef {object} ContentFlowResults
- * @property {ContentFlowResultDetails} exportResult - Export results
- * @property {ContentFlowResultDetails} importResult - Import results
- */
-
-/**
- * Describes a __Content Flow Result Details__
- *
- * @typedef {object} ContentFlowResultDetails
- * @property {string} errorCode - Error code
- * @property {string} message - Message
- * @property {string[]} details - flow details
- * @property {string} phase - flow phase
- */

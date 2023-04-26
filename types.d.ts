@@ -291,6 +291,72 @@ declare class CloudManagerAPI {
      * @returns a truthy value
      */
     removeIpAllowlistBinding(programId: string, ipAllowlistId: string, environmentId: string, service: string): Promise<object>;
+    /**
+     * Create a Content set
+     * @param programId - the program id
+     * @param contentSet - the body of the content set.
+     * @returns the created content set
+     */
+    createContentSet(programId: string, contentSet: string): Promise<ContentSet>;
+    /**
+     * Delete Content Set
+     * @param programId - the program id
+     * @param contentSetId - the content set id
+     * @returns a truthy value
+     */
+    deleteContentSet(programId: string, contentSetId: string): Promise<object>;
+    /**
+     * Get Content Set
+     * @param programId - the program id
+     * @param contentSetId - the content set id
+     * @returns the content set
+     */
+    getContentSet(programId: string, contentSetId: string): Promise<ContentSet>;
+    /**
+     * List Content Sets for program
+     * @param programId - the program id
+     * @returns list of the content sets for the program
+     */
+    listContentSets(programId: string): Promise<ContentSet[]>;
+    /**
+     * Update the content set definition.
+     *
+     * The operation is a PUT, so the entire body has to be provided.
+     * @param programId - The program id
+     * @param contentSetId - The content set id
+     * @param updatedContentSet - the body (JSON format)
+     * @returns the updated content set
+     */
+    updateContentSet(programId: string, contentSetId: string, updatedContentSet: string): Promise<ContentSet>;
+    /**
+     * Create content Set Flow for environment
+     * @param programId - The program id
+     * @param environmentId - The environment id
+     * @param contentFlow - The body of the contentFlow
+     * @returns the created content flow representation
+     */
+    createContentFlow(programId: string, environmentId: string, contentFlow: ContentFlow): Promise<ContentFlow>;
+    /**
+     * Get Content Flow
+     * @param programId - The program id
+     * @param contentFlowId - the content flow id
+     * @returns the Content Flow
+     */
+    getContentFlow(programId: string, contentFlowId: string): Promise<ContentFlow>;
+    /**
+     * List content flows for program
+     * @param programId - The program id
+     * @returns an array of content flows
+     */
+    listContentFlows(programId: string): Promise<ContentFlow[]>;
+    /**
+     * Cancel a content flow
+     * Cancels an in progress flow
+     * @param programId - the program id
+     * @param contentFlowId - the flow id
+     * @returns a truthy value
+     */
+    cancelContentFlow(programId: string, contentFlowId: string): Promise<object>;
 }
 
 /**
@@ -489,6 +555,50 @@ declare type Variable = {
     type: string;
     service: string;
     status: string;
+};
+
+/**
+ * A representation of a ContentSet custom
+ * @property id - Identifier of the Content Set
+ * @property name - The name of the content set
+ * @property paths - Included asset paths
+ * @property programId - Identifier of the program. Unique within the space.
+ * @property createdAt - Create date
+ * @property updatedAt - Update date
+ */
+declare type ContentSet = {
+    id: string;
+    name: string;
+    paths: ContentSetPath[];
+    programId: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+/**
+ * The Content Flow Execution
+ * @property contentSetId - The content set id
+ * @property contentSetName - The content set name
+ * @property srcEnvironmentId - Source environment id
+ * @property srcEnvironmentName - Source environment name
+ * @property destEnvironmentId - Destination environment id
+ * @property destEnvironmentName - Destination environment name
+ * @property tier - The tier, for example author
+ * @property status - Status of the flows
+ * @property destProgramId - Destination program id
+ * @property resultDetails - Details of this content flow result
+ */
+declare type ContentFlow = {
+    contentSetId: string;
+    contentSetName: string;
+    srcEnvironmentId: string;
+    srcEnvironmentName: string;
+    destEnvironmentId: string;
+    destEnvironmentName: string;
+    tier: string;
+    status: string;
+    destProgramId: string;
+    resultDetails: undefined;
 };
 
 /**

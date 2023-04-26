@@ -1,5 +1,17 @@
 # Changelog
 
+# [3.1.0](https://github.com/adobe/aio-lib-cloudmanager/compare/3.0.0...3.1.0) (2023-04-26)
+
+
+### Bug Fixes
+
+* **release:** Update release job to ubuntu-latest. Fixes [#379](https://github.com/adobe/aio-lib-cloudmanager/issues/379) ([#380](https://github.com/adobe/aio-lib-cloudmanager/issues/380)) ([b0ff79b](https://github.com/adobe/aio-lib-cloudmanager/commit/b0ff79bd05445b1acc0336b0e87c212c69b12d61))
+
+
+### Features
+
+* **content-set:** add Content Set Public API ([#376](https://github.com/adobe/aio-lib-cloudmanager/issues/376)). fixes [#378](https://github.com/adobe/aio-lib-cloudmanager/issues/378) ([7a88488](https://github.com/adobe/aio-lib-cloudmanager/commit/7a884881dbc20a6d4c3e0671324ab66d4aeb6657))
+
 # [3.0.0](https://github.com/adobe/aio-lib-cloudmanager/compare/2.0.0...3.0.0) (2022-12-16)
 
 

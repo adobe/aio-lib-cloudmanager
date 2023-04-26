@@ -112,6 +112,12 @@ with valid values for orgId, apiKey and accessToken</p>
 <dt><a href="#Variable">Variable</a> : <code>object</code></dt>
 <dd><p>A named value than can be set on an Environment or Pipeline</p>
 </dd>
+<dt><a href="#ContentSet">ContentSet</a> : <code>object</code></dt>
+<dd><p>A representation of a ContentSet custom</p>
+</dd>
+<dt><a href="#ContentFlow">ContentFlow</a> : <code>object</code></dt>
+<dd><p>The Content Flow Execution</p>
+</dd>
 <dt><a href="#LogOptionRepresentation">LogOptionRepresentation</a> : <code>object</code></dt>
 <dd></dd>
 <dt><a href="#IPAllowedListBinding">IPAllowedListBinding</a> : <code>object</code></dt>
@@ -126,24 +132,6 @@ with valid values for orgId, apiKey and accessToken</p>
 <dt><a href="#DownloadedLog">DownloadedLog</a> : <code>object</code></dt>
 <dd></dd>
 <dt><a href="#PipelineUpdate">PipelineUpdate</a> : <code>object</code></dt>
-<dd></dd>
-<dt><a href="#ContentSet">ContentSet</a> : <code>object</code></dt>
-<dd><p>A representation of a Content Set known to Cloud Manager.</p>
-<dd></dd>
-<dt><a href="#ContentSetList">ContentSetList</a> : <code>object</code></dt>
-<dd><p>A representation of a Content Set List known to Cloud Manager.</p>
-<dd></dd>
-<dt><a href="#ContentFlow">ContentFlow</a> : <code>object</code></dt>
-<dd><p>A representation of a Content Flow known to Cloud Manager.</p>
-<dd></dd>
-<dt><a href="#ContentFlowList">ContentFlowList</a> : <code>object</code></dt>
-<dd><p>A representation of a Content Flow List known to Cloud Manager.</p>
-<dd></dd>
-<dt><a href="#ContentFlowResults">ContentFlowResults</a> : <code>object</code></dt>
-<dd><p>A representation of a Content Flow Results known to Cloud Manager.</p>
-<dd></dd>
-<dt><a href="#ContentFlowResultDetails">ContentFlowResultDetails</a> : <code>object</code></dt>
-<dd><p>A representation of a Content Flow Result details known to Cloud Manager.</p>
 <dd></dd>
 </dl>
 
@@ -163,14 +151,20 @@ with valid values for orgId, apiKey and accessToken
     * [.baseUrl](#CloudManagerAPI+baseUrl) : <code>string</code>
     * [.addIpAllowlistBinding(programId, ipAllowlistId, environmentId, service)](#CloudManagerAPI+addIpAllowlistBinding) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.advanceCurrentExecution(programId, pipelineId)](#CloudManagerAPI+advanceCurrentExecution) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.cancelContentFlow(programId, contentFlowId)](#CloudManagerAPI+cancelContentFlow) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.cancelCurrentExecution(programId, pipelineId)](#CloudManagerAPI+cancelCurrentExecution) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.createContentFlow(programId, environmentId, contentFlow)](#CloudManagerAPI+createContentFlow) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
+    * [.createContentSet(programId, contentSet)](#CloudManagerAPI+createContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
     * [.createExecution(programId, pipelineId, mode)](#CloudManagerAPI+createExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.createIpAllowlist(programId, name, cidrBlocks)](#CloudManagerAPI+createIpAllowlist) ⇒ [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList)
+    * [.deleteContentSet(programId, contentSetId)](#CloudManagerAPI+deleteContentSet) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deleteEnvironment(programId, environmentId)](#CloudManagerAPI+deleteEnvironment) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deleteIpAllowlist(programId, ipAllowlistId)](#CloudManagerAPI+deleteIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deletePipeline(programId, pipelineId)](#CloudManagerAPI+deletePipeline) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deleteProgram(programId)](#CloudManagerAPI+deleteProgram) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.downloadLogs(programId, environmentId, service, name, days, outputDirectory)](#CloudManagerAPI+downloadLogs) ⇒ <code>Promise.&lt;Array.&lt;DownloadedLog&gt;&gt;</code>
+    * [.getContentFlow(programId, contentFlowId)](#CloudManagerAPI+getContentFlow) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
+    * [.getContentSet(programId, contentSetId)](#CloudManagerAPI+getContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
     * [.getCurrentExecution(programId, pipelineId)](#CloudManagerAPI+getCurrentExecution) ⇒ [<code>Promise.&lt;PipelineExecution&gt;</code>](#PipelineExecution)
     * [.getDeveloperConsoleUrl(programId, environmentId)](#CloudManagerAPI+getDeveloperConsoleUrl) ⇒ <code>Promise.&lt;string&gt;</code>
     * [.getEnvironmentVariables(programId, environmentId)](#CloudManagerAPI+getEnvironmentVariables) ⇒ <code>Promise.&lt;Array.&lt;Variable&gt;&gt;</code>
@@ -181,6 +175,8 @@ with valid values for orgId, apiKey and accessToken
     * [.init(orgId, apiKey, accessToken, baseUrl)](#CloudManagerAPI+init) ⇒ [<code>Promise.&lt;CloudManagerAPI&gt;</code>](#CloudManagerAPI)
     * [.invalidatePipelineCache(programId, pipelineId)](#CloudManagerAPI+invalidatePipelineCache) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.listAvailableLogOptions(programId, environmentId)](#CloudManagerAPI+listAvailableLogOptions) ⇒ <code>Promise.&lt;Array.&lt;LogOptionRepresentation&gt;&gt;</code>
+    * [.listContentFlows(programId)](#CloudManagerAPI+listContentFlows) ⇒ <code>Promise.&lt;Array.&lt;ContentFlow&gt;&gt;</code>
+    * [.listContentSets(programId)](#CloudManagerAPI+listContentSets) ⇒ <code>Promise.&lt;Array.&lt;ContentSet&gt;&gt;</code>
     * [.listEnvironments(programId)](#CloudManagerAPI+listEnvironments) ⇒ <code>Promise.&lt;Array.&lt;Environment&gt;&gt;</code>
     * [.listExecutions(programId, pipelineId, limit)](#CloudManagerAPI+listExecutions) ⇒ <code>Promise.&lt;Array.&lt;PipelineExecution&gt;&gt;</code>
     * [.listIpAllowlists(programId)](#CloudManagerAPI+listIpAllowlists) ⇒ [<code>Promise.&lt;IPAllowedList&gt;</code>](#IPAllowedList)
@@ -191,16 +187,9 @@ with valid values for orgId, apiKey and accessToken
     * [.setPipelineVariables(programId, pipelineId, variables)](#CloudManagerAPI+setPipelineVariables) ⇒ <code>Promise.&lt;object&gt;</code>
     * ~~[.startExecution(programId, pipelineId, mode)](#CloudManagerAPI+startExecution) ⇒ <code>Promise.&lt;string&gt;</code>~~
     * [.tailExecutionStepLog(programId, pipelineId, action, logFile, outputStream)](#CloudManagerAPI+tailExecutionStepLog) ⇒ [<code>Promise.&lt;PipelineExecutionStepState&gt;</code>](#PipelineExecutionStepState)
+    * [.updateContentSet(programId, contentSetId, updatedContentSet)](#CloudManagerAPI+updateContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
     * [.updateIpAllowlist(programId, ipAllowlistId, cidrBlocks)](#CloudManagerAPI+updateIpAllowlist) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.createContentSet(programId, contentSet)](#CloudManagerAPI+createContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
-    * [.deleteContentSet(programId, contentSetId)](#CloudManagerAPI+deleteContentSet) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getContentSet(programId, contentSetId)](#CloudManagerAPI+getContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
-    * [.updateContentSet(programId, contentsetId, updated)](#CloudManagerAPI+updateContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
-    * [.listContentSets(programId)](#CloudManagerAPI+listContentSets) ⇒ [<code>Promise.&lt;ContentSetList&gt;</code>](#ContentSetList)
-    * [.createContentFlow(programId, environmentId, contentFlow)](#CloudManagerAPI+createContentFlow) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
-    * [.getContentFlow(programId, environmentId, contentFlow)](#CloudManagerAPI+getContentFlow) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
-    * [.cancelContentFlow(programId, contentFlowId)](#CloudManagerAPI+cancelContentFlow) ⇒ [<code>Promise.&lt;object&gt;</code>](#ContentFlow)
-    * [.listContentFlows(programId)](#CloudManagerAPI+listContentFlows) ⇒ [<code>Promise.&lt;ContentFlowList&gt;</code>](#ContentFlowList)
+    * [.updatePipeline(programId, pipelineId, changes)](#CloudManagerAPI+updatePipeline) ⇒ [<code>Promise.&lt;Pipeline&gt;</code>](#Pipeline)
 
 <a name="CloudManagerAPI+orgId"></a>
 
@@ -254,6 +243,20 @@ Advance current execution
 | programId | <code>string</code> | the program id |
 | pipelineId | <code>string</code> | the pipeline id |
 
+<a name="CloudManagerAPI+cancelContentFlow"></a>
+
+### cloudManagerAPI.cancelContentFlow(programId, contentFlowId) ⇒ <code>Promise.&lt;object&gt;</code>
+Cancel a content flow
+Cancels an in progress flow
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| contentFlowId | <code>string</code> | the flow id |
+
 <a name="CloudManagerAPI+cancelCurrentExecution"></a>
 
 ### cloudManagerAPI.cancelCurrentExecution(programId, pipelineId) ⇒ <code>Promise.&lt;object&gt;</code>
@@ -266,6 +269,33 @@ Cancel current execution
 | --- | --- | --- |
 | programId | <code>string</code> | the program id |
 | pipelineId | <code>string</code> | the pipeline id |
+
+<a name="CloudManagerAPI+createContentFlow"></a>
+
+### cloudManagerAPI.createContentFlow(programId, environmentId, contentFlow) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
+Create content Set Flow for environment
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow) - the created content flow representation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | The program id |
+| environmentId | <code>string</code> | The environment id |
+| contentFlow | [<code>ContentFlow</code>](#ContentFlow) | The body of the contentFlow |
+
+<a name="CloudManagerAPI+createContentSet"></a>
+
+### cloudManagerAPI.createContentSet(programId, contentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
+Create a Content set
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet) - the created content set  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| contentSet | <code>string</code> | the body of the content set. |
 
 <a name="CloudManagerAPI+createExecution"></a>
 
@@ -294,6 +324,19 @@ Create IP Allow List
 | programId | <code>string</code> | the program id |
 | name | <code>string</code> | the name |
 | cidrBlocks | <code>Array.&lt;string&gt;</code> | the CIDR blocks |
+
+<a name="CloudManagerAPI+deleteContentSet"></a>
+
+### cloudManagerAPI.deleteContentSet(programId, contentSetId) ⇒ <code>Promise.&lt;object&gt;</code>
+Delete Content Set
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| contentSetId | <code>string</code> | the content set id |
 
 <a name="CloudManagerAPI+deleteEnvironment"></a>
 
@@ -362,6 +405,32 @@ Download log files from the environment to a specified directory.
 | name | <code>string</code> | the log name |
 | days | <code>number</code> | the number of days |
 | outputDirectory | <code>string</code> | the output directory |
+
+<a name="CloudManagerAPI+getContentFlow"></a>
+
+### cloudManagerAPI.getContentFlow(programId, contentFlowId) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
+Get Content Flow
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow) - the Content Flow  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | The program id |
+| contentFlowId | <code>string</code> | the content flow id |
+
+<a name="CloudManagerAPI+getContentSet"></a>
+
+### cloudManagerAPI.getContentSet(programId, contentSetId) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
+Get Content Set
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet) - the content set  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+| contentSetId | <code>string</code> | the content set id |
 
 <a name="CloudManagerAPI+getCurrentExecution"></a>
 
@@ -502,6 +571,30 @@ List the log options available for an environment
 | programId | <code>string</code> | the program id |
 | environmentId | <code>string</code> | the environment id |
 
+<a name="CloudManagerAPI+listContentFlows"></a>
+
+### cloudManagerAPI.listContentFlows(programId) ⇒ <code>Promise.&lt;Array.&lt;ContentFlow&gt;&gt;</code>
+List content flows for program
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;Array.&lt;ContentFlow&gt;&gt;</code> - an array of content flows  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | The program id |
+
+<a name="CloudManagerAPI+listContentSets"></a>
+
+### cloudManagerAPI.listContentSets(programId) ⇒ <code>Promise.&lt;Array.&lt;ContentSet&gt;&gt;</code>
+List Content Sets for program
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: <code>Promise.&lt;Array.&lt;ContentSet&gt;&gt;</code> - list of the content sets for the program  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | the program id |
+
 <a name="CloudManagerAPI+listEnvironments"></a>
 
 ### cloudManagerAPI.listEnvironments(programId) ⇒ <code>Promise.&lt;Array.&lt;Environment&gt;&gt;</code>
@@ -635,6 +728,22 @@ Tail step log to an output stream.
 | logFile | <code>string</code> | the log file to select a non-default value |
 | outputStream | <code>object</code> | the output stream to write to |
 
+<a name="CloudManagerAPI+updateContentSet"></a>
+
+### cloudManagerAPI.updateContentSet(programId, contentSetId, updatedContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
+Update the content set definition.
+
+The operation is a PUT, so the entire body has to be provided.
+
+**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
+**Returns**: [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet) - the updated content set  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| programId | <code>string</code> | The program id |
+| contentSetId | <code>string</code> | The content set id |
+| updatedContentSet | <code>string</code> | the body (JSON format) |
+
 <a name="CloudManagerAPI+updateIpAllowlist"></a>
 
 ### cloudManagerAPI.updateIpAllowlist(programId, ipAllowlistId, cidrBlocks) ⇒ <code>Promise.&lt;object&gt;</code>
@@ -687,126 +796,6 @@ Find the first waiting step in a pipeline execution
 | --- | --- | --- |
 | execution | [<code>PipelineExecution</code>](#PipelineExecution) | the execution |
 
-<a name="CloudManagerAPI+listContentSets"></a>
-
-### cloudManagerAPI.listContentSets(programId) ⇒ [<code>Promise.&lt;ContentSetList&gt;</code>](#ContentSetList)
-List content sets
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Promise.&lt;ContentSetList&gt;</code>](#ContentSetList) - list of the content sets in the program
-
-| Param | Type | Description |
-| --- | --- | --- |
-| programId | <code>string</code> | the program id |
-
-<a name="CloudManagerAPI+getContentSet"></a>
-
-### cloudManagerAPI.getContentSet(programId, contentSetId) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
-Get the content set
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet) - the content set definition
-
-| Param | Type | Description        |
-| --- | --- |--------------------|
-| programId | <code>string</code> | the program id     |
-| contentSetId | <code>string</code> | the content set id |
-
-<a name="CloudManagerAPI+createContentSet"></a>
-
-### cloudManagerAPI.createContentSet(programId, contentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
-Create a content set
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet) - the created content set definition
-
-| Param | Type                                   | Description                   |
-| --- |----------------------------------------|-------------------------------|
-| programId | <code>string</code>                    | the program id                |
-| contentSet | [<code>ContentSet</code>](#ContentSet) | the content set to be created |
-
-<a name="CloudManagerAPI+updateContentSet"></a>
-
-### cloudManagerAPI.updateContentSet(programId, contentSetId, updatedContentSet) ⇒ [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet)
-Update a content set
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Promise.&lt;ContentSet&gt;</code>](#ContentSet) - the updated content set definition
-
-| Param        | Type                                           | Description                        |
-|--------------|------------------------------------------------|------------------------------------|
-| programId    | <code>string</code>                            | the program id                     |
-| contentSetId | <code>string</code> (#ContentSet)              | the  content set id                |
-| update       | [<code>ContentSet</code>](#ContentSet) | the changed content set definition |
-
-<a name="CloudManagerAPI+deleteContentSet"></a>
-
-### cloudManagerAPI.deleteContentSet(programId, contentSetId) ⇒ <code>Promise.&lt;object&gt;</code>
-Delete a content set
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)
-**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value  
-
-| Param        | Type                                           | Description                        |
-|--------------|------------------------------------------------|------------------------------------|
-| programId    | <code>string</code>                            | the program id                     |
-| contentSetId | <code>string</code> (#ContentSet)              | the  content set id                |
-
-
-<a name="CloudManagerAPI+createContentFlow"></a>
-
-### cloudManagerAPI.createContentFlow(programId, contentFlow) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
-Crate a content flow
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow) - the created content flow definition
-
-| Param         | Type                                     | Description                 |
-|---------------|------------------------------------------|-----------------------------|
-| programId     | <code>string</code>                      | the program id              |
-| environmentId | <code>string</code>                      | the environment id          |
-| contentFlow   | [<code>ContentFlow</code>](#ContentFlow) | the content flow definition |
-
-
-<a name="CloudManagerAPI+getContentFlow"></a>
-
-### cloudManagerAPI.getContentFlow(programId, contentFlowId) ⇒ [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow)
-Get a content flow
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Promise.&lt;ContentFlow&gt;</code>](#ContentFlow) - the content flow definition
-
-| Param         | Type | Description         |
-|---------------| --- |---------------------|
-| programId     | <code>string</code> | the program id      |
-| contentFlowId | <code>string</code> | the content flow id |
-
-<a name="CloudManagerAPI+listContentFlows"></a>
-
-### cloudManagerAPI.listContentFlows(programId) ⇒ [<code>Promise.&lt;ContentFlowList&gt;</code>](#ContentFlowList)
-List content flows
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: [<code>Promise.&lt;ContentFlowList&gt;</code>](#ContentFlowList) - list of the content flows in the program
-
-| Param | Type | Description |
-| --- | --- | --- |
-| programId | <code>string</code> | the program id |
-
-<a name="CloudManagerAPI+cancelContentFlow"></a>
-
-### cloudManagerAPI.cancelContentFlow(programId, contentFlowId) ⇒ <code>Promise.&lt;object&gt;</code>
-Cancel content flow
-
-**Kind**: instance method of [<code>CloudManagerAPI</code>](#CloudManagerAPI)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - a truthy value
-
-| Param         | Type | Description         |
-|---------------| --- |---------------------|
-| programId     | <code>string</code> | the program id      |
-| contentFlowId | <code>string</code> | the content flow id |
-
-
 <a name="init"></a>
 
 ## init(orgId, apiKey, accessToken, baseUrl) ⇒ [<code>Promise.&lt;CloudManagerAPI&gt;</code>](#CloudManagerAPI)
@@ -821,7 +810,6 @@ Returns a Promise that resolves with a new CloudManagerAPI object.
 | apiKey | <code>string</code> | the API key for your integration |
 | accessToken | <code>string</code> | the access token for your integration |
 | baseUrl | <code>string</code> | the base URL to access the API (defaults to https://cloudmanager.adobe.io) |
-
 
 <a name="EmbeddedProgram"></a>
 
@@ -993,6 +981,44 @@ A named value than can be set on an Environment or Pipeline
 | service | <code>string</code> | Service of the variable. When not provided, the variable applies to all services. Currently the values 'author', 'publish', and 'preview' are supported. Note - this value is case-sensitive. |
 | status | <code>string</code> | Status of the variable |
 
+<a name="ContentSet"></a>
+
+## ContentSet : <code>object</code>
+A representation of a ContentSet custom
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Identifier of the Content Set |
+| name | <code>string</code> | The name of the content set |
+| paths | <code>Array.&lt;ContentSetPath&gt;</code> | Included asset paths |
+| programId | <code>string</code> | Identifier of the program. Unique within the space. |
+| createdAt | <code>string</code> | Create date |
+| updatedAt | <code>string</code> | Update date |
+
+<a name="ContentFlow"></a>
+
+## ContentFlow : <code>object</code>
+The Content Flow Execution
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| contentSetId | <code>string</code> | The content set id |
+| contentSetName | <code>string</code> | The content set name |
+| srcEnvironmentId | <code>string</code> | Source environment id |
+| srcEnvironmentName | <code>string</code> | Source environment name |
+| destEnvironmentId | <code>string</code> | Destination environment id |
+| destEnvironmentName | <code>string</code> | Destination environment name |
+| tier | <code>string</code> | The tier, for example author |
+| status | <code>string</code> | Status of the flows |
+| destProgramId | <code>string</code> | Destination program id |
+| resultDetails | <code>undefined</code> | Details of this content flow result |
+
 <a name="LogOptionRepresentation"></a>
 
 ## LogOptionRepresentation : <code>object</code>
@@ -1073,75 +1099,6 @@ Options to the listPipeline function
 | devEnvironmentId | <code>string</code> | the new dev environment id |
 | stageEnvironmentId | <code>string</code> | the new stage environment id |
 | prodEnvironmentId | <code>string</code> | the new prod environment id |
-
-
-<a name="ContentSet"></a>
-
-## ContentSet : <code>object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type                          | Description |
-| --- |-------------------------------| --- |
-| id | <code>string</code>           | Identifier of the Content Set |
-| name | <code>string</code>           | The name of the content set |
-| paths | <code>[ContentSetPath]</code> | Included asset paths |
-| programId | <code>string</code>           | Identifier of the program. Unique within the space |
-
-## ContentSetList : <code>object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name               | Type                      | Description                  |
-|--------------------|---------------------------|------------------------------|
-| embedded           | <code>[ContentSet]</code> | List of the content sets     |
-
-
-## ContentFlow : <code>object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| contentSetId | <code>string</code> | The content set id |
-| contentSetName | <code>string</code> | The content set name|
-| srcEnvironmentId |  <code>string</code> | Source environment id |
-| srcEnvironmentName |  <code>string</code> | Source environment name |
-| destEnvironmentId |  <code>string</code> | Destination environment id |
-| destEnvironmentName |  <code>string</code> | Destination environment name |
-| tier | <code>string</code> | the tier |
-| destProgramId | <code>string</code> | Destination program id |
-| resultDetails | <code>ContentFlowResults</code> | The Content Flow Results |
-
-## ContentFlowResults : <code>object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name          | Type                | Description    |
-|---------------|---------------------|----------------|
-| exportResults | <code>[ContentFlowResultDetails]</code> | export details |
-| ImportResults | <code>[ContentFlowResultDetails]</code> | import details |
-
-
-## ContentFlowResultDetails : <code>object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name      | Type                | Description                 |
-|-----------|---------------------|-----------------------------|
-| errorCode | <code>string</code> | content flow error          |
-| message   | <code>string</code> | content flow error message  |
-| details   | <code>[string]</code> | content flow error  details |
-| phase     | <code>string</code> | content flow phase          |
-
-## ContentFlowList : <code>object</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name               | Type                       | Description               |
-|--------------------|----------------------------|---------------------------|
-| embedded           | <code>[ContentFlow]</code> | List of the content flows |
-
 
 ### Debug Logs
 
