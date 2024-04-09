@@ -12,13 +12,13 @@ governing permissions and limitations under the License.
 /* global PipelineExecution, PipelineExecutionStepState */ // for linter
 
 /**
- * Find the first non-finished step in a pipeline execution
+ * Find the first non-finished or incomplete step in a pipeline execution
  *
  * @param {PipelineExecution} execution the execution
  * @returns {PipelineExecutionStepState} the step state or a falsy object if all steps are finished
  */
 function getCurrentStep (execution) {
-  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status !== 'FINISHED')[0]) || undefined
+  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status !== 'FINISHED' && ss.status !== 'INCOMPLETE')[0]) || undefined
 }
 
 /**
