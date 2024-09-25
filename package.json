@@ -69,7 +69,7 @@
     "jsdoc-to-markdown": "7.1.1",
     "lodash.sortby": "4.7.0",
     "pinst": "3.0.0",
-    "semantic-release": "17.4.7",
+    "semantic-release": "19.0.3",
     "sinon": "13.0.1",
     "stdout-stderr": "0.1.13",
     "tsd-jsdoc": "2.5.0"
