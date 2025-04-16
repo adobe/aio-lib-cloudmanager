@@ -5,31 +5,30 @@ name: CI Build
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        os: [ubuntu-latest, macos-latest]
+        node-version: [17.x]
         include:
-          - node-version: 14.x
+          - node-version: 17.x
             reportCoverage: true
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm version
-    - run: npm install
-    - run: npm run generate-docs
-    - run: npm test
-    - run: npm run semantic-release-dry-run
-    - name: Codecov
-      uses: codecov/codecov-action@v2.1.0
-      if: matrix.reportCoverage
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm version
+      - run: npm install
+      - run: npm run generate-docs
+      - run: npm test
+      - run: npm run semantic-release-dry-run
+      - name: Codecov
+        uses: codecov/codecov-action@v2.1.0
+        if: matrix.reportCoverage
