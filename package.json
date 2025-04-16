@@ -75,7 +75,7 @@
     "tsd-jsdoc": "2.5.0"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=12"
   },
   "release": {
     "branches": [

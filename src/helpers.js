@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
  * @returns {PipelineExecutionStepState} the step state or a falsy object if all steps are finished
  */
 function getCurrentStep (execution) {
-  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status !== 'FINISHED' && ss.status !== 'INCOMPLETE')[0]) || undefined
+  return (execution && execution._embedded && execution._embedded.stepStates && execution._embedded.stepStates.filter(ss => ss.status !== 'FINISHED')[0]) || undefined
 }
 
 /**
