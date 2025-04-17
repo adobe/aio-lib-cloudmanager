@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/adobe/aio-lib-cloudmanager/compare/3.1.0...3.1.1) (2025-04-17)
+
+
+### Bug Fixes
+
+* **pipeline:** add incomplete as a finished state for pipeline steps. Fixes [#384](https://github.com/adobe/aio-lib-cloudmanager/issues/384) ([df80ba0](https://github.com/adobe/aio-lib-cloudmanager/commit/df80ba0f0bd9ffabe8d7b68ee239ebd102ea3538))
+
 # [3.1.0](https://github.com/adobe/aio-lib-cloudmanager/compare/3.0.0...3.1.0) (2023-04-26)
 
 

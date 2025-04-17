@@ -1040,12 +1040,12 @@ Describes an __IP Allowed List Binding__
 
 | Name | Type | Description |
 | --- | --- | --- |
-| id | <code>string</code> | Identifier of the IP Allowed List Binding to an Environment |
+| id | <code>integer</code> | Identifier of the IP Allowed List Binding to an Environment |
 | tier | <code>string</code> | Tier of the environment. |
 | status | <code>string</code> | Status of the binding. |
-| programId | <code>string</code> | Identifier of the program. |
-| ipAllowListId | <code>string</code> | Identifier of the IP allow list. |
-| environmentId | <code>string</code> | Identifier of the environment. |
+| programId | <code>integer</code> | Identifier of the program. |
+| ipAllowListId | <code>integer</code> | Identifier of the IP allow list. |
+| environmentId | <code>integer</code> | Identifier of the environment. |
 
 <a name="IPAllowedList"></a>
 
@@ -1057,10 +1057,10 @@ Describes an __IP Allowed List__
 
 | Name | Type | Description |
 | --- | --- | --- |
-| id | <code>string</code> | Identifier of the IP Allowed List |
+| id | <code>integer</code> | Identifier of the IP Allowed List |
 | name | <code>string</code> | Name of the IP Allowed List |
+| programId | <code>integer</code> | Identifier of the program. |
 | ipCidrSet | <code>Array.&lt;string&gt;</code> | IP CIDR Set |
-| programId | <code>string</code> | Identifier of the program. |
 | bindings | [<code>Array.&lt;IPAllowedListBinding&gt;</code>](#IPAllowedListBinding) | IP Allowlist bindings |
 
 <a name="ListPipelineOptions"></a>

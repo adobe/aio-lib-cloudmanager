@@ -194,12 +194,12 @@ Mandatory if type=BUILD
  * Describes an __IP Allowed List Binding__
  *
  * @typedef {object} IPAllowedListBinding
- * @property {string} id - Identifier of the IP Allowed List Binding to an Environment
+ * @property {integer} id - Identifier of the IP Allowed List Binding to an Environment
  * @property {string} tier - Tier of the environment.
  * @property {string} status - Status of the binding.
- * @property {string} programId - Identifier of the program.
- * @property {string} ipAllowListId - Identifier of the IP allow list.
- * @property {string} environmentId - Identifier of the environment.
+ * @property {integer} programId - Identifier of the program.
+ * @property {integer} ipAllowListId - Identifier of the IP allow list.
+ * @property {integer} environmentId - Identifier of the environment.
  */
 
 
@@ -207,10 +207,10 @@ Mandatory if type=BUILD
  * Describes an __IP Allowed List__
  *
  * @typedef {object} IPAllowedList
- * @property {string} id - Identifier of the IP Allowed List
+ * @property {integer} id - Identifier of the IP Allowed List
  * @property {string} name - Name of the IP Allowed List
+ * @property {integer} programId - Identifier of the program.
  * @property {string[]} ipCidrSet - IP CIDR Set
- * @property {string} programId - Identifier of the program.
  * @property {IPAllowedListBinding[]} bindings - IP Allowlist bindings
  */
 

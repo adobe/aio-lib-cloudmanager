@@ -620,27 +620,27 @@ declare type LogOptionRepresentation = {
  * @property environmentId - Identifier of the environment.
  */
 declare type IPAllowedListBinding = {
-    id: string;
+    id: integer;
     tier: string;
     status: string;
-    programId: string;
-    ipAllowListId: string;
-    environmentId: string;
+    programId: integer;
+    ipAllowListId: integer;
+    environmentId: integer;
 };
 
 /**
  * Describes an __IP Allowed List__
  * @property id - Identifier of the IP Allowed List
  * @property name - Name of the IP Allowed List
- * @property ipCidrSet - IP CIDR Set
  * @property programId - Identifier of the program.
+ * @property ipCidrSet - IP CIDR Set
  * @property bindings - IP Allowlist bindings
  */
 declare type IPAllowedList = {
-    id: string;
+    id: integer;
     name: string;
+    programId: integer;
     ipCidrSet: string[];
-    programId: string;
     bindings: IPAllowedListBinding[];
 };
 
