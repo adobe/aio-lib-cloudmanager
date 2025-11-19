@@ -1177,7 +1177,7 @@ class CloudManagerAPI {
 
   async _findIpAllowlist (programId, ipAllowlistId) {
     const ipAllowlists = await this.listIpAllowlists(programId)
-    const ipAllowlist = ipAllowlists.find(i => i.id === ipAllowlistId)
+    const ipAllowlist = ipAllowlists.find(i => String(i.id) === String(ipAllowlistId))
     if (!ipAllowlist) {
       throw new codes.ERROR_FIND_IP_ALLOWLIST({ messageValues: [ipAllowlistId, programId] })
     }
@@ -1277,7 +1277,7 @@ class CloudManagerAPI {
    */
   async removeIpAllowlistBinding (programId, ipAllowlistId, environmentId, service) {
     const ipAllowlist = await this._findIpAllowlist(programId, ipAllowlistId)
-    let binding = ipAllowlist.bindings.find(b => b.environmentId === environmentId && b.tier === service)
+    let binding = ipAllowlist.bindings.find(b => String(b.environmentId) === String(environmentId) && b.tier === service)
     if (!binding) {
       throw new codes.ERROR_FIND_IP_ALLOWLIST_BINDING({ messageValues: [ipAllowlistId, environmentId, service, programId] })
     }
