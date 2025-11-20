@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.2](https://github.com/adobe/aio-lib-cloudmanager/compare/3.1.1...3.1.2) (2025-11-20)
+
+
+### Bug Fixes
+
+* **ip allowlist:** type mismatch ([#397](https://github.com/adobe/aio-lib-cloudmanager/issues/397)) ([de2babe](https://github.com/adobe/aio-lib-cloudmanager/commit/de2babe7b298a6146bbdd1c363ce9adf93ec8884))
+
 ## [3.1.1](https://github.com/adobe/aio-lib-cloudmanager/compare/3.1.0...3.1.1) (2025-04-17)
 
 
